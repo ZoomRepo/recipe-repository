@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ recipe.title or 'Recipe' }} · Recipe Repository
+{% endblock %}
+
+{% block content %}
+  <article class="recipe-detail">
+    <header>
+      <h1>{{ recipe.title or 'Untitled recipe' }}</h1>
+      <p class="recipe-source">
+        From <a href="{{ recipe.source_url }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a>
+      </p>
+      {% if recipe.image %}
+        <img class="hero-image" src="{{ recipe.image }}" alt="Image for {{ recipe.title or 'recipe' }}">
+      {% endif %}
+    </header>
+
+    {% if recipe.description %}
+      <p class="lead">{{ recipe.description }}</p>
+    {% endif %}
+
+    <section class="recipe-meta-grid">
+      {% if recipe.prep_time %}
+        <div><strong>Prep time:</strong> {{ recipe.prep_time }}</div>
+      {% endif %}
+      {% if recipe.cook_time %}
+        <div><strong>Cook time:</strong> {{ recipe.cook_time }}</div>
+      {% endif %}
+      {% if recipe.total_time %}
+        <div><strong>Total time:</strong> {{ recipe.total_time }}</div>
+      {% endif %}
+      {% if recipe.servings %}
+        <div><strong>Servings:</strong> {{ recipe.servings }}</div>
+      {% endif %}
+      {% if recipe.author %}
+        <div><strong>Author:</strong> {{ recipe.author }}</div>
+      {% endif %}
+    </section>
+
+    <section class="recipe-sections">
+      {% if recipe.ingredients %}
+        <div class="ingredients">
+          <h2>Ingredients</h2>
+          <ul>
+            {% for item in recipe.ingredients %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      {% if recipe.instructions %}
+        <div class="instructions">
+          <h2>Instructions</h2>
+          <ol>
+            {% for step in recipe.instructions %}
+              <li>{{ step }}</li>
+            {% endfor %}
+          </ol>
+        </div>
+      {% endif %}
+    </section>
+
+    {% if recipe.categories or recipe.tags %}
+      <section class="taxonomies">
+        {% if recipe.categories %}
+          <p><strong>Categories:</strong>
+            {% for category in recipe.categories %}
+              <span class="pill">{{ category }}</span>
+            {% endfor %}
+          </p>
+        {% endif %}
+        {% if recipe.tags %}
+          <p><strong>Tags:</strong>
+            {% for tag in recipe.tags %}
+              <span class="pill">{{ tag }}</span>
+            {% endfor %}
+          </p>
+        {% endif %}
+      </section>
+    {% endif %}
+
+    <footer class="recipe-footer">
+      <a class="button" href="{{ recipe.source_url }}" target="_blank" rel="noopener">View original recipe</a>
+    </footer>
+  </article>
+{% endblock %}
