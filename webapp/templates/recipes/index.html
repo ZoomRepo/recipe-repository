@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if results.query %}Search results for "{{ results.query }}"{% else %}All recipes{% endif %}
+{% endblock %}
+
+{% block content %}
+  <section class="results-header">
+    <h1>
+      {% if results.query %}
+        Recipes matching "{{ results.query }}"
+      {% else %}
+        Latest recipes
+      {% endif %}
+    </h1>
+    <p>{{ results.total }} recipe{{ '' if results.total == 1 else 's' }} found</p>
+  </section>
+
+  {% if results.items %}
+    <ul class="recipe-grid">
+      {% for recipe in results.items %}
+        <li class="recipe-card">
+          {% if recipe.image %}
+            <a class="recipe-thumb" href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">
+              <img src="{{ recipe.image }}" alt="Image for {{ recipe.title or 'recipe' }}">
+            </a>
+          {% endif %}
+          <div class="recipe-card-body">
+            <h2>
+              <a href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">{{ recipe.title or 'Untitled recipe' }}</a>
+            </h2>
+            {% if recipe.description %}
+              <p class="recipe-summary">{{ recipe.description }}</p>
+            {% endif %}
+            <p class="recipe-meta">From <a href="{{ recipe.source_url }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a></p>
+            {% if recipe.updated_at %}
+              <p class="recipe-meta">Updated {{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if results.total_pages > 1 %}
+      <nav class="pagination" aria-label="Search results pages">
+        <ul>
+          {% for page_number in results.iter_pages() %}
+            <li class="pagination-item {% if page_number == results.page %}active{% endif %}">
+              {% if results.query %}
+                <a href="{{ url_for('recipes.index', page=page_number, q=results.query) }}">{{ page_number }}</a>
+              {% else %}
+                <a href="{{ url_for('recipes.index', page=page_number) }}">{{ page_number }}</a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+  {% else %}
+    <p class="empty-state">No recipes found. Try another search term.</p>
+  {% endif %}
+{% endblock %}
