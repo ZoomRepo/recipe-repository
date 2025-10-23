@@ -6,6 +6,16 @@ from typing import Any, List, Optional
 from flask import Blueprint, abort, jsonify, render_template, request
 from werkzeug.datastructures import MultiDict
 
+from .filter_options import (
+    CUISINE_LOOKUP,
+    CUISINE_OPTIONS,
+    DIET_LOOKUP,
+    DIET_OPTIONS,
+    MEAL_LOOKUP,
+    MEAL_OPTIONS,
+    labels_for,
+    normalize_selection,
+)
 from .service import RecipeService
 
 
@@ -20,12 +30,30 @@ def register_routes(app: Any, service: RecipeService) -> None:
         normalized_query = _normalize_query(raw_query)
         page = _parse_page(request.args.get("page", "1"))
         ingredients = _parse_ingredients(request.args)
-        results = service.search(raw_query, page, ingredients)
-        filters = {"query": normalized_query, "ingredients": ingredients}
+        cuisines = normalize_selection(request.args.getlist("cuisine"), CUISINE_LOOKUP)
+        meals = normalize_selection(request.args.getlist("meal"), MEAL_LOOKUP)
+        diets = normalize_selection(request.args.getlist("diet"), DIET_LOOKUP)
+        results = service.search(raw_query, page, ingredients, cuisines, meals, diets)
+        heading_text = _format_heading(
+            normalized_query, ingredients, cuisines, meals, diets
+        )
+        subtitle_text = _format_subtitle(results.total)
+        filters = {
+            "query": normalized_query,
+            "ingredients": ingredients,
+            "cuisines": cuisines,
+            "meals": meals,
+            "diets": diets,
+        }
         return render_template(
             "recipes/index.html",
             results=results,
             filters=filters,
+            heading=heading_text,
+            subtitle=subtitle_text,
+            cuisine_options=CUISINE_OPTIONS,
+            meal_options=MEAL_OPTIONS,
+            diet_options=DIET_OPTIONS,
         )
 
     @blueprint.route("/api/recipes")
@@ -34,8 +62,17 @@ def register_routes(app: Any, service: RecipeService) -> None:
         normalized_query = _normalize_query(raw_query)
         page = _parse_page(request.args.get("page", "1"))
         ingredients = _parse_ingredients(request.args)
-        results = service.search(raw_query, page, ingredients)
-        filters = {"query": normalized_query, "ingredients": ingredients}
+        cuisines = normalize_selection(request.args.getlist("cuisine"), CUISINE_LOOKUP)
+        meals = normalize_selection(request.args.getlist("meal"), MEAL_LOOKUP)
+        diets = normalize_selection(request.args.getlist("diet"), DIET_LOOKUP)
+        results = service.search(raw_query, page, ingredients, cuisines, meals, diets)
+        filters = {
+            "query": normalized_query,
+            "ingredients": ingredients,
+            "cuisines": cuisines,
+            "meals": meals,
+            "diets": diets,
+        }
         return jsonify(
             {
                 "html": render_template(
@@ -44,7 +81,9 @@ def register_routes(app: Any, service: RecipeService) -> None:
                     filters=filters,
                 ),
                 "meta": {
-                    "heading": _format_heading(normalized_query, ingredients),
+                    "heading": _format_heading(
+                        normalized_query, ingredients, cuisines, meals, diets
+                    ),
                     "subtitle": _format_subtitle(results.total),
                     "total": results.total,
                     "page": results.page,
@@ -53,6 +92,9 @@ def register_routes(app: Any, service: RecipeService) -> None:
                 "filters": {
                     "query": normalized_query or "",
                     "ingredients": ingredients,
+                    "cuisines": cuisines,
+                    "meals": meals,
+                    "diets": diets,
                 },
             }
         )
@@ -106,15 +148,37 @@ def _parse_ingredients(args: MultiDict[str, str]) -> List[str]:
     return normalized
 
 
-def _format_heading(query: Optional[str], ingredients: List[str]) -> str:
+def _format_heading(
+    query: Optional[str],
+    ingredients: List[str],
+    cuisines: List[str],
+    meals: List[str],
+    diets: List[str],
+) -> str:
     if query and ingredients:
         plural = "s" if len(ingredients) != 1 else ""
-        return f'Recipes matching "{query}" with {len(ingredients)} ingredient{plural}'
-    if query:
-        return f'Recipes matching "{query}"'
-    if ingredients:
-        return "Recipes containing " + ", ".join(ingredients)
-    return "Latest recipes"
+        heading = f'Recipes matching "{query}" with {len(ingredients)} ingredient{plural}'
+    elif query:
+        heading = f'Recipes matching "{query}"'
+    elif ingredients:
+        heading = "Recipes containing " + ", ".join(ingredients)
+    else:
+        heading = "Latest recipes"
+
+    descriptors: List[str] = []
+    cuisine_labels = labels_for(cuisines, CUISINE_LOOKUP)
+    if cuisine_labels:
+        descriptors.append("Cuisine: " + ", ".join(cuisine_labels))
+    meal_labels = labels_for(meals, MEAL_LOOKUP)
+    if meal_labels:
+        descriptors.append("Meal: " + ", ".join(meal_labels))
+    diet_labels = labels_for(diets, DIET_LOOKUP)
+    if diet_labels:
+        descriptors.append("Diet: " + ", ".join(diet_labels))
+
+    if descriptors:
+        return f"{heading} · {' · '.join(descriptors)}"
+    return heading
 
 
 def _format_subtitle(total: int) -> str:

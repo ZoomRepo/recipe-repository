@@ -17,6 +17,7 @@
   const clearButton = form.querySelector('[data-role="clear-filters"]');
   const queryInput = form.querySelector('input[name="q"]');
   const pageInput = form.querySelector('input[name="page"]');
+  const autoSubmitInputs = form.querySelectorAll('[data-auto-submit="change"]');
 
   let debounceTimer = null;
 
@@ -107,6 +108,9 @@
             queryInput.value = payload.filters.query || '';
           }
           syncIngredientChips(payload.filters.ingredients || []);
+          syncCheckboxGroup('cuisine', payload.filters.cuisines || []);
+          syncCheckboxGroup('meal', payload.filters.meals || []);
+          syncCheckboxGroup('diet', payload.filters.diets || []);
         }
       })
       .catch((error) => {
@@ -191,6 +195,19 @@
     });
   }
 
+  function syncCheckboxGroup(name, values) {
+    if (!form) {
+      return;
+    }
+    const desired = new Set((values || []).map((value) => String(value)));
+    const selector = `input[name="${name}"]`;
+    form.querySelectorAll(selector).forEach((element) => {
+      if (element instanceof HTMLInputElement) {
+        element.checked = desired.has(element.value);
+      }
+    });
+  }
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     if (pageInput) {
@@ -239,6 +256,15 @@
     });
   }
 
+  autoSubmitInputs.forEach((input) => {
+    input.addEventListener('change', () => {
+      if (pageInput) {
+        pageInput.value = '1';
+      }
+      fetchResults(1);
+    });
+  });
+
   if (clearButton) {
     clearButton.addEventListener('click', () => {
       if (queryInput) {
@@ -250,6 +276,11 @@
       if (ingredientField) {
         ingredientField.value = '';
       }
+      autoSubmitInputs.forEach((input) => {
+        if (input instanceof HTMLInputElement && input.type === 'checkbox') {
+          input.checked = false;
+        }
+      });
       if (pageInput) {
         pageInput.value = '1';
       }

@@ -7,6 +7,12 @@ from typing import List, Optional
 from mysql.connector import pooling
 
 from .config import DatabaseConfig
+from .filter_options import (
+    CUISINE_LOOKUP,
+    DIET_LOOKUP,
+    MEAL_LOOKUP,
+    FilterOption,
+)
 from .models import PaginatedResult, RecipeDetail, RecipeSummary
 
 
@@ -37,6 +43,9 @@ class RecipeQueryRepository:
         ingredients: Optional[List[str]],
         page: int,
         page_size: int,
+        cuisines: Optional[List[str]] = None,
+        meals: Optional[List[str]] = None,
+        diets: Optional[List[str]] = None,
     ) -> PaginatedResult:
         """Search recipes matching *query* and *ingredients* with pagination."""
 
@@ -59,6 +68,9 @@ class RecipeQueryRepository:
                 like = f"%{normalized}%"
                 conditions.append("LOWER(ingredients) LIKE %s")
                 params.append(like)
+        self._apply_option_filters(cuisines, CUISINE_LOOKUP, conditions, params)
+        self._apply_option_filters(meals, MEAL_LOOKUP, conditions, params)
+        self._apply_option_filters(diets, DIET_LOOKUP, conditions, params)
         where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
         listing_sql = f"""
             SELECT
@@ -178,6 +190,51 @@ class RecipeQueryRepository:
         finally:
             connection.close()
         return int(total)
+
+    def _apply_option_filters(
+        self,
+        selected: Optional[List[str]],
+        lookup: dict[str, FilterOption],
+        conditions: List[str],
+        params: List[object],
+    ) -> None:
+        if not selected:
+            return
+
+        option_clauses: List[str] = []
+        for value in selected:
+            option = lookup.get(value)
+            if not option:
+                continue
+            clause = self._build_keywords_clause(option.normalized_keywords(), params)
+            if clause:
+                option_clauses.append(clause)
+        if option_clauses:
+            conditions.append(f"({' OR '.join(option_clauses)})")
+
+    def _build_keywords_clause(
+        self, keywords: tuple[str, ...], params: List[object]
+    ) -> Optional[str]:
+        if not keywords:
+            return None
+
+        column_template = (
+            "LOWER(COALESCE(title, '')) LIKE %s OR "
+            "LOWER(COALESCE(description, '')) LIKE %s OR "
+            "LOWER(COALESCE(categories, '')) LIKE %s OR "
+            "LOWER(COALESCE(tags, '')) LIKE %s OR "
+            "LOWER(COALESCE(ingredients, '')) LIKE %s"
+        )
+
+        keyword_clauses: List[str] = []
+        for keyword in keywords:
+            like = f"%{keyword}%"
+            keyword_clauses.append(f"({column_template})")
+            params.extend([like] * 5)
+
+        if not keyword_clauses:
+            return None
+        return f"({' OR '.join(keyword_clauses)})"
 
     @staticmethod
     def _parse_json_list(value: Optional[str]) -> List[str]:
