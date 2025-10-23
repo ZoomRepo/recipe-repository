@@ -1,9 +1,15 @@
 """Application services for the recipe web interface."""
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from typing import Iterable, Optional, Sequence
 
 from .models import PaginatedResult, RecipeDetail
+from .filter_options import (
+    CUISINE_LOOKUP,
+    DIET_LOOKUP,
+    MEAL_LOOKUP,
+    normalize_selection,
+)
 from .repository import RecipeQueryRepository
 
 
@@ -19,6 +25,9 @@ class RecipeService:
         query: Optional[str],
         page: int,
         ingredients: Optional[Iterable[str]] = None,
+        cuisines: Optional[Sequence[str]] = None,
+        meals: Optional[Sequence[str]] = None,
+        diets: Optional[Sequence[str]] = None,
     ) -> PaginatedResult:
         normalized_query = query.strip() if query else None
         if normalized_query == "":
@@ -37,11 +46,18 @@ class RecipeService:
                 normalized_ingredients.append(cleaned)
                 seen.add(cleaned)
 
+        normalized_cuisines = normalize_selection(cuisines or [], CUISINE_LOOKUP)
+        normalized_meals = normalize_selection(meals or [], MEAL_LOOKUP)
+        normalized_diets = normalize_selection(diets or [], DIET_LOOKUP)
+
         return self._repository.search(
             normalized_query,
             normalized_ingredients,
             page,
             self._page_size,
+            normalized_cuisines,
+            normalized_meals,
+            normalized_diets,
         )
 
     def get(self, recipe_id: int) -> Optional[RecipeDetail]:

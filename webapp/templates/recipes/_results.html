@@ -1,7 +1,7 @@
 {% if results.items %}
-  <ul class="recipe-grid">
+  <ul class="recipe-list">
     {% for recipe in results.items %}
-      <li class="recipe-card">
+      <li class="recipe-card{% if recipe.image %} recipe-card--with-image{% endif %}">
         {% if recipe.image %}
           <a class="recipe-thumb" href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">
             <img src="{{ recipe.image }}" alt="Image for {{ recipe.title or 'recipe' }}">
@@ -29,7 +29,15 @@
         {% for page_number in results.iter_pages() %}
           <li class="pagination-item {% if page_number == results.page %}active{% endif %}">
             <a
-              href="{{ url_for('recipes.index', page=page_number, q=filters.query, ingredient=filters.ingredients if filters.ingredients else None) }}"
+              href="{{ url_for(
+                'recipes.index',
+                page=page_number,
+                q=filters.query,
+                ingredient=filters.ingredients if filters.ingredients else None,
+                cuisine=filters.cuisines if filters.cuisines else None,
+                meal=filters.meals if filters.meals else None,
+                diet=filters.diets if filters.diets else None,
+              ) }}"
               data-page="{{ page_number }}"
             >
               {{ page_number }}

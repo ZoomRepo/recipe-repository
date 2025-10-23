@@ -5,19 +5,6 @@
 {% endblock %}
 
 {% block content %}
-  {% set has_query = filters.query %}
-  {% set has_ingredients = filters.ingredients %}
-  {% if has_query and has_ingredients %}
-    {% set heading = 'Recipes matching "' ~ filters.query ~ '" with ' ~ filters.ingredients|length ~ ' ingredient' ~ ('s' if filters.ingredients|length != 1 else '') %}
-  {% elif has_query %}
-    {% set heading = 'Recipes matching "' ~ filters.query ~ '"' %}
-  {% elif has_ingredients %}
-    {% set heading = 'Recipes containing ' ~ filters.ingredients|join(', ') %}
-  {% else %}
-    {% set heading = 'Latest recipes' %}
-  {% endif %}
-  {% set subtitle = results.total ~ ' recipe' ~ ('' if results.total == 1 else 's') ~ ' found' %}
-
   <div class="recipe-layout" data-role="search-layout">
     <aside class="filter-panel">
       <form
@@ -65,6 +52,66 @@
               >
               <p class="hint">Press Enter to add an ingredient filter.</p>
             </div>
+          </div>
+        </details>
+        <details class="filter-section" open>
+          <summary>Cuisine</summary>
+          <div class="filter-section-body">
+            <fieldset class="filter-group">
+              <legend class="sr-only">Cuisine filters</legend>
+              {% for option in cuisine_options %}
+                <label class="filter-checkbox">
+                  <input
+                    type="checkbox"
+                    name="cuisine"
+                    value="{{ option.value }}"
+                    {% if option.value in filters.cuisines %}checked{% endif %}
+                    data-auto-submit="change"
+                  >
+                  <span>{{ option.label }}</span>
+                </label>
+              {% endfor %}
+            </fieldset>
+          </div>
+        </details>
+        <details class="filter-section" open>
+          <summary>Meal</summary>
+          <div class="filter-section-body">
+            <fieldset class="filter-group">
+              <legend class="sr-only">Meal filters</legend>
+              {% for option in meal_options %}
+                <label class="filter-checkbox">
+                  <input
+                    type="checkbox"
+                    name="meal"
+                    value="{{ option.value }}"
+                    {% if option.value in filters.meals %}checked{% endif %}
+                    data-auto-submit="change"
+                  >
+                  <span>{{ option.label }}</span>
+                </label>
+              {% endfor %}
+            </fieldset>
+          </div>
+        </details>
+        <details class="filter-section" open>
+          <summary>Diet</summary>
+          <div class="filter-section-body">
+            <fieldset class="filter-group">
+              <legend class="sr-only">Diet filters</legend>
+              {% for option in diet_options %}
+                <label class="filter-checkbox">
+                  <input
+                    type="checkbox"
+                    name="diet"
+                    value="{{ option.value }}"
+                    {% if option.value in filters.diets %}checked{% endif %}
+                    data-auto-submit="change"
+                  >
+                  <span>{{ option.label }}</span>
+                </label>
+              {% endfor %}
+            </fieldset>
           </div>
         </details>
         <div class="filter-actions">
