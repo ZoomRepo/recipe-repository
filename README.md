@@ -33,8 +33,8 @@ limit the run to specific sites:
 ```bash
 python -m scraper.cli \
     --db-host 127.0.0.1 \
-    --db-user reciperepository \
-    --db-password Xenomorph123 \
+    --db-user [USER] \
+    --db-password [PASS] \
     --db-name reciperepository \
     --sites "BBC Good Food" "simplyrecipes.com"
 ```
@@ -50,9 +50,9 @@ The web application is backed by the same MySQL database. Environment
 variables can be used to override the defaults shown below.
 
 ```bash
-export DB_HOST=217.43.43.202
-export DB_USER=reciperepository
-export DB_PASSWORD=Xenomorph123
+export DB_HOST=[EXTERNAL_IP]
+export DB_USER=[USER]
+export DB_PASSWORD=[PASS]
 export DB_NAME=reciperepository
 
 python -m webapp
