@@ -44,6 +44,13 @@ Use `--max-pages` to constrain how many listing pages are crawled per site.
 Logs are emitted to stdout and can be controlled with `--log-level` (e.g.
 `--log-level DEBUG`).
 
+If a site's configured listing pages fail or return no results the scraper now
+falls back to crawling the domain's XML sitemaps (including WordPress specific
+maps). This greatly improves coverage for JavaScript-driven or paginated
+catalogues at the cost of additional HTTP requests. The fallback respects the
+`--max-pages` option for HTML listings and caps sitemap discovery to protect the
+target sites.
+
 ## Running the web application
 
 The web application is backed by the same MySQL database. Environment

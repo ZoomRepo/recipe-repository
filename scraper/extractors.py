@@ -1,9 +1,14 @@
 """HTML extraction helpers for recipe listings and articles."""
 from __future__ import annotations
 
+import gzip
 import json
+import logging
+from collections import deque
+from io import BytesIO
 from typing import Iterable, Iterator, List, Optional, Sequence, Set
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
+from xml.etree import ElementTree
 
 from bs4 import BeautifulSoup
 
@@ -11,6 +16,14 @@ from .http_client import HttpClient
 from .models import ArticleConfig, ListingConfig, Recipe, RecipeTemplate, StructuredDataConfig
 
 LIST_FIELDS = {"ingredients", "instructions", "categories", "tags"}
+SITEMAP_CANDIDATES = (
+    "sitemap.xml",
+    "sitemap_index.xml",
+    "sitemap-index.xml",
+    "wp-sitemap.xml",
+)
+
+logger = logging.getLogger(__name__)
 
 
 def _clean_text(value: str) -> str:
@@ -102,14 +115,46 @@ def _normalise_instructions(value) -> List[str]:
 class ListingScraper:
     """Scrape recipe article URLs from listing pages."""
 
-    def __init__(self, http_client: HttpClient, max_pages: int = 200) -> None:
+    def __init__(
+        self,
+        http_client: HttpClient,
+        max_pages: int = 200,
+        enable_sitemaps: bool = True,
+        sitemap_max_urls: int = 2000,
+    ) -> None:
         self._http = http_client
         self._max_pages = max_pages
+        self._enable_sitemaps = enable_sitemaps
+        self._sitemap_max_urls = sitemap_max_urls
 
     def discover(self, template: RecipeTemplate) -> Set[str]:
         discovered: Set[str] = set()
+        had_listing_error = False
         for listing in template.listings:
-            discovered.update(self._scrape_listing(listing))
+            try:
+                discovered.update(self._scrape_listing(listing))
+            except Exception as exc:  # pylint: disable=broad-except
+                had_listing_error = True
+                logger.warning(
+                    "Listing discovery failed for %s (%s): %s",
+                    template.name,
+                    listing.url,
+                    exc,
+                )
+
+        if not discovered and self._enable_sitemaps:
+            sitemap_urls = self._discover_from_sitemaps(template)
+            if sitemap_urls:
+                logger.info(
+                    "Sitemap fallback discovered %d article URLs for %s",
+                    len(sitemap_urls),
+                    template.name,
+                )
+            elif had_listing_error:
+                logger.info(
+                    "Sitemap fallback yielded no URLs for %s", template.name
+                )
+            discovered.update(sitemap_urls)
         return discovered
 
     def _scrape_listing(self, listing: ListingConfig) -> Set[str]:
@@ -138,6 +183,89 @@ class ListingScraper:
                         continue
             break
         return article_urls
+
+    def _discover_from_sitemaps(self, template: RecipeTemplate) -> Set[str]:
+        """Attempt to discover recipe URLs via sitemap crawling."""
+
+        base_candidates = self._candidate_sitemaps(template.url)
+        queue = deque(base_candidates)
+        visited: Set[str] = set()
+        article_urls: Set[str] = set()
+
+        while queue and len(article_urls) < self._sitemap_max_urls:
+            sitemap_url = queue.popleft()
+            if sitemap_url in visited:
+                continue
+            visited.add(sitemap_url)
+
+            try:
+                response = self._http.get(sitemap_url, timeout=30)
+            except Exception as exc:  # pylint: disable=broad-except
+                logger.debug("Failed to fetch sitemap %s: %s", sitemap_url, exc)
+                continue
+
+            content = self._decode_sitemap_content(sitemap_url, response.content)
+            if content is None:
+                continue
+
+            try:
+                root = ElementTree.fromstring(content)
+            except ElementTree.ParseError as exc:
+                logger.debug("Failed to parse sitemap %s: %s", sitemap_url, exc)
+                continue
+
+            namespace = ""
+            if root.tag.startswith("{") and "}" in root.tag:
+                namespace = root.tag.split("}")[0].strip("{")
+            loc_tag = f"{{{namespace}}}loc" if namespace else "loc"
+
+            for loc in root.iter(loc_tag):
+                loc_text = (loc.text or "").strip()
+                if not loc_text:
+                    continue
+                if not self._same_domain(template.url, loc_text):
+                    continue
+
+                if loc_text.endswith((".xml", ".xml.gz")):
+                    if loc_text not in visited:
+                        queue.append(loc_text)
+                    continue
+
+                article_urls.add(loc_text)
+                if len(article_urls) >= self._sitemap_max_urls:
+                    break
+
+        return article_urls
+
+    def _candidate_sitemaps(self, base_url: str) -> List[str]:
+        base = base_url.rstrip("/") + "/"
+        return [urljoin(base, candidate) for candidate in SITEMAP_CANDIDATES]
+
+    @staticmethod
+    def _same_domain(base_url: str, candidate: str) -> bool:
+        base = urlparse(base_url)
+        target = urlparse(candidate)
+        base_host = base.netloc.lower().lstrip("www.")
+        target_host = target.netloc.lower().lstrip("www.")
+        if target_host and target_host != base_host:
+            return False
+        return bool(target_host) or (not target.netloc and bool(target.path))
+
+    @staticmethod
+    def _decode_sitemap_content(url: str, payload: bytes) -> Optional[bytes]:
+        if not payload:
+            return None
+        if url.endswith(".gz"):
+            try:
+                return gzip.decompress(payload)
+            except OSError:
+                try:
+                    with gzip.GzipFile(fileobj=BytesIO(payload)) as handle:
+                        return handle.read()
+                except OSError as exc:  # pylint: disable=broad-except
+                    logger.debug("Failed to decompress sitemap %s: %s", url, exc)
+                    return None
+        return payload
 
 
 class ArticleScraper:
