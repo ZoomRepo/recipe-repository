@@ -28,8 +28,8 @@ limit the run to specific sites:
 ```bash
 python -m scraper.cli \
     --db-host 127.0.0.1 \
-    --db-user reciperepository \
-    --db-password Xenomorph123 \
+    --db-user [USER] \
+    --db-password [PASS] \
     --db-name reciperepository \
     --sites "BBC Good Food" "simplyrecipes.com"
 ```
