@@ -1,0 +1,1234 @@
+[
+    {
+        "name": "DR Vegan Blog",
+        "url": "https://drveganblog.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://drveganblog.com/category/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li",
+                "div.wp-block-wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+                "div.wp-block-wprm-recipe-instructions li"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "figure.wp-block-image img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "BBC Good Food",
+        "url": "https://www.bbcgoodfood.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.bbcgoodfood.com/recipes",
+                    "link_selector": "a.standard-card-new__article-title",
+                    "pagination_selector": "a.pagination-item--next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.post-header__title"
+            ],
+            "description": [
+                "div.editor-content > p"
+            ],
+            "ingredients": [
+                "section.recipe__ingredients ul.ingredients-list__content li"
+            ],
+            "instructions": [
+                "section.method__list li.method__item"
+            ],
+            "prep_time": [
+                "span.recipe-details__cooking-time-prep"
+            ],
+            "cook_time": [
+                "span.recipe-details__cooking-time-cook"
+            ],
+            "total_time": [
+                "span.recipe-details__total-time"
+            ],
+            "servings": [
+                "span.recipe-details__item--servings"
+            ],
+            "image": [
+                "figure img.post-header__recipe-image"
+            ],
+            "author": [
+                "a.post-header__author-link"
+            ],
+            "categories": [
+                "ul.tags-list li a"
+            ],
+            "tags": [
+                "ul.tags-list li a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..['@graph'][?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Spain on a Fork",
+        "url": "https://spainonafork.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://spainonafork.com/category/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Vikalinka",
+        "url": "https://vikalinka.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://vikalinka.com/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Pantry Mama",
+        "url": "https://pantrymama.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://pantrymama.com/category/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "The Clever Carrot",
+        "url": "https://theclevercarrot.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.theclevercarrot.com/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "KetyP",
+        "url": "https://ketyp.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://ketyp.com/category/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Foodaholic",
+        "url": "https://foodaholic.biz/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://foodaholic.biz/category/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Aegean Delight",
+        "url": "https://aegeandelight.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://aegeandelight.com/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Gousto",
+        "url": "https://gousto.co.uk/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://gousto.co.uk/cookbook",
+                    "link_selector": "a.cookbook-recipe-card",
+                    "pagination_selector": "button[data-testid='pagination-next']"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.recipe-hero__title"
+            ],
+            "description": [
+                "div.recipe-hero__description"
+            ],
+            "ingredients": [
+                "ul.ingredients__list li"
+            ],
+            "instructions": [
+                "ol.method__list li",
+                "div.method__step"
+            ],
+            "prep_time": [
+                "span.recipe-meta__prep"
+            ],
+            "cook_time": [
+                "span.recipe-meta__cook"
+            ],
+            "total_time": [
+                "span.recipe-meta__total"
+            ],
+            "servings": [
+                "span.recipe-meta__serves"
+            ],
+            "image": [
+                "div.recipe-hero__image img"
+            ],
+            "author": [
+                "span.recipe-meta__author"
+            ],
+            "categories": [
+                "ul.recipe-meta__tags li a"
+            ],
+            "tags": [
+                "ul.recipe-meta__tags li a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Simply Recipes",
+        "url": "https://simplyrecipes.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.simplyrecipes.com/recipes-5090448",
+                    "link_selector": "a.comp.card-list__link",
+                    "pagination_selector": "a.mntl-pagination__btn--next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.heading__title"
+            ],
+            "description": [
+                "div.mntl-sc-block-html p"
+            ],
+            "ingredients": [
+                "ul.mntl-structured-ingredients__list li"
+            ],
+            "instructions": [
+                "ol.mntl-sc-block-group--OL li.mntl-sc-block"
+            ],
+            "prep_time": [
+                "div.mntl-recipe-details__item--prepTime span.mntl-recipe-details__value"
+            ],
+            "cook_time": [
+                "div.mntl-recipe-details__item--cookTime span.mntl-recipe-details__value"
+            ],
+            "total_time": [
+                "div.mntl-recipe-details__item--totalTime span.mntl-recipe-details__value"
+            ],
+            "servings": [
+                "div.mntl-recipe-details__item--servings span.mntl-recipe-details__value"
+            ],
+            "image": [
+                "figure.primary-image picture img"
+            ],
+            "author": [
+                "span.byline__name"
+            ],
+            "categories": [
+                "a.mntl-taxonomy-list__link"
+            ],
+            "tags": [
+                "a.mntl-taxonomy-list__link"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..['@graph'][?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "RecipeTin Eats",
+        "url": "https://recipetineats.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.recipetineats.com/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Cookist",
+        "url": "https://cookist.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.cookist.com/recipes/",
+                    "link_selector": "a.article-card__title-link",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.article-header__title"
+            ],
+            "description": [
+                "div.article-header__subtitle"
+            ],
+            "ingredients": [
+                "div.recipe-ingredients li"
+            ],
+            "instructions": [
+                "div.recipe-method li",
+                "div.recipe-steps__item"
+            ],
+            "prep_time": [
+                "span.recipe-data__prep"
+            ],
+            "cook_time": [
+                "span.recipe-data__cook"
+            ],
+            "total_time": [
+                "span.recipe-data__total"
+            ],
+            "servings": [
+                "span.recipe-data__servings"
+            ],
+            "image": [
+                "figure.article-header__image img"
+            ],
+            "author": [
+                "span.article-header__author"
+            ],
+            "categories": [
+                "div.article-meta__categories a"
+            ],
+            "tags": [
+                "div.article-meta__tags a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Well Plated",
+        "url": "https://wellplated.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.wellplated.com/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Kitchen Sanctuary",
+        "url": "https://kitchensanctuary.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.kitchensanctuary.com/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Love Logs",
+        "url": "https://love-logs.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://love-logs.com/blogs/recipes",
+                    "link_selector": "a.article-card__title",
+                    "pagination_selector": "a.pagination__next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.article-template__title"
+            ],
+            "description": [
+                "div.article-template__content > p"
+            ],
+            "ingredients": [
+                "ul.recipe-ingredients li",
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "ol.recipe-instructions li",
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.recipe-meta__prep"
+            ],
+            "cook_time": [
+                "span.recipe-meta__cook"
+            ],
+            "total_time": [
+                "span.recipe-meta__total"
+            ],
+            "servings": [
+                "span.recipe-meta__servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "figure.article-template__hero img"
+            ],
+            "author": [
+                "span.article-template__author"
+            ],
+            "categories": [
+                "a.article-template__tag"
+            ],
+            "tags": [
+                "a.article-template__tag"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Burnt Pellet BBQ",
+        "url": "https://burntpelltbbq.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://burntpelltbbq.com/blogs/recipes",
+                    "link_selector": "h2.article-card__title a",
+                    "pagination_selector": "a.pagination__next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.article-template__title"
+            ],
+            "description": [
+                "div.article-template__content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "figure.article-template__hero img"
+            ],
+            "author": [
+                "span.article-template__author"
+            ],
+            "categories": [
+                "a.article-template__tag"
+            ],
+            "tags": [
+                "a.article-template__tag"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Cafe Delites",
+        "url": "https://cafedelites.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://cafedelites.com/recipes/",
+                    "link_selector": "h2.entry-title a",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.wprm-recipe-prep_time"
+            ],
+            "cook_time": [
+                "span.wprm-recipe-cook_time"
+            ],
+            "total_time": [
+                "span.wprm-recipe-total_time"
+            ],
+            "servings": [
+                "span.wprm-recipe-servings"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.entry-content img"
+            ],
+            "author": [
+                "span.wprm-recipe-author",
+                "span.author"
+            ],
+            "categories": [
+                "span.cat-links a"
+            ],
+            "tags": [
+                "span.tags-links a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Food Fanatic",
+        "url": "https://foodfanatic.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.foodfanatic.com/recipes/",
+                    "link_selector": "a.feed-item-title",
+                    "pagination_selector": "a.next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.entry-title"
+            ],
+            "description": [
+                "div.entry-content > p"
+            ],
+            "ingredients": [
+                "div.ingredients ul li",
+                "div.wprm-recipe-ingredients ul li"
+            ],
+            "instructions": [
+                "ol.directions li",
+                "div.wprm-recipe-instructions div.wprm-recipe-instruction-text"
+            ],
+            "prep_time": [
+                "span.recipe-times__prep"
+            ],
+            "cook_time": [
+                "span.recipe-times__cook"
+            ],
+            "total_time": [
+                "span.recipe-times__total"
+            ],
+            "servings": [
+                "span.recipe-yield"
+            ],
+            "image": [
+                "meta[property='og:image']",
+                "div.recipe-image img"
+            ],
+            "author": [
+                "span.entry-author"
+            ],
+            "categories": [
+                "span.entry-categories a"
+            ],
+            "tags": [
+                "span.entry-tags a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "delicious.",
+        "url": "https://delicious.com.au/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.delicious.com.au/recipes",
+                    "link_selector": "a.card__title-link",
+                    "pagination_selector": "a.pagination__next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.article-title"
+            ],
+            "description": [
+                "div.article__deck"
+            ],
+            "ingredients": [
+                "div.ingredients__list li"
+            ],
+            "instructions": [
+                "div.method__steps li"
+            ],
+            "prep_time": [
+                "span.recipe-data__prep"
+            ],
+            "cook_time": [
+                "span.recipe-data__cook"
+            ],
+            "total_time": [
+                "span.recipe-data__total"
+            ],
+            "servings": [
+                "span.recipe-data__serves"
+            ],
+            "image": [
+                "figure.article__image img"
+            ],
+            "author": [
+                "span.article__author"
+            ],
+            "categories": [
+                "a.article__section"
+            ],
+            "tags": [
+                "div.tags a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    },
+    {
+        "name": "Taste of Home",
+        "url": "https://tasteofhome.com/",
+        "type": "cooking",
+        "recipes": {
+            "listing": [
+                {
+                    "url": "https://www.tasteofhome.com/recipes/",
+                    "link_selector": "a.recipe-card__title-link",
+                    "pagination_selector": "a.pagination__next"
+                }
+            ]
+        },
+        "article": {
+            "title": [
+                "h1.recipe-header__title"
+            ],
+            "description": [
+                "div.recipe-summary p"
+            ],
+            "ingredients": [
+                "ul.recipe-ingredients__list li"
+            ],
+            "instructions": [
+                "ol.recipe-directions__list li"
+            ],
+            "prep_time": [
+                "span.recipe-details__prep"
+            ],
+            "cook_time": [
+                "span.recipe-details__cook"
+            ],
+            "total_time": [
+                "span.recipe-details__total"
+            ],
+            "servings": [
+                "span.recipe-details__servings"
+            ],
+            "image": [
+                "div.recipe-featured__media img"
+            ],
+            "author": [
+                "span.recipe-contributor__name"
+            ],
+            "categories": [
+                "a.breadcrumbs__link"
+            ],
+            "tags": [
+                "div.recipe-tags a"
+            ]
+        },
+        "structured_data": {
+            "enabled": true,
+            "json_ld_selector": "script[type='application/ld+json']",
+            "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+        }
+    }
+]
