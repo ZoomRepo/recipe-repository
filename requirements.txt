@@ -1,0 +1,4 @@
+beautifulsoup4>=4.12
+mysql-connector-python>=8.0
+requests>=2.31
+Flask>=2.3

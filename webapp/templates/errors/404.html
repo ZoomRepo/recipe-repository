@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found · Recipe Repository{% endblock %}
+
+{% block content %}
+  <section class="error-page">
+    <h1>Page not found</h1>
+    <p>The recipe you are looking for could not be located.</p>
+    <p><a class="button" href="{{ url_for('recipes.index') }}">Return to recipes</a></p>
+  </section>
+{% endblock %}

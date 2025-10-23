@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Recipe Catalogue{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="{{ url_for('recipes.index') }}">Recipe Repository</a>
+        <form class="search-form" action="{{ url_for('recipes.index') }}" method="get">
+          <label class="sr-only" for="search-input">Search recipes</label>
+          <input
+            id="search-input"
+            type="search"
+            name="q"
+            placeholder="Search recipes..."
+            value="{{ query|default(request.args.get('q', '')) }}"
+          >
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </header>
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <p>Data sourced from approved recipe partners.</p>
+      </div>
+    </footer>
+  </body>
+</html>
