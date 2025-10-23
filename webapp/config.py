@@ -9,10 +9,10 @@ from dataclasses import dataclass
 class DatabaseConfig:
     """Connection details for the recipe database."""
 
-    host: str = "217.43.43.202"
+    host: str = "192.168.1.99"
     port: int = 3306
     user: str = "reciperepository"
-    password: str = "Xenomorph123"
+    password: str = "Xenomorph123!"
     database: str = "reciperepository"
     pool_name: str = "recipe_web_pool"
     pool_size: int = 5

@@ -11,7 +11,8 @@ def main() -> None:
     config = AppConfig.from_env()
     app = create_app(config)
     port = int(os.getenv("PORT", "8000"))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
+
 
 
 if __name__ == "__main__":

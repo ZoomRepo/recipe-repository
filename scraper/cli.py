@@ -15,10 +15,10 @@ from .service import RecipeScraperService, logger as service_logger
 
 
 DEFAULT_CONFIG = Path("config/scraper_templates.json")
-DEFAULT_DB_HOST = "217.43.43.202"
+DEFAULT_DB_HOST = "192.168.1.99"
 DEFAULT_DB_NAME = "reciperepository"
 DEFAULT_DB_USER = "reciperepository"
-DEFAULT_DB_PASSWORD = "Xenomorph123"
+DEFAULT_DB_PASSWORD = "Xenomorph123!"
 
 
 def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:

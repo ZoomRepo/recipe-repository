@@ -3,14 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Recipe Catalogue{% endblock %}</title>
+    <title>{% block title %}Recipe Repository{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     {% block extra_head %}{% endblock %}
   </head>
   <body>
     <header class="site-header">
       <div class="container">
-        <a class="brand" href="{{ url_for('recipes.index') }}">Recipe Repository</a>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" class="brand" href="{{ url_for('recipes.index') }}">Recipe Repository</a>
       </div>
     </header>
     <main class="container">

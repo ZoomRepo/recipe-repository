@@ -224,6 +224,7 @@ main.container {
 }
 
 .ingredient-field {
+  color: #000;
   border: 1px dashed #a5d8ff;
   background-color: #ffffff;
 }
