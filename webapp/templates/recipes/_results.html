@@ -1,0 +1,44 @@
+{% if results.items %}
+  <ul class="recipe-grid">
+    {% for recipe in results.items %}
+      <li class="recipe-card">
+        {% if recipe.image %}
+          <a class="recipe-thumb" href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">
+            <img src="{{ recipe.image }}" alt="Image for {{ recipe.title or 'recipe' }}">
+          </a>
+        {% endif %}
+        <div class="recipe-card-body">
+          <h2>
+            <a href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">{{ recipe.title or 'Untitled recipe' }}</a>
+          </h2>
+          {% if recipe.description %}
+            <p class="recipe-summary">{{ recipe.description }}</p>
+          {% endif %}
+          <p class="recipe-meta">From <a href="{{ recipe.source_url }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a></p>
+          {% if recipe.updated_at %}
+            <p class="recipe-meta">Updated {{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if results.total_pages > 1 %}
+    <nav class="pagination" aria-label="Search results pages">
+      <ul>
+        {% for page_number in results.iter_pages() %}
+          <li class="pagination-item {% if page_number == results.page %}active{% endif %}">
+            <a
+              href="{{ url_for('recipes.index', page=page_number, q=filters.query, ingredient=filters.ingredients if filters.ingredients else None) }}"
+              data-page="{{ page_number }}"
+            >
+              {{ page_number }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+{% else %}
+  <p class="empty-state">No recipes found. Try adjusting your filters.</p>
+{% endif %}

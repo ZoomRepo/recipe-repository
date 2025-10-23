@@ -1,62 +1,91 @@
 {% extends "base.html" %}
 
 {% block title %}
-  {% if results.query %}Search results for "{{ results.query }}"{% else %}All recipes{% endif %}
+  {% if filters.query or filters.ingredients %}Filtered recipes{% else %}All recipes{% endif %}
 {% endblock %}
 
 {% block content %}
-  <section class="results-header">
-    <h1>
-      {% if results.query %}
-        Recipes matching "{{ results.query }}"
-      {% else %}
-        Latest recipes
-      {% endif %}
-    </h1>
-    <p>{{ results.total }} recipe{{ '' if results.total == 1 else 's' }} found</p>
-  </section>
-
-  {% if results.items %}
-    <ul class="recipe-grid">
-      {% for recipe in results.items %}
-        <li class="recipe-card">
-          {% if recipe.image %}
-            <a class="recipe-thumb" href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">
-              <img src="{{ recipe.image }}" alt="Image for {{ recipe.title or 'recipe' }}">
-            </a>
-          {% endif %}
-          <div class="recipe-card-body">
-            <h2>
-              <a href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">{{ recipe.title or 'Untitled recipe' }}</a>
-            </h2>
-            {% if recipe.description %}
-              <p class="recipe-summary">{{ recipe.description }}</p>
-            {% endif %}
-            <p class="recipe-meta">From <a href="{{ recipe.source_url }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a></p>
-            {% if recipe.updated_at %}
-              <p class="recipe-meta">Updated {{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
-            {% endif %}
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-
-    {% if results.total_pages > 1 %}
-      <nav class="pagination" aria-label="Search results pages">
-        <ul>
-          {% for page_number in results.iter_pages() %}
-            <li class="pagination-item {% if page_number == results.page %}active{% endif %}">
-              {% if results.query %}
-                <a href="{{ url_for('recipes.index', page=page_number, q=results.query) }}">{{ page_number }}</a>
-              {% else %}
-                <a href="{{ url_for('recipes.index', page=page_number) }}">{{ page_number }}</a>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      </nav>
-    {% endif %}
+  {% set has_query = filters.query %}
+  {% set has_ingredients = filters.ingredients %}
+  {% if has_query and has_ingredients %}
+    {% set heading = 'Recipes matching "' ~ filters.query ~ '" with ' ~ filters.ingredients|length ~ ' ingredient' ~ ('s' if filters.ingredients|length != 1 else '') %}
+  {% elif has_query %}
+    {% set heading = 'Recipes matching "' ~ filters.query ~ '"' %}
+  {% elif has_ingredients %}
+    {% set heading = 'Recipes containing ' ~ filters.ingredients|join(', ') %}
   {% else %}
-    <p class="empty-state">No recipes found. Try another search term.</p>
+    {% set heading = 'Latest recipes' %}
   {% endif %}
+  {% set subtitle = results.total ~ ' recipe' ~ ('' if results.total == 1 else 's') ~ ' found' %}
+
+  <div class="recipe-layout" data-role="search-layout">
+    <aside class="filter-panel">
+      <form
+        id="filter-form"
+        class="filter-form"
+        action="{{ url_for('recipes.index') }}"
+        method="get"
+        data-endpoint="{{ url_for('recipes.api_recipes') }}"
+      >
+        <input type="hidden" name="page" value="{{ results.page }}">
+        <details class="filter-section" open>
+          <summary>Search</summary>
+          <div class="filter-section-body">
+            <label for="filter-query">Keyword</label>
+            <input
+              id="filter-query"
+              name="q"
+              type="search"
+              placeholder="Search recipes..."
+              value="{{ filters.query or '' }}"
+            >
+          </div>
+        </details>
+        <details class="filter-section" open>
+          <summary>Ingredients</summary>
+          <div class="filter-section-body">
+            <label for="ingredient-field">Must include</label>
+            <div class="ingredient-input" data-role="ingredient-input">
+              <ul class="ingredient-chips" data-role="ingredient-chips">
+                {% for ingredient in filters.ingredients %}
+                  <li class="chip" data-value="{{ ingredient }}">
+                    <span>{{ ingredient }}</span>
+                    <button type="button" class="chip-remove" aria-label="Remove ingredient {{ ingredient }}">&times;</button>
+                    <input type="hidden" name="ingredient" value="{{ ingredient }}">
+                  </li>
+                {% endfor %}
+              </ul>
+              <input
+                id="ingredient-field"
+                class="ingredient-field"
+                type="text"
+                placeholder="Add ingredient..."
+                data-role="ingredient-field"
+                autocomplete="off"
+              >
+              <p class="hint">Press Enter to add an ingredient filter.</p>
+            </div>
+          </div>
+        </details>
+        <div class="filter-actions">
+          <button type="submit" class="filter-apply">Apply filters</button>
+          <button type="button" class="filter-clear" data-role="clear-filters">Clear all</button>
+        </div>
+      </form>
+    </aside>
+    <section class="results-panel">
+      <header class="results-header">
+        <h1 data-role="results-title">{{ heading }}</h1>
+        <p data-role="results-count">{{ subtitle }}</p>
+      </header>
+      <div data-role="results-container">
+        {% include "recipes/_results.html" %}
+      </div>
+    </section>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='js/search.js') }}" defer></script>
 {% endblock %}

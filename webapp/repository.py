@@ -31,8 +31,14 @@ class RecipeQueryRepository:
         )
         return cls(pool)
 
-    def search(self, query: Optional[str], page: int, page_size: int) -> PaginatedResult:
-        """Search recipes matching *query* and return a paginated result set."""
+    def search(
+        self,
+        query: Optional[str],
+        ingredients: Optional[List[str]],
+        page: int,
+        page_size: int,
+    ) -> PaginatedResult:
+        """Search recipes matching *query* and *ingredients* with pagination."""
 
         normalized_page = max(page, 1)
         offset = (normalized_page - 1) * page_size
@@ -47,6 +53,12 @@ class RecipeQueryRepository:
                 ")"
             )
             params.extend([like] * 6)
+        if ingredients:
+            for ingredient in ingredients:
+                normalized = ingredient.lower()
+                like = f"%{normalized}%"
+                conditions.append("LOWER(ingredients) LIKE %s")
+                params.append(like)
         where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
         listing_sql = f"""
             SELECT
