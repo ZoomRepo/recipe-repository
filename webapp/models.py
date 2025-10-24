@@ -53,4 +53,20 @@ class PaginatedResult:
         return quotient + (1 if remainder else 0)
 
     def iter_pages(self) -> Iterable[int]:
-        return range(1, self.total_pages + 1)
+        """Iterate over page numbers with an initial block then a sliding window."""
+
+        total_pages = self.total_pages
+
+        if total_pages <= 10:
+            return range(1, total_pages + 1)
+
+        if self.page < 10:
+            return range(1, 11)
+
+        start = max(1, self.page - 5)
+        end = min(total_pages, self.page + 5)
+
+        if end - start < 10 and start > 1:
+            start = max(1, end - 10)
+
+        return range(start, end + 1)
