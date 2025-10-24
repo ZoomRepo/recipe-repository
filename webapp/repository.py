@@ -13,7 +13,7 @@ from .filter_options import (
     MEAL_LOOKUP,
     FilterOption,
 )
-from .models import PaginatedResult, RecipeDetail, RecipeSummary
+from .models import PaginatedResult, RecipeDetail, RecipeSummary, SourcePreference
 
 
 class RecipeQueryRepository:
@@ -21,6 +21,7 @@ class RecipeQueryRepository:
 
     def __init__(self, pool: pooling.MySQLConnectionPool) -> None:
         self._pool = pool
+        self._ensure_source_preferences_table()
 
     @classmethod
     def from_config(cls, config: DatabaseConfig) -> "RecipeQueryRepository":
@@ -57,8 +58,8 @@ class RecipeQueryRepository:
             like = f"%{query}%"
             query_clauses = [
                 "("
-                "title LIKE %s OR description LIKE %s OR ingredients LIKE %s OR instructions LIKE %s "
-                "OR categories LIKE %s OR tags LIKE %s"
+                "r.title LIKE %s OR r.description LIKE %s OR r.ingredients LIKE %s OR r.instructions LIKE %s "
+                "OR r.categories LIKE %s OR r.tags LIKE %s"
                 ")"
             ]
             params.extend([like] * 6)
@@ -67,7 +68,7 @@ class RecipeQueryRepository:
             if len(keywords) > 1:
                 for keyword in keywords:
                     keyword_like = f"%{keyword}%"
-                    query_clauses.append("(title LIKE %s OR description LIKE %s)")
+                    query_clauses.append("(r.title LIKE %s OR r.description LIKE %s)")
                     params.extend([keyword_like, keyword_like])
 
             conditions.append(f"({' OR '.join(query_clauses)})")
@@ -75,7 +76,7 @@ class RecipeQueryRepository:
             for ingredient in ingredients:
                 normalized = ingredient.lower()
                 like = f"%{normalized}%"
-                conditions.append("LOWER(ingredients) LIKE %s")
+                conditions.append("LOWER(r.ingredients) LIKE %s")
                 params.append(like)
         self._apply_option_filters(cuisines, CUISINE_LOOKUP, conditions, params)
         self._apply_option_filters(meals, MEAL_LOOKUP, conditions, params)
@@ -83,19 +84,21 @@ class RecipeQueryRepository:
         where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
         listing_sql = f"""
             SELECT
-                id,
-                title,
-                source_name,
-                source_url,
-                description,
-                image,
-                updated_at
-            FROM recipes
+                r.id,
+                r.title,
+                r.source_name,
+                r.source_url,
+                r.description,
+                r.image,
+                r.updated_at,
+                COALESCE(sp.hotlink_enabled, 0) AS hotlink_enabled
+            FROM recipes AS r
+            LEFT JOIN source_preferences AS sp ON sp.source_name = r.source_name
             {where_clause}
-            ORDER BY updated_at DESC, id DESC
+            ORDER BY r.updated_at DESC, r.id DESC
             LIMIT %s OFFSET %s
         """
-        count_sql = f"SELECT COUNT(*) AS total FROM recipes {where_clause}"
+        count_sql = f"SELECT COUNT(*) AS total FROM recipes AS r {where_clause}"
         items = self._fetch_summaries(listing_sql, (*params, page_size, offset))
         total = self._fetch_total(count_sql, params)
         return PaginatedResult(
@@ -111,25 +114,27 @@ class RecipeQueryRepository:
 
         sql = """
             SELECT
-                id,
-                title,
-                source_name,
-                source_url,
-                description,
-                image,
-                ingredients,
-                instructions,
-                prep_time,
-                cook_time,
-                total_time,
-                servings,
-                author,
-                categories,
-                tags,
-                raw,
-                updated_at
-            FROM recipes
-            WHERE id = %s
+                r.id,
+                r.title,
+                r.source_name,
+                r.source_url,
+                r.description,
+                r.image,
+                r.ingredients,
+                r.instructions,
+                r.prep_time,
+                r.cook_time,
+                r.total_time,
+                r.servings,
+                r.author,
+                r.categories,
+                r.tags,
+                r.raw,
+                r.updated_at,
+                COALESCE(sp.hotlink_enabled, 0) AS hotlink_enabled
+            FROM recipes AS r
+            LEFT JOIN source_preferences AS sp ON sp.source_name = r.source_name
+            WHERE r.id = %s
         """
         connection = self._pool.get_connection()
         try:
@@ -161,6 +166,7 @@ class RecipeQueryRepository:
             categories=self._parse_json_list(row.get("categories")),
             tags=self._parse_json_list(row.get("tags")),
             raw=self._parse_json_object(row.get("raw")),
+            hotlink_enabled=bool(row.get("hotlink_enabled", 0)),
         )
 
     def _fetch_summaries(self, sql: str, params: tuple) -> List[RecipeSummary]:
@@ -183,9 +189,59 @@ class RecipeQueryRepository:
                 description=row.get("description"),
                 image=row.get("image"),
                 updated_at=row.get("updated_at"),
+                hotlink_enabled=bool(row.get("hotlink_enabled", 0)),
             )
             for row in rows
         ]
+
+    def list_source_preferences(self) -> List[SourcePreference]:
+        sql = """
+            SELECT
+                r.source_name,
+                COUNT(*) AS recipe_count,
+                MAX(r.source_url) AS sample_url,
+                COALESCE(sp.hotlink_enabled, 0) AS hotlink_enabled
+            FROM recipes AS r
+            LEFT JOIN source_preferences AS sp ON sp.source_name = r.source_name
+            GROUP BY r.source_name
+            ORDER BY r.source_name
+        """
+        connection = self._pool.get_connection()
+        try:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                cursor.execute(sql)
+                rows = cursor.fetchall()
+            finally:
+                cursor.close()
+        finally:
+            connection.close()
+        return [
+            SourcePreference(
+                source_name=row["source_name"],
+                recipe_count=int(row.get("recipe_count", 0)),
+                hotlink_enabled=bool(row.get("hotlink_enabled", 0)),
+                sample_url=row.get("sample_url"),
+            )
+            for row in rows
+        ]
+
+    def set_hotlink_preference(self, source_name: str, enabled: bool) -> None:
+        sql = """
+            INSERT INTO source_preferences (source_name, hotlink_enabled)
+            VALUES (%s, %s)
+            ON DUPLICATE KEY UPDATE hotlink_enabled = VALUES(hotlink_enabled)
+        """
+        connection = self._pool.get_connection()
+        try:
+            cursor = connection.cursor()
+            try:
+                cursor.execute(sql, (source_name, int(enabled)))
+                connection.commit()
+            finally:
+                cursor.close()
+        finally:
+            connection.close()
 
     def _fetch_total(self, sql: str, params: List[object]) -> int:
         connection = self._pool.get_connection()
@@ -228,11 +284,11 @@ class RecipeQueryRepository:
             return None
 
         column_template = (
-            "LOWER(COALESCE(title, '')) LIKE %s OR "
-            "LOWER(COALESCE(description, '')) LIKE %s OR "
-            "LOWER(COALESCE(categories, '')) LIKE %s OR "
-            "LOWER(COALESCE(tags, '')) LIKE %s OR "
-            "LOWER(COALESCE(ingredients, '')) LIKE %s"
+            "LOWER(COALESCE(r.title, '')) LIKE %s OR "
+            "LOWER(COALESCE(r.description, '')) LIKE %s OR "
+            "LOWER(COALESCE(r.categories, '')) LIKE %s OR "
+            "LOWER(COALESCE(r.tags, '')) LIKE %s OR "
+            "LOWER(COALESCE(r.ingredients, '')) LIKE %s"
         )
 
         keyword_clauses: List[str] = []
@@ -244,6 +300,25 @@ class RecipeQueryRepository:
         if not keyword_clauses:
             return None
         return f"({' OR '.join(keyword_clauses)})"
+
+    def _ensure_source_preferences_table(self) -> None:
+        sql = """
+            CREATE TABLE IF NOT EXISTS source_preferences (
+                source_name VARCHAR(255) PRIMARY KEY,
+                hotlink_enabled TINYINT(1) NOT NULL DEFAULT 0,
+                updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """
+        connection = self._pool.get_connection()
+        try:
+            cursor = connection.cursor()
+            try:
+                cursor.execute(sql)
+                connection.commit()
+            finally:
+                cursor.close()
+        finally:
+            connection.close()
 
     @staticmethod
     def _parse_json_list(value: Optional[str]) -> List[str]:

@@ -11,7 +11,19 @@
   <body>
     <header class="site-header">
       <div class="container">
-        <a href="{{ url_for('recipes.index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" class="brand"/></a>
+        <a href="{{ url_for('recipes.index') }}" class="brand-link">
+          <img src="{{ url_for('static', filename='images/logo.png') }}" class="brand" alt="Recipe Repository logo">
+        </a>
+        <nav class="site-nav">
+          <a
+            href="{{ url_for('recipes.index') }}"
+            class="nav-link{% if request.endpoint in ['recipes.index', 'recipes.api_recipes', 'recipes.detail'] %} active{% endif %}"
+          >Recipes</a>
+          <a
+            href="{{ url_for('recipes.sources') }}"
+            class="nav-link{% if request.endpoint == 'recipes.sources' %} active{% endif %}"
+          >Sources</a>
+        </nav>
       </div>
     </header>
     <main class="container">

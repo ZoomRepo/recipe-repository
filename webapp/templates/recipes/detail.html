@@ -8,8 +8,21 @@
   <article class="recipe-detail">
     <header>
       <h1>{{ recipe.title or 'Untitled recipe' }}</h1>
+      {% if recipe.source_url %}
+        {% if recipe.hotlink_enabled %}
+          {% set source_href = recipe.hotlink_destination() %}
+        {% else %}
+          {% set source_href = recipe.source_url %}
+        {% endif %}
+      {% else %}
+        {% set source_href = None %}
+      {% endif %}
       <p class="recipe-source">
-        From <a href="{{ recipe.source_url }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a>
+        {% if source_href %}
+          From <a href="{{ source_href }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a>
+        {% else %}
+          From {{ recipe.source_name }}
+        {% endif %}
       </p>
       {% if recipe.image %}
         <img class="hero-image" src="{{ recipe.image }}" alt="Image for {{ recipe.title or 'recipe' }}">
@@ -80,8 +93,10 @@
       </section>
     {% endif %}
 
-    <footer class="recipe-footer">
-      <a class="button" href="{{ recipe.source_url }}" target="_blank" rel="noopener">View original recipe</a>
-    </footer>
+    {% if source_href %}
+      <footer class="recipe-footer">
+        <a class="button" href="{{ source_href }}" target="_blank" rel="noopener">View original recipe</a>
+      </footer>
+    {% endif %}
   </article>
 {% endblock %}
