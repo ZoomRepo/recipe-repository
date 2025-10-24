@@ -28,7 +28,8 @@ run_app_production:
 	fi
 	@. venv/bin/activate && \
 		export FLASK_ENV=production FLASK_DEBUG=0 && \
-		python3 -m webapp
+		PORT=$${PORT:-8000} && \
+		waitress-serve --listen=0.0.0.0:$${PORT} webapp.wsgi:app
 
 run_scraper:
 	@if [ ! -d "venv" ]; then \

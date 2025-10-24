@@ -116,3 +116,15 @@ python -m webapp
 
 The server listens on `http://127.0.0.1:8000/` by default. Adjust the `PORT`
 environment variable if you need to use a different port.
+
+For a production-style deployment, use the `run_app_production` make target
+which launches the app with the Waitress WSGI server:
+
+```bash
+make run_app_production
+```
+
+Waitress will honour the `PORT` environment variable (defaulting to `8000`)
+while loading the configuration from the same environment variables listed
+above. This avoids Flask's development server warning and provides a WSGI
+server suitable for running behind a reverse proxy.
