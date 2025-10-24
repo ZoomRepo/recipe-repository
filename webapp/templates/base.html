@@ -11,7 +11,7 @@
   <body>
     <header class="site-header">
       <div class="container">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" class="brand" href="{{ url_for('recipes.index') }}">Recipe Repository</a>
+        <a href="{{ url_for('recipes.index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" class="brand"/></a>
       </div>
     </header>
     <main class="container">
