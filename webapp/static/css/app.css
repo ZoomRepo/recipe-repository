@@ -345,11 +345,17 @@ main.container {
   margin: 0;
 }
 
+.pagination {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .pagination ul {
   list-style: none;
   display: flex;
   gap: 0.5rem;
   padding: 0;
+  flex-wrap: wrap;
 }
 
 .pagination-item a {
