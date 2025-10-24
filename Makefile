@@ -27,7 +27,8 @@ run_app_production:
 		exit 1; \
 	fi
 	@. venv/bin/activate && \
-	FLASK_ENV=production FLASK_DEBUG=0 python3 -m webapp
+		export FLASK_ENV=production FLASK_DEBUG=0 && \
+		python3 -m webapp
 
 run_scraper:
 	@if [ ! -d "venv" ]; then \
