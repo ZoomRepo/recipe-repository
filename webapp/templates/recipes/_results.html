@@ -29,6 +29,7 @@
         {% for page_number in results.iter_pages() %}
           <li class="pagination-item {% if page_number == results.page %}active{% endif %}">
             <a
+              {% if page_number == results.page %}aria-current="page"{% endif %}
               href="{{ url_for(
                 'recipes.index',
                 page=page_number,

@@ -365,11 +365,22 @@ main.container {
   border-radius: 4px;
   text-decoration: none;
   color: #0074d9;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pagination-item a:hover,
+.pagination-item a:focus {
+  background-color: #e7f3ff;
+  border-color: #b5d7ff;
 }
 
 .pagination-item.active a {
   background-color: #0074d9;
   color: #ffffff;
+  border-color: #0074d9;
+  box-shadow: 0 0 0 3px rgba(0, 116, 217, 0.2);
+  pointer-events: none;
 }
 
 .empty-state {
