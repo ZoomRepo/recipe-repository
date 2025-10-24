@@ -74,6 +74,17 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+class _ContextDefaultsFilter(logging.Filter):
+    """Ensure log records contain source/recipe attributes for formatting."""
+
+    def filter(self, record: logging.LogRecord) -> bool:  # pragma: no cover - trivial
+        if not hasattr(record, "source_name"):
+            record.source_name = "-"
+        if not hasattr(record, "recipe"):
+            record.recipe = "-"
+        return True
+
+
 def configure_logging(level: str) -> None:
     numeric_level = getattr(logging, level.upper(), logging.INFO)
     logging.basicConfig(
@@ -81,6 +92,22 @@ def configure_logging(level: str) -> None:
         format="%(asctime)s [%(levelname)s] %(name)s - %(message)s",
     )
     service_logger.setLevel(numeric_level)
+
+    root_logger = logging.getLogger()
+    if not any(getattr(handler, "_scraper_warning_handler", False) for handler in root_logger.handlers):
+        log_dir = Path("logs")
+        log_dir.mkdir(parents=True, exist_ok=True)
+        warning_log = log_dir / "scraper-warnings.log"
+        file_handler = logging.FileHandler(warning_log)
+        file_handler.setLevel(logging.WARNING)
+        file_handler.setFormatter(
+            logging.Formatter(
+                "%(asctime)s [%(levelname)s] %(name)s source=%(source_name)s recipe=%(recipe)s - %(message)s"
+            )
+        )
+        file_handler.addFilter(_ContextDefaultsFilter())
+        file_handler._scraper_warning_handler = True  # type: ignore[attr-defined]
+        root_logger.addHandler(file_handler)
 
 
 def filter_templates(

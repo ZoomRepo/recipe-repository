@@ -65,7 +65,10 @@ class RecipeScraperService:
         try:
             article_urls = self._listing_scraper.discover(template)
         except Exception as exc:  # pylint: disable=broad-except
-            logger.exception("Failed to discover listings for %s: %s", template.name, exc)
+            logger.exception(
+                "Failed to discover listings for %s: %s", template.name, exc,
+                extra={"source_name": template.name, "recipe": template.url},
+            )
             self._repository.record_failure(
                 ScrapeFailure(
                     template_name=template.name,
@@ -86,7 +89,10 @@ class RecipeScraperService:
             try:
                 recipe = self._article_scraper.scrape(template, url)
             except Exception as exc:  # pylint: disable=broad-except
-                logger.exception("Failed to scrape %s: %s", url, exc)
+                logger.exception(
+                    "Failed to scrape %s: %s", url, exc,
+                    extra={"source_name": template.name, "recipe": url},
+                )
                 self._repository.record_failure(
                     ScrapeFailure(
                         template_name=template.name,
@@ -109,7 +115,13 @@ class RecipeScraperService:
                     template.name, "persist", recipe.source_url
                 )
             except Exception as exc:  # pylint: disable=broad-except
-                logger.exception("Failed to persist recipe %s: %s", url, exc)
+                logger.exception(
+                    "Failed to persist recipe %s: %s", url, exc,
+                    extra={
+                        "source_name": template.name,
+                        "recipe": recipe.title or recipe.source_url or url,
+                    },
+                )
                 self._repository.record_failure(
                     ScrapeFailure(
                         template_name=template.name,
@@ -142,6 +154,10 @@ class RecipeScraperService:
                     "Skipping failure %s for unknown template %s",
                     failure.id,
                     failure.template_name,
+                    extra={
+                        "source_name": failure.template_name or "-",
+                        "recipe": failure.source_url or "-",
+                    },
                 )
                 continue
             if failure.stage == "article":
@@ -174,6 +190,7 @@ class RecipeScraperService:
                 url,
                 template.name,
                 exc,
+                extra={"source_name": template.name, "recipe": url or "-"},
             )
             self._repository.record_failure(
                 ScrapeFailure(
@@ -201,7 +218,11 @@ class RecipeScraperService:
             )
         except Exception as exc:  # pylint: disable=broad-except
             logger.exception(
-                "Replay persistence failed for %s: %s", recipe.source_url, exc
+                "Replay persistence failed for %s: %s", recipe.source_url, exc,
+                extra={
+                    "source_name": template.name,
+                    "recipe": recipe.title or recipe.source_url or "-",
+                },
             )
             self._repository.record_failure(
                 ScrapeFailure(
@@ -229,6 +250,10 @@ class RecipeScraperService:
                     "Unable to re-scrape %s during persistence replay: %s",
                     failure.source_url,
                     exc,
+                    extra={
+                        "source_name": template.name,
+                        "recipe": failure.source_url or "-",
+                    },
                 )
                 self._repository.record_failure(
                     ScrapeFailure(
@@ -253,7 +278,11 @@ class RecipeScraperService:
             )
         except Exception as exc:  # pylint: disable=broad-except
             logger.exception(
-                "Replay persistence still failing for %s: %s", recipe.source_url, exc
+                "Replay persistence still failing for %s: %s", recipe.source_url, exc,
+                extra={
+                    "source_name": template.name,
+                    "recipe": recipe.title or recipe.source_url or "-",
+                },
             )
             self._repository.record_failure(
                 ScrapeFailure(
