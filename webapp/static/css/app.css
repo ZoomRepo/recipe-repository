@@ -31,11 +31,38 @@ body {
   justify-content: space-between;
 }
 
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: #495057;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover,
+.site-nav a:focus {
+  color: #0074d9;
+}
+
+.site-nav a.active {
+  color: #0074d9;
+}
+
 .brand {
   font-weight: 600;
   font-size: 1.25rem;
   color: #0074d9;
   text-decoration: none;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
 }
 
 main.container {
@@ -320,6 +347,20 @@ main.container {
   gap: 0.75rem;
 }
 
+.hotlink-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 999px;
+  background-color: #e6fcf5;
+  color: #087f5b;
+}
+
 .recipe-card-body h2 {
   margin: 0;
   font-size: 1.15rem;
@@ -443,6 +484,71 @@ main.container {
 
 .button:hover {
   background-color: #005fa3;
+}
+
+.source-settings {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 12px 30px rgba(33, 37, 41, 0.04);
+}
+
+.source-settings h1 {
+  margin-top: 0;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.source-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.source-table th,
+.source-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.source-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #f1f3f5;
+  color: #495057;
+}
+
+.source-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.muted {
+  color: #868e96;
+}
+
+.hotlink-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.hotlink-toggle input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: #0ca678;
+  cursor: pointer;
+}
+
+.hotlink-toggle span {
+  min-width: 4.5rem;
 }
 
 .site-footer {

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Iterable, Optional, Sequence
 
-from .models import PaginatedResult, RecipeDetail
+from .models import PaginatedResult, RecipeDetail, SourcePreference
 from .filter_options import (
     CUISINE_LOOKUP,
     DIET_LOOKUP,
@@ -62,3 +62,12 @@ class RecipeService:
 
     def get(self, recipe_id: int) -> Optional[RecipeDetail]:
         return self._repository.get(recipe_id)
+
+    def list_source_preferences(self) -> list[SourcePreference]:
+        return self._repository.list_source_preferences()
+
+    def set_hotlink_preference(self, source_name: str, enabled: bool) -> None:
+        normalized = (source_name or "").strip()
+        if not normalized:
+            raise ValueError("source_name must not be empty")
+        self._repository.set_hotlink_preference(normalized, enabled)

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, List, Optional
 
-from flask import Blueprint, abort, jsonify, render_template, request
+from flask import Blueprint, abort, jsonify, redirect, render_template, request, url_for
 from werkzeug.datastructures import MultiDict
 
 from .filter_options import (
@@ -104,7 +104,31 @@ def register_routes(app: Any, service: RecipeService) -> None:
         recipe = service.get(recipe_id)
         if recipe is None:
             abort(404)
+        if recipe.hotlink_enabled and recipe.source_url:
+            destination = recipe.hotlink_destination()
+            if destination:
+                return redirect(destination)
         return render_template("recipes/detail.html", recipe=recipe)
+
+    @blueprint.route("/sources", methods=["GET"])
+    def sources() -> str:
+        preferences = service.list_source_preferences()
+        return render_template("recipes/sources.html", preferences=preferences)
+
+    @blueprint.route("/sources/<path:source_name>/hotlink", methods=["POST"])
+    def update_hotlink(source_name: str):
+        if len(source_name) > 255:
+            abort(400)
+        preferences = service.list_source_preferences()
+        known_sources = {preference.source_name for preference in preferences}
+        if source_name not in known_sources:
+            abort(404)
+        enabled_values = request.form.getlist("enabled")
+        selected_value = enabled_values[-1] if enabled_values else ""
+        normalized_value = str(selected_value).strip().lower()
+        enabled = normalized_value in {"1", "true", "on", "yes"}
+        service.set_hotlink_preference(source_name, enabled)
+        return redirect(url_for("recipes.sources"))
 
     @blueprint.app_errorhandler(404)
     def not_found(_: Exception) -> tuple[str, int]:

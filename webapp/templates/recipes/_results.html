@@ -1,20 +1,37 @@
 {% if results.items %}
   <ul class="recipe-list">
     {% for recipe in results.items %}
+      {% set recipe_href = recipe.hotlink_destination() if recipe.hotlink_enabled and recipe.source_url else url_for('recipes.detail', recipe_id=recipe.id) %}
       <li class="recipe-card{% if recipe.image %} recipe-card--with-image{% endif %}">
         {% if recipe.image %}
-          <a class="recipe-thumb" href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">
+          <a class="recipe-thumb" href="{{ recipe_href }}" {% if recipe.hotlink_enabled %}rel="noopener"{% endif %}>
             <img src="{{ recipe.image }}" loading="lazy" alt="Image for {{ recipe.title or 'recipe' }}">
           </a>
         {% endif %}
         <div class="recipe-card-body">
           <h2>
-            <a href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">{{ recipe.title or 'Untitled recipe' }}</a>
+            <a href="{{ recipe_href }}" {% if recipe.hotlink_enabled %}rel="noopener"{% endif %}>{{ recipe.title or 'Untitled recipe' }}</a>
+            {% if recipe.hotlink_enabled %}
+              <span class="hotlink-badge" title="This recipe opens on the original site">Hotlink</span>
+            {% endif %}
           </h2>
           {% if recipe.description %}
             <p class="recipe-summary">{{ recipe.description }}</p>
           {% endif %}
-          <p class="recipe-meta">From <a href="{{ recipe.source_url }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a></p>
+          {% if recipe.source_url %}
+            {% if recipe.hotlink_enabled %}
+              {% set source_href = recipe.hotlink_destination() %}
+            {% else %}
+              {% set source_href = recipe.source_url %}
+            {% endif %}
+          {% else %}
+            {% set source_href = None %}
+          {% endif %}
+          {% if source_href %}
+            <p class="recipe-meta">From <a href="{{ source_href }}" target="_blank" rel="noopener">{{ recipe.source_name }}</a></p>
+          {% else %}
+            <p class="recipe-meta">From {{ recipe.source_name }}</p>
+          {% endif %}
           {% if recipe.updated_at %}
             <p class="recipe-meta">Updated {{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
           {% endif %}

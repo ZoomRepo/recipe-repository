@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Iterable, List, Optional
+from urllib.parse import SplitResult, urlsplit, urlunsplit
 
 
 @dataclass(frozen=True)
@@ -17,6 +18,18 @@ class RecipeSummary:
     description: Optional[str]
     image: Optional[str]
     updated_at: Optional[datetime]
+    hotlink_enabled: bool = False
+
+    def hotlink_destination(self) -> str:
+        """Return the preferred external URL when hotlinking is enabled."""
+
+        if not self.source_url:
+            return ""
+        parts: SplitResult = urlsplit(self.source_url)
+        fragment = parts.fragment or f"recipe-{self.id}"
+        return urlunsplit(
+            (parts.scheme, parts.netloc, parts.path, parts.query, fragment)
+        )
 
 
 @dataclass(frozen=True)
@@ -33,6 +46,16 @@ class RecipeDetail(RecipeSummary):
     categories: List[str]
     tags: List[str]
     raw: Optional[dict]
+
+
+@dataclass(frozen=True)
+class SourcePreference:
+    """Represents the hotlink configuration for a source."""
+
+    source_name: str
+    recipe_count: int
+    hotlink_enabled: bool
+    sample_url: Optional[str]
 
 
 @dataclass(frozen=True)
