@@ -20,6 +20,7 @@
   const autoSubmitInputs = form.querySelectorAll('[data-auto-submit="change"]');
 
   let debounceTimer = null;
+  let latestRequestId = 0;
 
   function buildParams(page) {
     const params = new URLSearchParams();
@@ -70,6 +71,7 @@
       return;
     }
     const params = buildParams(page);
+    const requestId = ++latestRequestId;
     setLoading(true);
 
     fetch(`${endpoint}?${params.toString()}`, {
@@ -84,6 +86,9 @@
         return response.json();
       })
       .then((payload) => {
+        if (requestId !== latestRequestId) {
+          return;
+        }
         if (typeof payload !== 'object' || payload === null) {
           return;
         }
@@ -114,10 +119,14 @@
         }
       })
       .catch((error) => {
-        console.error('Failed to refresh recipes', error);
+        if (requestId === latestRequestId) {
+          console.error('Failed to refresh recipes', error);
+        }
       })
       .finally(() => {
-        setLoading(false);
+        if (requestId === latestRequestId) {
+          setLoading(false);
+        }
       });
   }
 
