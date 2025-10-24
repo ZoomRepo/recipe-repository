@@ -12,10 +12,11 @@ This repository now includes two major components:
 
 ## Prerequisites
 
-Install the Python dependencies:
+Install the Python dependencies (re-run this whenever `requirements.txt`
+changes to refresh the virtual environment):
 
 ```bash
-pip install -r requirements.txt
+make setup
 ```
 
 ## Running the scraper
