@@ -4,7 +4,7 @@
       <li class="recipe-card{% if recipe.image %} recipe-card--with-image{% endif %}">
         {% if recipe.image %}
           <a class="recipe-thumb" href="{{ url_for('recipes.detail', recipe_id=recipe.id) }}">
-            <img src="{{ recipe.image }}" alt="Image for {{ recipe.title or 'recipe' }}">
+            <img src="{{ recipe.image }}" loading="lazy" alt="Image for {{ recipe.title or 'recipe' }}">
           </a>
         {% endif %}
         <div class="recipe-card-body">
