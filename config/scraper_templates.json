@@ -1,3 +1,87 @@
 [
-
+  {
+    "name": "Scandinavian Cookbook",
+    "url": "https://scandinaviancookbook.com/",
+    "type": "cooking",
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://scandinaviancookbook.com/category/danish/",
+          "link_selector": "h2.entry-title a",
+          "pagination_selector": "a.next"
+        },
+        {
+          "url": "https://scandinaviancookbook.com/category/swedish/",
+          "link_selector": "h2.entry-title a",
+          "pagination_selector": "a.next"
+        },
+        {
+          "url": "https://scandinaviancookbook.com/category/norwegian/",
+          "link_selector": "h2.entry-title a",
+          "pagination_selector": "a.next"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title"
+      ],
+      "description": [
+        "div.entry-content > p",
+        "meta[name='description']"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+    }
+  }
 ]
