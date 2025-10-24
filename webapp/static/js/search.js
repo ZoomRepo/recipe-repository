@@ -21,6 +21,7 @@
 
   let debounceTimer = null;
   let latestRequestId = 0;
+  let pendingQuerySync = null;
 
   function buildParams(page) {
     const params = new URLSearchParams();
@@ -110,7 +111,13 @@
         }
         if (payload.filters) {
           if (queryInput) {
-            queryInput.value = payload.filters.query || '';
+            const serverQuery = payload.filters.query || '';
+            if (document.activeElement === queryInput) {
+              pendingQuerySync = serverQuery;
+            } else {
+              queryInput.value = serverQuery;
+              pendingQuerySync = null;
+            }
           }
           syncIngredientChips(payload.filters.ingredients || []);
           syncCheckboxGroup('cuisine', payload.filters.cuisines || []);
@@ -232,6 +239,12 @@
       }
       scheduleFetch(1);
     });
+    queryInput.addEventListener('blur', () => {
+      if (pendingQuerySync !== null) {
+        queryInput.value = pendingQuerySync;
+        pendingQuerySync = null;
+      }
+    });
   }
 
   if (ingredientField) {
@@ -278,6 +291,7 @@
     clearButton.addEventListener('click', () => {
       if (queryInput) {
         queryInput.value = '';
+        pendingQuerySync = null;
       }
       if (chipsContainer) {
         chipsContainer.innerHTML = '';
