@@ -20,6 +20,8 @@
   const autoSubmitInputs = form.querySelectorAll('[data-auto-submit="change"]');
 
   let debounceTimer = null;
+  let latestRequestId = 0;
+  let pendingQuerySync = null;
 
   function buildParams(page) {
     const params = new URLSearchParams();
@@ -70,6 +72,7 @@
       return;
     }
     const params = buildParams(page);
+    const requestId = ++latestRequestId;
     setLoading(true);
 
     fetch(`${endpoint}?${params.toString()}`, {
@@ -84,6 +87,9 @@
         return response.json();
       })
       .then((payload) => {
+        if (requestId !== latestRequestId) {
+          return;
+        }
         if (typeof payload !== 'object' || payload === null) {
           return;
         }
@@ -105,7 +111,13 @@
         }
         if (payload.filters) {
           if (queryInput) {
-            queryInput.value = payload.filters.query || '';
+            const serverQuery = payload.filters.query || '';
+            if (document.activeElement === queryInput) {
+              pendingQuerySync = serverQuery;
+            } else {
+              queryInput.value = serverQuery;
+              pendingQuerySync = null;
+            }
           }
           syncIngredientChips(payload.filters.ingredients || []);
           syncCheckboxGroup('cuisine', payload.filters.cuisines || []);
@@ -114,10 +126,14 @@
         }
       })
       .catch((error) => {
-        console.error('Failed to refresh recipes', error);
+        if (requestId === latestRequestId) {
+          console.error('Failed to refresh recipes', error);
+        }
       })
       .finally(() => {
-        setLoading(false);
+        if (requestId === latestRequestId) {
+          setLoading(false);
+        }
       });
   }
 
@@ -223,6 +239,12 @@
       }
       scheduleFetch(1);
     });
+    queryInput.addEventListener('blur', () => {
+      if (pendingQuerySync !== null) {
+        queryInput.value = pendingQuerySync;
+        pendingQuerySync = null;
+      }
+    });
   }
 
   if (ingredientField) {
@@ -269,6 +291,7 @@
     clearButton.addEventListener('click', () => {
       if (queryInput) {
         queryInput.value = '';
+        pendingQuerySync = null;
       }
       if (chipsContainer) {
         chipsContainer.innerHTML = '';

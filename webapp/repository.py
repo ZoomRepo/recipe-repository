@@ -54,20 +54,30 @@ class RecipeQueryRepository:
         conditions: List[str] = []
         params: List[object] = []
         if query:
-            like = f"%{query}%"
-            query_clauses = [
+            lowered_query = query.lower()
+            like = f"%{lowered_query}%"
+            normalized_clause = (
                 "("
-                "title LIKE %s OR description LIKE %s OR ingredients LIKE %s OR instructions LIKE %s "
-                "OR categories LIKE %s OR tags LIKE %s"
+                "LOWER(COALESCE(title, '')) LIKE %s OR "
+                "LOWER(COALESCE(description, '')) LIKE %s OR "
+                "LOWER(COALESCE(ingredients, '')) LIKE %s OR "
+                "LOWER(COALESCE(instructions, '')) LIKE %s OR "
+                "LOWER(COALESCE(categories, '')) LIKE %s OR "
+                "LOWER(COALESCE(tags, '')) LIKE %s"
                 ")"
-            ]
+            )
+            query_clauses = [normalized_clause]
             params.extend([like] * 6)
 
-            keywords = [part for part in query.split() if part]
+            keywords = [part for part in lowered_query.split() if part]
             if len(keywords) > 1:
+                keyword_clause = (
+                    "(LOWER(COALESCE(title, '')) LIKE %s OR "
+                    "LOWER(COALESCE(description, '')) LIKE %s)"
+                )
                 for keyword in keywords:
                     keyword_like = f"%{keyword}%"
-                    query_clauses.append("(title LIKE %s OR description LIKE %s)")
+                    query_clauses.append(keyword_clause)
                     params.extend([keyword_like, keyword_like])
 
             conditions.append(f"({' OR '.join(query_clauses)})")
