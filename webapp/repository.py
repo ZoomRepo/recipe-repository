@@ -21,7 +21,8 @@ class RecipeQueryRepository:
 
     def __init__(self, pool: pooling.MySQLConnectionPool) -> None:
         self._pool = pool
-        self._ensure_source_preferences_table()
+        self._ensure_sources_table()
+        self._sync_sources_table()
 
     @classmethod
     def from_config(cls, config: DatabaseConfig) -> "RecipeQueryRepository":
@@ -91,9 +92,9 @@ class RecipeQueryRepository:
                 r.description,
                 r.image,
                 r.updated_at,
-                COALESCE(sp.hotlink_enabled, 0) AS hotlink_enabled
+                COALESCE(rs.hotlink_enabled, 0) AS hotlink_enabled
             FROM recipes AS r
-            LEFT JOIN source_preferences AS sp ON sp.source_name = r.source_name
+            LEFT JOIN recipe_sources AS rs ON rs.source_name = r.source_name
             {where_clause}
             ORDER BY r.updated_at DESC, r.id DESC
             LIMIT %s OFFSET %s
@@ -131,9 +132,9 @@ class RecipeQueryRepository:
                 r.tags,
                 r.raw,
                 r.updated_at,
-                COALESCE(sp.hotlink_enabled, 0) AS hotlink_enabled
+                COALESCE(rs.hotlink_enabled, 0) AS hotlink_enabled
             FROM recipes AS r
-            LEFT JOIN source_preferences AS sp ON sp.source_name = r.source_name
+            LEFT JOIN recipe_sources AS rs ON rs.source_name = r.source_name
             WHERE r.id = %s
         """
         connection = self._pool.get_connection()
@@ -195,16 +196,17 @@ class RecipeQueryRepository:
         ]
 
     def list_source_preferences(self) -> List[SourcePreference]:
+        self._sync_sources_table()
         sql = """
             SELECT
-                r.source_name,
-                COUNT(*) AS recipe_count,
-                MAX(r.source_url) AS sample_url,
-                COALESCE(sp.hotlink_enabled, 0) AS hotlink_enabled
-            FROM recipes AS r
-            LEFT JOIN source_preferences AS sp ON sp.source_name = r.source_name
-            GROUP BY r.source_name
-            ORDER BY r.source_name
+                rs.source_name,
+                COUNT(r.id) AS recipe_count,
+                rs.sample_url,
+                COALESCE(rs.hotlink_enabled, 0) AS hotlink_enabled
+            FROM recipe_sources AS rs
+            LEFT JOIN recipes AS r ON r.source_name = rs.source_name
+            GROUP BY rs.source_name, rs.sample_url, rs.hotlink_enabled
+            ORDER BY rs.source_name
         """
         connection = self._pool.get_connection()
         try:
@@ -227,16 +229,26 @@ class RecipeQueryRepository:
         ]
 
     def set_hotlink_preference(self, source_name: str, enabled: bool) -> None:
+        self._sync_sources_table()
         sql = """
-            INSERT INTO source_preferences (source_name, hotlink_enabled)
-            VALUES (%s, %s)
-            ON DUPLICATE KEY UPDATE hotlink_enabled = VALUES(hotlink_enabled)
+            UPDATE recipe_sources
+            SET hotlink_enabled = %s
+            WHERE source_name = %s
         """
         connection = self._pool.get_connection()
         try:
             cursor = connection.cursor()
             try:
-                cursor.execute(sql, (source_name, int(enabled)))
+                cursor.execute(sql, (int(enabled), source_name))
+                if cursor.rowcount == 0:
+                    cursor.execute(
+                        """
+                        INSERT INTO recipe_sources (source_name, hotlink_enabled)
+                        VALUES (%s, %s)
+                        ON DUPLICATE KEY UPDATE hotlink_enabled = VALUES(hotlink_enabled)
+                        """,
+                        (source_name, int(enabled)),
+                    )
                 connection.commit()
             finally:
                 cursor.close()
@@ -301,13 +313,37 @@ class RecipeQueryRepository:
             return None
         return f"({' OR '.join(keyword_clauses)})"
 
-    def _ensure_source_preferences_table(self) -> None:
+    def _ensure_sources_table(self) -> None:
         sql = """
-            CREATE TABLE IF NOT EXISTS source_preferences (
+            CREATE TABLE IF NOT EXISTS recipe_sources (
                 source_name VARCHAR(255) PRIMARY KEY,
+                sample_url TEXT,
                 hotlink_enabled TINYINT(1) NOT NULL DEFAULT 0,
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """
+        connection = self._pool.get_connection()
+        try:
+            cursor = connection.cursor()
+            try:
+                cursor.execute(sql)
+                connection.commit()
+            finally:
+                cursor.close()
+        finally:
+            connection.close()
+
+    def _sync_sources_table(self) -> None:
+        sql = """
+            INSERT INTO recipe_sources (source_name, sample_url)
+            SELECT
+                r.source_name,
+                MAX(r.source_url) AS sample_url
+            FROM recipes AS r
+            WHERE r.source_name IS NOT NULL AND r.source_name <> ''
+            GROUP BY r.source_name
+            ON DUPLICATE KEY UPDATE sample_url = VALUES(sample_url)
         """
         connection = self._pool.get_connection()
         try:
