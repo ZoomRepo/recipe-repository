@@ -4,12 +4,12 @@ from __future__ import annotations
 import json
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
-from typing import Generator, Optional
+from typing import Generator, Iterable, List, Optional
 
 import mysql.connector
 from mysql.connector.connection import MySQLConnection
 
-from .models import Recipe
+from .models import PendingFailure, Recipe, ScrapeFailure
 
 
 class RecipeRepository(ABC):
@@ -21,6 +21,20 @@ class RecipeRepository(ABC):
 
     @abstractmethod
     def save(self, recipe: Recipe) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def record_failure(self, failure: ScrapeFailure) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def resolve_failure(
+        self, template_name: str, stage: str, source_url: Optional[str]
+    ) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def iter_pending_failures(self) -> Iterable[PendingFailure]:
         raise NotImplementedError
 
 
@@ -78,10 +92,26 @@ class MySqlRecipeRepository(RecipeRepository):
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             UNIQUE KEY uniq_source_url (source_url(255))
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS scrape_failures (
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            template_name VARCHAR(255) NOT NULL,
+            stage VARCHAR(50) NOT NULL,
+            source_url VARCHAR(2048) NOT NULL DEFAULT '',
+            error_message TEXT,
+            context LONGTEXT,
+            attempt_count INT UNSIGNED NOT NULL DEFAULT 1,
+            resolved TINYINT(1) NOT NULL DEFAULT 0,
+            last_attempt_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            resolved_at TIMESTAMP NULL DEFAULT NULL,
+            UNIQUE KEY uniq_failure (template_name, stage, source_url(255))
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         """
         with self._connection() as connection:
             cursor = connection.cursor()
-            cursor.execute(schema_sql)
+            for statement in filter(None, schema_sql.split(";")):
+                if statement.strip():
+                    cursor.execute(statement)
             connection.commit()
 
     def save(self, recipe: Recipe) -> None:
@@ -144,8 +174,90 @@ class MySqlRecipeRepository(RecipeRepository):
             cursor.execute(sql, params)
             connection.commit()
 
+    def record_failure(self, failure: ScrapeFailure) -> None:
+        sql = """
+            INSERT INTO scrape_failures (
+                template_name,
+                stage,
+                source_url,
+                error_message,
+                context,
+                attempt_count,
+                resolved
+            ) VALUES (%s, %s, %s, %s, %s, 1, 0)
+            ON DUPLICATE KEY UPDATE
+                error_message = VALUES(error_message),
+                context = VALUES(context),
+                attempt_count = scrape_failures.attempt_count + 1,
+                resolved = 0,
+                last_attempt_at = CURRENT_TIMESTAMP,
+                resolved_at = NULL
+        """
+        params = (
+            failure.template_name,
+            failure.stage,
+            failure.normalised_source_url(),
+            failure.error_message,
+            self._to_json_text(failure.context),
+        )
+        with self._connection() as connection:
+            cursor = connection.cursor()
+            cursor.execute(sql, params)
+            connection.commit()
+
+    def resolve_failure(
+        self, template_name: str, stage: str, source_url: Optional[str]
+    ) -> None:
+        sql = """
+            UPDATE scrape_failures
+            SET resolved = 1,
+                resolved_at = CURRENT_TIMESTAMP
+            WHERE template_name = %s AND stage = %s AND source_url = %s
+        """
+        params = (template_name, stage, source_url or "")
+        with self._connection() as connection:
+            cursor = connection.cursor()
+            cursor.execute(sql, params)
+            connection.commit()
+
+    def iter_pending_failures(self) -> Iterable[PendingFailure]:
+        sql = """
+            SELECT id, template_name, stage, source_url, error_message, context, attempt_count
+            FROM scrape_failures
+            WHERE resolved = 0
+            ORDER BY last_attempt_at ASC
+        """
+        with self._connection() as connection:
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(sql)
+            rows = cursor.fetchall()
+        failures: List[PendingFailure] = []
+        for row in rows:
+            context = self._from_json_text(row.get("context"))
+            failures.append(
+                PendingFailure(
+                    id=row["id"],
+                    template_name=row["template_name"],
+                    stage=row["stage"],
+                    source_url=row.get("source_url") or None,
+                    error_message=row.get("error_message") or "",
+                    context=context or {},
+                    attempt_count=row.get("attempt_count", 0) or 0,
+                )
+            )
+        return failures
+
     @staticmethod
     def _to_json_text(value: Optional[object]) -> Optional[str]:
         if value is None:
             return None
         return json.dumps(value, ensure_ascii=False)
+
+    @staticmethod
+    def _from_json_text(value: Optional[str]) -> Optional[dict]:
+        if not value:
+            return None
+        try:
+            return json.loads(value)
+        except json.JSONDecodeError:
+            return None

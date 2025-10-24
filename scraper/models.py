@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional
 
 
 @dataclass(frozen=True)
@@ -48,6 +48,28 @@ class RecipeTemplate:
     structured_data: StructuredDataConfig = field(default_factory=StructuredDataConfig)
 
 
+@dataclass(frozen=True)
+class ScrapeFailure:
+    """Represents a failed scraping attempt that can be retried later."""
+
+    template_name: str
+    stage: str
+    source_url: Optional[str] = None
+    error_message: str = ""
+    context: Dict[str, Any] = field(default_factory=dict)
+
+    def normalised_source_url(self) -> str:
+        return self.source_url or ""
+
+
+@dataclass(frozen=True)
+class PendingFailure(ScrapeFailure):
+    """A stored failure fetched from persistence for replay."""
+
+    id: int = 0
+    attempt_count: int = 0
+
+
 @dataclass
 class Recipe:
     """Normalized recipe entity ready for persistence."""
@@ -88,3 +110,25 @@ class Recipe:
             "tags": self.tags,
             "raw": self.raw,
         }
+
+    @classmethod
+    def from_record(cls, payload: Dict[str, Any]) -> "Recipe":
+        """Recreate a recipe entity from a persisted representation."""
+
+        return cls(
+            source_name=str(payload.get("source_name", "")),
+            source_url=str(payload.get("source_url", "")),
+            title=payload.get("title"),
+            description=payload.get("description"),
+            ingredients=list(payload.get("ingredients", []) or []),
+            instructions=list(payload.get("instructions", []) or []),
+            prep_time=payload.get("prep_time"),
+            cook_time=payload.get("cook_time"),
+            total_time=payload.get("total_time"),
+            servings=payload.get("servings"),
+            image=payload.get("image"),
+            author=payload.get("author"),
+            categories=list(payload.get("categories", []) or []),
+            tags=list(payload.get("tags", []) or []),
+            raw=dict(payload.get("raw", {}) or {}),
+        )

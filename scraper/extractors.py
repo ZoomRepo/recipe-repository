@@ -140,6 +140,10 @@ class ListingScraper:
                     template.name,
                     listing.url,
                     exc,
+                    extra={
+                        "source_name": template.name,
+                        "recipe": listing.url,
+                    },
                 )
 
         if not discovered and self._enable_sitemaps:
