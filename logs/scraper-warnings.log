@@ -794,6 +794,7 @@ Traceback (most recent call last):
   File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
     raise HTTPError(http_error_msg, response=self)
 requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/potato-pirojki/
+<<<<<<< HEAD
 2025-10-26 01:56:18,877 [WARNING] scraper.service source=Taste Antigua Barbuda recipe=https://tasteantiguabarbuda.com/ - Skipping failure 13 for unknown template Taste Antigua Barbuda
 2025-10-26 01:56:18,878 [WARNING] scraper.service source=Argentine Cuisine recipe=https://argentinecuisine.com/ - Skipping failure 14 for unknown template Argentine Cuisine
 2025-10-26 01:56:18,878 [WARNING] scraper.service source=Taste.com.au recipe=https://www.taste.com.au/ - Skipping failure 15 for unknown template Taste.com.au
@@ -2333,3 +2334,144 @@ bs4.exceptions.ParserRejectedMarkup: The markup you provided was rejected by the
 
 Original exception(s) from parser:
  AssertionError: expected name token at '<![�s�p�\x03�VŮ��0��\x00\x08q'
+=======
+2025-10-25 20:58:37,417 [WARNING] scraper.service source=Afghan Kitchen Recipes recipe=https://afghankitchenrecipes.com/ - Skipping failure 7 for unknown template Afghan Kitchen Recipes
+2025-10-25 20:58:37,417 [WARNING] scraper.service source=Visit Andorra recipe=https://visitandorra.com/de/andorra-selected/ - Skipping failure 1 for unknown template Visit Andorra
+2025-10-25 20:58:37,418 [WARNING] scraper.service source=Visit Andorra recipe=https://visitandorra.com/en//plan-your-trip - Skipping failure 2 for unknown template Visit Andorra
+2025-10-25 20:58:37,418 [WARNING] scraper.service source=Visit Andorra recipe=https://visitandorra.com/en/andorra-selected/ - Skipping failure 11 for unknown template Visit Andorra
+2025-10-25 20:58:37,419 [WARNING] scraper.service source=A Taste of Algeria recipe=https://atasteofalgeria.com/ - Skipping failure 8 for unknown template A Taste of Algeria
+2025-10-25 20:58:37,421 [WARNING] scraper.service source=Taste Antigua Barbuda recipe=https://tasteantiguabarbuda.com/ - Skipping failure 13 for unknown template Taste Antigua Barbuda
+2025-10-25 20:58:37,421 [WARNING] scraper.service source=Argentine Cuisine recipe=https://argentinecuisine.com/ - Skipping failure 14 for unknown template Argentine Cuisine
+2025-10-25 20:58:37,421 [WARNING] scraper.service source=Taste.com.au recipe=https://www.taste.com.au/ - Skipping failure 15 for unknown template Taste.com.au
+2025-10-25 20:58:37,421 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-finest-home-improvement-and-repair-books-for-householders.html - Skipping failure 16 for unknown template Austrian Food
+2025-10-25 20:58:37,421 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-ideas-that-can-effectively-assist-you-to-promote-a-house-quickly.html - Skipping failure 17 for unknown template Austrian Food
+2025-10-25 20:58:37,422 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-suggestions-that-can-successfully-assist-you-to-sell-a-house-shortly.html - Skipping failure 18 for unknown template Austrian Food
+2025-10-25 20:58:37,422 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/11-tasty-food-and-cooking-shows-to-stream-now.html - Skipping failure 19 for unknown template Austrian Food
+2025-10-25 20:58:37,422 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-finest-home-improvement-projects-under-100.html - Skipping failure 20 for unknown template Austrian Food
+2025-10-25 20:58:37,422 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-beneath-100.html - Skipping failure 21 for unknown template Austrian Food
+2025-10-25 20:58:37,422 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-underneath-100.html - Skipping failure 22 for unknown template Austrian Food
+2025-10-25 20:58:37,422 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/21-home-improvement-concepts-on-price-range.html - Skipping failure 23 for unknown template Austrian Food
+2025-10-25 20:58:37,422 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/152-2/ - Skipping failure 24 for unknown template AZ Cookbook
+2025-10-25 20:58:37,423 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/153-2/ - Skipping failure 25 for unknown template AZ Cookbook
+2025-10-25 20:58:37,423 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/154-2/ - Skipping failure 26 for unknown template AZ Cookbook
+2025-10-25 20:58:37,423 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/155-2/ - Skipping failure 27 for unknown template AZ Cookbook
+2025-10-25 20:58:37,424 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/156-2/ - Skipping failure 28 for unknown template AZ Cookbook
+2025-10-25 20:58:37,424 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/159-2/ - Skipping failure 29 for unknown template AZ Cookbook
+2025-10-25 20:58:37,425 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/baked-baklava/ - Skipping failure 30 for unknown template AZ Cookbook
+2025-10-25 20:58:37,425 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/baklava-diamonds/ - Skipping failure 31 for unknown template AZ Cookbook
+2025-10-25 20:58:37,425 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/crumble/ - Skipping failure 32 for unknown template AZ Cookbook
+2025-10-25 20:58:37,426 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/easy-baklava-2/ - Skipping failure 33 for unknown template AZ Cookbook
+2025-10-25 20:58:37,427 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/ - Skipping failure 38 for unknown template AZ Cookbook
+2025-10-25 20:58:37,427 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/rolled-dough/ - Skipping failure 37 for unknown template AZ Cookbook
+2025-10-25 20:58:37,427 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/pastry-disk/ - Skipping failure 35 for unknown template AZ Cookbook
+2025-10-25 20:58:37,427 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/filling-2/ - Skipping failure 34 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/pastry-layers/ - Skipping failure 36 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/162-2/ - Skipping failure 39 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/165-2/ - Skipping failure 40 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/166-2/ - Skipping failure 41 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/spinach-salad-with-walnuts/ - Skipping failure 42 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/ - Skipping failure 43 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/175-2/ - Skipping failure 44 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/176-2/ - Skipping failure 45 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/177-2/ - Skipping failure 46 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/178-2/ - Skipping failure 47 for unknown template AZ Cookbook
+2025-10-25 20:58:37,428 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/182-2/ - Skipping failure 51 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/183-2/ - Skipping failure 52 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/181-2/ - Skipping failure 50 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/180-2/ - Skipping failure 49 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/179-2/ - Skipping failure 48 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/184-2/ - Skipping failure 53 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/dough-ball/ - Skipping failure 54 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/filling1/ - Skipping failure 55 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/glazing/ - Skipping failure 56 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/pirojki-potato/ - Skipping failure 57 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/potato-filling/ - Skipping failure 58 for unknown template AZ Cookbook
+2025-10-25 20:58:37,429 [WARNING] scraper.service source=Bahamas Recipes recipe=https://bahamasrecipes.com/ - Skipping failure 59 for unknown template Bahamas Recipes
+2025-10-25 20:58:37,430 [WARNING] scraper.service source=Bahrain Recipes recipe=https://bahrainrecipes.com/ - Skipping failure 60 for unknown template Bahrain Recipes
+2025-10-25 20:58:37,430 [WARNING] scraper.service source=Bangladesh Recipes recipe=https://bangladeshrecipes.com/ - Skipping failure 63 for unknown template Bangladesh Recipes
+2025-10-25 20:58:37,430 [WARNING] scraper.service source=Barbados Foodie recipe=https://barbadosfoodie.com/ - Skipping failure 64 for unknown template Barbados Foodie
+2025-10-25 20:58:37,430 [WARNING] scraper.service source=Belarus Recipes recipe=https://belarusrecipes.com/ - Skipping failure 65 for unknown template Belarus Recipes
+2025-10-25 20:58:37,430 [WARNING] scraper.service source=Belgium Recipes recipe=https://belgiumrecipes.com/ - Skipping failure 66 for unknown template Belgium Recipes
+2025-10-25 20:58:37,430 [WARNING] scraper.service source=Belize Recipes recipe=https://belizerecipes.com/ - Skipping failure 67 for unknown template Belize Recipes
+2025-10-25 21:14:00,062 [WARNING] scraper.service source=Afghan Kitchen Recipes recipe=https://afghankitchenrecipes.com/ - Skipping failure 7 for unknown template Afghan Kitchen Recipes
+2025-10-25 21:14:00,063 [WARNING] scraper.service source=Visit Andorra recipe=https://visitandorra.com/de/andorra-selected/ - Skipping failure 1 for unknown template Visit Andorra
+2025-10-25 21:14:00,063 [WARNING] scraper.service source=Visit Andorra recipe=https://visitandorra.com/en//plan-your-trip - Skipping failure 2 for unknown template Visit Andorra
+2025-10-25 21:14:00,064 [WARNING] scraper.service source=Visit Andorra recipe=https://visitandorra.com/en/andorra-selected/ - Skipping failure 11 for unknown template Visit Andorra
+2025-10-25 21:14:00,064 [WARNING] scraper.service source=A Taste of Algeria recipe=https://atasteofalgeria.com/ - Skipping failure 8 for unknown template A Taste of Algeria
+2025-10-25 21:14:00,064 [WARNING] scraper.service source=Taste Antigua Barbuda recipe=https://tasteantiguabarbuda.com/ - Skipping failure 13 for unknown template Taste Antigua Barbuda
+2025-10-25 21:14:00,065 [WARNING] scraper.service source=Argentine Cuisine recipe=https://argentinecuisine.com/ - Skipping failure 14 for unknown template Argentine Cuisine
+2025-10-25 21:14:00,065 [WARNING] scraper.service source=Taste.com.au recipe=https://www.taste.com.au/ - Skipping failure 15 for unknown template Taste.com.au
+2025-10-25 21:14:00,065 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-finest-home-improvement-and-repair-books-for-householders.html - Skipping failure 16 for unknown template Austrian Food
+2025-10-25 21:14:00,066 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-ideas-that-can-effectively-assist-you-to-promote-a-house-quickly.html - Skipping failure 17 for unknown template Austrian Food
+2025-10-25 21:14:00,066 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-suggestions-that-can-successfully-assist-you-to-sell-a-house-shortly.html - Skipping failure 18 for unknown template Austrian Food
+2025-10-25 21:14:00,066 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/11-tasty-food-and-cooking-shows-to-stream-now.html - Skipping failure 19 for unknown template Austrian Food
+2025-10-25 21:14:00,067 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-finest-home-improvement-projects-under-100.html - Skipping failure 20 for unknown template Austrian Food
+2025-10-25 21:14:00,067 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-beneath-100.html - Skipping failure 21 for unknown template Austrian Food
+2025-10-25 21:14:00,067 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-underneath-100.html - Skipping failure 22 for unknown template Austrian Food
+2025-10-25 21:14:00,068 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/21-home-improvement-concepts-on-price-range.html - Skipping failure 23 for unknown template Austrian Food
+2025-10-25 21:14:00,068 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/152-2/ - Skipping failure 24 for unknown template AZ Cookbook
+2025-10-25 21:14:00,068 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/153-2/ - Skipping failure 25 for unknown template AZ Cookbook
+2025-10-25 21:14:00,068 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/154-2/ - Skipping failure 26 for unknown template AZ Cookbook
+2025-10-25 21:14:00,069 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/155-2/ - Skipping failure 27 for unknown template AZ Cookbook
+2025-10-25 21:14:00,069 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/156-2/ - Skipping failure 28 for unknown template AZ Cookbook
+2025-10-25 21:14:00,069 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/159-2/ - Skipping failure 29 for unknown template AZ Cookbook
+2025-10-25 21:14:00,069 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/baked-baklava/ - Skipping failure 30 for unknown template AZ Cookbook
+2025-10-25 21:14:00,070 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/baklava-diamonds/ - Skipping failure 31 for unknown template AZ Cookbook
+2025-10-25 21:14:00,070 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/crumble/ - Skipping failure 32 for unknown template AZ Cookbook
+2025-10-25 21:14:00,070 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/easy-baklava-2/ - Skipping failure 33 for unknown template AZ Cookbook
+2025-10-25 21:14:00,071 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/ - Skipping failure 38 for unknown template AZ Cookbook
+2025-10-25 21:14:00,071 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/rolled-dough/ - Skipping failure 37 for unknown template AZ Cookbook
+2025-10-25 21:14:00,071 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/pastry-disk/ - Skipping failure 35 for unknown template AZ Cookbook
+2025-10-25 21:14:00,072 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/filling-2/ - Skipping failure 34 for unknown template AZ Cookbook
+2025-10-25 21:14:00,072 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/18/easy-baklava/pastry-layers/ - Skipping failure 36 for unknown template AZ Cookbook
+2025-10-25 21:14:00,072 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/162-2/ - Skipping failure 39 for unknown template AZ Cookbook
+2025-10-25 21:14:00,072 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/165-2/ - Skipping failure 40 for unknown template AZ Cookbook
+2025-10-25 21:14:00,073 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/166-2/ - Skipping failure 41 for unknown template AZ Cookbook
+2025-10-25 21:14:00,073 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/spinach-salad-with-walnuts/ - Skipping failure 42 for unknown template AZ Cookbook
+2025-10-25 21:14:00,073 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/ - Skipping failure 43 for unknown template AZ Cookbook
+2025-10-25 21:14:00,074 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/175-2/ - Skipping failure 44 for unknown template AZ Cookbook
+2025-10-25 21:14:00,074 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/176-2/ - Skipping failure 45 for unknown template AZ Cookbook
+2025-10-25 21:14:00,074 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/177-2/ - Skipping failure 46 for unknown template AZ Cookbook
+2025-10-25 21:14:00,074 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/178-2/ - Skipping failure 47 for unknown template AZ Cookbook
+2025-10-25 21:14:00,075 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/182-2/ - Skipping failure 51 for unknown template AZ Cookbook
+2025-10-25 21:14:00,075 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/183-2/ - Skipping failure 52 for unknown template AZ Cookbook
+2025-10-25 21:14:00,075 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/181-2/ - Skipping failure 50 for unknown template AZ Cookbook
+2025-10-25 21:14:00,076 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/180-2/ - Skipping failure 49 for unknown template AZ Cookbook
+2025-10-25 21:14:00,076 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/179-2/ - Skipping failure 48 for unknown template AZ Cookbook
+2025-10-25 21:14:00,076 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/184-2/ - Skipping failure 53 for unknown template AZ Cookbook
+2025-10-25 21:14:00,077 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/dough-ball/ - Skipping failure 54 for unknown template AZ Cookbook
+2025-10-25 21:14:00,077 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/filling1/ - Skipping failure 55 for unknown template AZ Cookbook
+2025-10-25 21:14:00,077 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/glazing/ - Skipping failure 56 for unknown template AZ Cookbook
+2025-10-25 21:14:00,078 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/pirojki-potato/ - Skipping failure 57 for unknown template AZ Cookbook
+2025-10-25 21:14:00,078 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/potato-filling/ - Skipping failure 58 for unknown template AZ Cookbook
+2025-10-25 21:14:00,078 [WARNING] scraper.service source=Bahamas Recipes recipe=https://bahamasrecipes.com/ - Skipping failure 59 for unknown template Bahamas Recipes
+2025-10-25 21:14:00,078 [WARNING] scraper.service source=Bahrain Recipes recipe=https://bahrainrecipes.com/ - Skipping failure 60 for unknown template Bahrain Recipes
+2025-10-25 21:14:00,079 [WARNING] scraper.service source=Bangladesh Recipes recipe=https://bangladeshrecipes.com/ - Skipping failure 63 for unknown template Bangladesh Recipes
+2025-10-25 21:14:00,079 [WARNING] scraper.service source=Barbados Foodie recipe=https://barbadosfoodie.com/ - Skipping failure 64 for unknown template Barbados Foodie
+2025-10-25 21:14:00,079 [WARNING] scraper.service source=Belarus Recipes recipe=https://belarusrecipes.com/ - Skipping failure 65 for unknown template Belarus Recipes
+2025-10-25 21:14:00,080 [WARNING] scraper.service source=Belgium Recipes recipe=https://belgiumrecipes.com/ - Skipping failure 66 for unknown template Belgium Recipes
+2025-10-25 21:14:00,080 [WARNING] scraper.service source=Belize Recipes recipe=https://belizerecipes.com/ - Skipping failure 67 for unknown template Belize Recipes
+2025-10-25 21:18:24,074 [ERROR] scraper.service source=Kosher World Kitchen - Botswana recipe=mailto:trmarvin@gmail.com - Failed to scrape mailto:trmarvin@gmail.com: No connection adapters were found for 'mailto:trmarvin@gmail.com'
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 126, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 58, in get
+    response = self._session.get(url, timeout=timeout, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/sessions.py", line 697, in send
+    adapter = self.get_adapter(url=request.url)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/sessions.py", line 792, in get_adapter
+    raise InvalidSchema(f"No connection adapters were found for {url!r}")
+requests.exceptions.InvalidSchema: No connection adapters were found for 'mailto:trmarvin@gmail.com'
+>>>>>>> be2d468 (ran scripts)

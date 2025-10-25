@@ -3047,12 +3047,15 @@
     "article": {
       "title": [
         "h1.entry-title",
-        "h1.post-title"
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
       ],
       "description": [
         "meta[name='description']",
         "meta[property='og:description']",
-        "div.entry-content p"
+        "div.entry-content p",
+        "div.post-content p"
       ],
       "ingredients": [
         "div.wprm-recipe-ingredients ul li",
@@ -3133,12 +3136,15 @@
     "article": {
       "title": [
         "h1.entry-title",
-        "h1.post-title"
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
       ],
       "description": [
         "meta[name='description']",
         "meta[property='og:description']",
-        "div.entry-content p"
+        "div.entry-content p",
+        "div.post-content p"
       ],
       "ingredients": [
         "div.wprm-recipe-ingredients ul li",
@@ -3306,12 +3312,15 @@
     "article": {
       "title": [
         "h1.entry-title",
-        "h1.post-title"
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
       ],
       "description": [
         "meta[name='description']",
         "meta[property='og:description']",
-        "div.entry-content p"
+        "div.entry-content p",
+        "div.post-content p"
       ],
       "ingredients": [
         "div.wprm-recipe-ingredients ul li",
@@ -3392,12 +3401,15 @@
     "article": {
       "title": [
         "h1.entry-title",
-        "h1.post-title"
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
       ],
       "description": [
         "meta[name='description']",
         "meta[property='og:description']",
-        "div.entry-content p"
+        "div.entry-content p",
+        "div.post-content p"
       ],
       "ingredients": [
         "div.wprm-recipe-ingredients ul li",
@@ -3478,7 +3490,9 @@
     "article": {
       "title": [
         "h1.entry-title",
-        "h1.post-title"
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
       ],
       "description": [
         "meta[name='description']",
