@@ -129,3 +129,48 @@ Waitress will honour the `PORT` environment variable (defaulting to `8000`)
 while loading the configuration from the same environment variables listed
 above. This avoids Flask's development server warning and provides a WSGI
 server suitable for running behind a reverse proxy.
+
+### Configuring the invite-only access gate
+
+The welcome screen keeps the site closed while it is in private testing. It
+offers two flows:
+
+* Collecting prospective users' email addresses and storing them in the
+  `subscribers` table.
+* Allowing invited testers to request a 6-digit code that unlocks the app on
+  their device.
+
+Only phone numbers that already exist in the `invited_users` table are allowed
+to request a verification SMS. When a number that is not listed attempts to
+request a code the UI will display `Sorry but you're number is not on the invite
+list.` and no message is sent.
+
+Populate the table with the phone numbers of the people you want to invite. The
+service normalises phone numbers down to digits before performing the lookup, so
+you can insert entries without punctuation or spacing (for example, `447700900123`
+for a UK mobile). If you already have numbers stored in E.164 format they will
+still match because the comparison ignores formatting characters.
+
+```sql
+INSERT INTO invited_users (phone_number) VALUES
+  ('447700900123'),
+  ('15551234567');
+```
+
+Once a tester successfully enters the SMS code their device identifier is stored
+in the same table. Subsequent visits from that device bypass the welcome screen
+entirely.
+
+SMS delivery is handled via Twilio when the following environment variables are
+present. When they are omitted the application falls back to logging the message
+contents instead of sending them.
+
+```bash
+export SMS_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+export SMS_AUTH_TOKEN=your_twilio_auth_token
+export SMS_FROM_NUMBER=447700900000  # or another verified Twilio number
+```
+
+The welcome page requires Flask's session support to track the pending phone
+number while the user enters their verification code. Set `SECRET_KEY` in the
+environment to a strong random value before deploying the app.

@@ -161,7 +161,7 @@ def _map_request_error(result: RequestCodeResult) -> Dict[str, str]:
     if result.status is RequestCodeStatus.INVALID_NUMBER:
         message = "Please enter a valid mobile number including your country code."
     elif result.status is RequestCodeStatus.NOT_FOUND:
-        message = "This mobile number is not on our invite list yet."
+        message = "Sorry but you're number is not on the invite list."
     else:
         message = "We couldn't send a code right now. Please try again shortly."
     return {"category": "error", "message": message}
