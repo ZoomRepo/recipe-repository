@@ -192,11 +192,28 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
             logging.getLogger(__name__).warning("No templates matched selection; exiting")
             return
 
+    for raw in raw_templates:
+        if isinstance(raw, dict) and "scraper" in raw and "scraped" not in raw:
+            raw["scraped"] = bool(raw.get("scraper"))
+            raw.pop("scraper", None)
+
     raw_templates_by_name = {
         str(raw.get("name")): raw for raw in raw_templates if isinstance(raw, dict)
     }
 
     completed: List[RecipeTemplate] = []
+
+    logger = logging.getLogger(__name__)
+
+    def persist_template_state(template: RecipeTemplate, success: bool) -> None:
+        raw_template = raw_templates_by_name.get(template.name)
+        if raw_template is None:
+            return
+        current_flag = bool(raw_template.get("scraped"))
+        if success and not current_flag:
+            raw_template["scraped"] = True
+            save_template_payload(args.config, raw_templates)
+            logger.info("Marked %s as scraped", template.name)
 
     with HttpClient() as http_client:
         listing_scraper = ListingScraper(http_client, max_pages=args.max_pages)
@@ -211,22 +228,22 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
             if args.rerun_failures:
                 service.replay_failures(max_failures=args.max_failures)
             else:
-                completed = service.run()
+                completed = service.run(on_template_finished=persist_template_state)
 
     if not args.rerun_failures and completed:
-        updated_count = 0
+        # Ensure all completed templates have their scraped flag persisted even if
+        # the callback did not trigger (e.g. already marked prior to this run).
+        updates = 0
         for template in completed:
             raw_template = raw_templates_by_name.get(template.name)
             if raw_template is None:
                 continue
-            if not raw_template.get("scraper"):
-                raw_template["scraper"] = True
-                updated_count += 1
-        if updated_count:
+            if not raw_template.get("scraped"):
+                raw_template["scraped"] = True
+                updates += 1
+        if updates:
             save_template_payload(args.config, raw_templates)
-            logging.getLogger(__name__).info(
-                "Marked %d template(s) as scraped", updated_count
-            )
+            logger.info("Marked %d template(s) as scraped", updates)
 
 
 if __name__ == "__main__":
