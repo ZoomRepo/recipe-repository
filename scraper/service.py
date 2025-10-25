@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+from dataclasses import replace
 from pathlib import Path
 from typing import Callable, Dict, Iterable, List, Optional
 
@@ -68,11 +69,14 @@ class RecipeScraperService:
         logger.info("Starting recipe scraping for %d templates", len(self._templates))
         self._replay_failures()
         completed: List[RecipeTemplate] = []
-        for template in self._templates:
+        for index, template in enumerate(self._templates):
             success = self._scrape_template(template)
             if success:
-                template.scraped = True
-                completed.append(template)
+                updated_template = replace(template, scraped=True)
+                self._templates[index] = updated_template
+                self._templates_by_name[updated_template.name] = updated_template
+                template = updated_template
+                completed.append(updated_template)
             if on_template_finished:
                 try:
                     on_template_finished(template, success)
