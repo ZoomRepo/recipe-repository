@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Iterable, List
+from typing import Iterable, List, Sequence
 
 from .models import ArticleConfig, ListingConfig, RecipeTemplate, StructuredDataConfig
 
@@ -16,11 +16,28 @@ def _coerce_iterable(value: object) -> Iterable[dict]:
     return [value]
 
 
-def load_templates(path: Path) -> List[RecipeTemplate]:
-    """Load all recipe templates defined in ``path``."""
+def load_template_payload(path: Path) -> List[dict]:
+    """Return the raw template payload stored in ``path``."""
 
     with path.open("r", encoding="utf-8") as handle:
-        raw_templates = json.load(handle)
+        payload = json.load(handle)
+
+    if not isinstance(payload, list):  # pragma: no cover - defensive guard
+        raise ValueError("Template configuration must be a list")
+
+    return payload
+
+
+def save_template_payload(path: Path, payload: Sequence[dict]) -> None:
+    """Persist the provided template payload back to ``path``."""
+
+    with path.open("w", encoding="utf-8") as handle:
+        json.dump(list(payload), handle, indent=2, ensure_ascii=False)
+        handle.write("\n")
+
+
+def parse_templates(raw_templates: Iterable[dict]) -> List[RecipeTemplate]:
+    """Convert raw template dictionaries into :class:`RecipeTemplate` objects."""
 
     templates: List[RecipeTemplate] = []
     for raw in raw_templates:
@@ -51,7 +68,14 @@ def load_templates(path: Path) -> List[RecipeTemplate]:
                 listings=listings,
                 article=article_config,
                 structured_data=structured_config,
+                scraped=bool(raw.get("scraped") or raw.get("scraper")),
             )
         )
 
     return templates
+
+
+def load_templates(path: Path) -> List[RecipeTemplate]:
+    """Load all recipe templates defined in ``path``."""
+
+    return parse_templates(load_template_payload(path))

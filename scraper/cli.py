@@ -6,7 +6,11 @@ import logging
 from pathlib import Path
 from typing import Iterable, List, Optional
 
-from .config_loader import load_templates
+from .config_loader import (
+    load_template_payload,
+    parse_templates,
+    save_template_payload,
+)
 from .extractors import ArticleScraper, ListingScraper
 from .http_client import HttpClient
 from .models import RecipeTemplate
@@ -71,6 +75,22 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         nargs="*",
         help="Optional list of template names or domains to restrict scraping to.",
     )
+    parser.add_argument(
+        "--rerun-failures",
+        action="store_true",
+        help="Only replay previously stored scrape failures instead of scraping new listings.",
+    )
+    parser.add_argument(
+        "--max-failures",
+        type=int,
+        default=None,
+        help="Maximum number of stored failures to replay when --rerun-failures is provided.",
+    )
+    parser.add_argument(
+        "--migrate-only",
+        action="store_true",
+        help="Create or update database tables and exit without running the scraper.",
+    )
     return parser.parse_args(argv)
 
 
@@ -130,12 +150,6 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
     args = parse_args(argv)
     configure_logging(args.log_level)
 
-    templates = load_templates(args.config)
-    templates = filter_templates(templates, args.sites)
-    if not templates:
-        logging.getLogger(__name__).warning("No templates matched selection; exiting")
-        return
-
     repository = MySqlRecipeRepository(
         host=args.db_host,
         user=args.db_user,
@@ -144,6 +158,45 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
         port=args.db_port,
     )
     repository.ensure_schema()
+
+    if args.migrate_only:
+        logging.getLogger(__name__).info("Database schema ensured")
+        return
+
+    raw_templates = load_template_payload(args.config)
+    templates = parse_templates(raw_templates)
+    templates = filter_templates(templates, args.sites)
+
+    if not args.rerun_failures:
+        skipped = [template for template in templates if template.scraped]
+        if skipped and not args.sites:
+            logging.getLogger(__name__).info(
+                "Skipping %d template(s) already marked as scraped: %s",
+                len(skipped),
+                ", ".join(template.name for template in skipped),
+            )
+            templates = [template for template in templates if not template.scraped]
+        elif skipped and args.sites:
+            logging.getLogger(__name__).info(
+                "Including %d explicitly requested template(s) despite scraped flag: %s",
+                len(skipped),
+                ", ".join(template.name for template in skipped),
+            )
+
+    if not templates:
+        if args.rerun_failures:
+            logging.getLogger(__name__).warning(
+                "No templates matched selection; failure replay will skip unmatched entries"
+            )
+        else:
+            logging.getLogger(__name__).warning("No templates matched selection; exiting")
+            return
+
+    raw_templates_by_name = {
+        str(raw.get("name")): raw for raw in raw_templates if isinstance(raw, dict)
+    }
+
+    completed: List[RecipeTemplate] = []
 
     with HttpClient() as http_client:
         listing_scraper = ListingScraper(http_client, max_pages=args.max_pages)
@@ -155,7 +208,25 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
             listing_scraper=listing_scraper,
             article_scraper=article_scraper,
         ) as service:
-            service.run()
+            if args.rerun_failures:
+                service.replay_failures(max_failures=args.max_failures)
+            else:
+                completed = service.run()
+
+    if not args.rerun_failures and completed:
+        updated_count = 0
+        for template in completed:
+            raw_template = raw_templates_by_name.get(template.name)
+            if raw_template is None:
+                continue
+            if not raw_template.get("scraper"):
+                raw_template["scraper"] = True
+                updated_count += 1
+        if updated_count:
+            save_template_payload(args.config, raw_templates)
+            logging.getLogger(__name__).info(
+                "Marked %d template(s) as scraped", updated_count
+            )
 
 
 if __name__ == "__main__":
