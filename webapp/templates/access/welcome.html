@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Welcome · Recipe Library{% endblock %}
 {% block body_class %}access-page{% endblock %}
+{% block header %}{% endblock %}
 {% block content %}
   <div class="access-hero">
     <div class="access-card">
+      <img
+        src="{{ url_for('static', filename='images/Recipe Library Logo.png') }}"
+        alt="Recipe Library logo"
+        class="access-logo"
+        width="160"
+        height="86"
+      >
       <h1>Welcome to the Recipe Library</h1>
       <p class="access-lede">
         We are currently in Alpha/Beta development stages, but we'd love to keep you in the loop.
@@ -33,10 +41,11 @@
       {% endif %}
       {% if code_requested %}
         <p class="access-subtle">
-          Enter the 6 digit code we sent to {{ pending_phone or 'your mobile number' }}.
+          Enter the 6 digit code we sent to {{ pending_email or 'your email address' }}.
         </p>
         <form method="post" class="access-form">
           <input type="hidden" name="action" value="verify_code">
+          <input type="hidden" name="invite_email" value="{{ pending_email }}">
           <label class="access-label" for="code">6 digit access code</label>
           <div class="access-input-row">
             <input
@@ -56,22 +65,22 @@
         </form>
         <form method="post" class="access-form access-inline">
           <input type="hidden" name="action" value="request_code">
-          <input type="hidden" name="phone" value="{{ pending_phone }}">
+          <input type="hidden" name="invite_email" value="{{ pending_email }}">
           <button type="submit" class="access-button link">Resend code</button>
         </form>
       {% else %}
-        <p class="access-subtle">Enter your mobile number below to receive a verification code.</p>
+        <p class="access-subtle">Enter your email below to receive a verification code.</p>
         <form method="post" class="access-form">
           <input type="hidden" name="action" value="request_code">
-          <label class="access-label" for="phone">Mobile number</label>
+          <label class="access-label" for="invite_email">Email address</label>
           <div class="access-input-row">
             <input
-              type="tel"
-              id="phone"
-              name="phone"
-              placeholder="+441234567890"
+              type="email"
+              id="invite_email"
+              name="invite_email"
+              placeholder="tester@example.com"
               required
-              autocomplete="tel"
+              autocomplete="email"
             >
             <button type="submit" class="access-button primary">Send Code</button>
           </div>

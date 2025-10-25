@@ -34,18 +34,18 @@ class AccessRepository:
         finally:
             connection.close()
 
-    def get_invited_user_by_phone(self, phone_number: str) -> Optional[Dict[str, Any]]:
-        """Return invited user details for *phone_number* or ``None``."""
+    def get_invited_user_by_email(self, email: str) -> Optional[Dict[str, Any]]:
+        """Return invited user details for *email* or ``None``."""
 
         sql = (
-            "SELECT id, phone_number, access_code, code_generated_at, device_id "
-            "FROM invited_users WHERE phone_number = %s"
+            "SELECT id, email, access_code, code_generated_at, device_id "
+            "FROM invited_users WHERE email = %s"
         )
         connection = self._pool.get_connection()
         try:
             cursor = connection.cursor(dictionary=True)
             try:
-                cursor.execute(sql, (phone_number,))
+                cursor.execute(sql, (email,))
                 row = cursor.fetchone()
             finally:
                 cursor.close()
@@ -105,7 +105,7 @@ class AccessRepository:
         """Return invited user data with matching *device_id* or ``None``."""
 
         sql = (
-            "SELECT id, phone_number, access_code, code_generated_at, device_id "
+            "SELECT id, email, access_code, code_generated_at, device_id "
             "FROM invited_users WHERE device_id = %s"
         )
         connection = self._pool.get_connection()

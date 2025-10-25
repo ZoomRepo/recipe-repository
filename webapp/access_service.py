@@ -11,7 +11,7 @@ from typing import Optional
 
 from .access_repository import AccessRepository
 from .config import AccessConfig
-from .sms import SmsGateway
+from .email import EmailSender
 
 LOGGER = logging.getLogger(__name__)
 
@@ -20,14 +20,14 @@ class RequestCodeStatus(Enum):
     SENT = "sent"
     NOT_FOUND = "not_found"
     ALREADY_VERIFIED = "already_verified"
-    INVALID_NUMBER = "invalid_number"
+    INVALID_EMAIL = "invalid_email"
     FAILED = "failed"
 
 
 @dataclass(frozen=True)
 class RequestCodeResult:
     status: RequestCodeStatus
-    phone_number: Optional[str] = None
+    email: Optional[str] = None
     device_id: Optional[str] = None
 
 
@@ -54,12 +54,12 @@ class AccessService:
     def __init__(
         self,
         repository: AccessRepository,
-        sms_gateway: SmsGateway,
+        email_sender: EmailSender,
         config: AccessConfig,
         logger: logging.Logger | None = None,
     ) -> None:
         self._repository = repository
-        self._sms_gateway = sms_gateway
+        self._email_sender = email_sender
         self._config = config
         self._logger = logger or LOGGER
 
@@ -73,41 +73,42 @@ class AccessService:
             raise ValueError("Email address is required")
         self._repository.add_subscriber(normalized)
 
-    def request_access_code(self, phone_number: str) -> RequestCodeResult:
-        normalized = self._normalize_phone(phone_number)
+    def request_access_code(self, email: str) -> RequestCodeResult:
+        normalized = self._normalize_email(email)
         if not normalized:
-            return RequestCodeResult(RequestCodeStatus.INVALID_NUMBER)
+            return RequestCodeResult(RequestCodeStatus.INVALID_EMAIL)
 
-        invited = self._repository.get_invited_user_by_phone(normalized)
+        invited = self._repository.get_invited_user_by_email(normalized)
         if not invited:
             return RequestCodeResult(RequestCodeStatus.NOT_FOUND)
         if invited.get("device_id"):
             return RequestCodeResult(
                 RequestCodeStatus.ALREADY_VERIFIED,
-                invited["phone_number"],
+                invited["email"],
                 invited.get("device_id"),
             )
 
         code = self._generate_code()
         try:
             self._repository.save_access_code(invited["id"], code)
-            message = (
+            subject = "Your Recipe Library verification code"
+            body = (
                 "Your Recipe Library verification code is "
                 f"{code}. It will expire in {self._config.code_ttl_minutes} minutes."
             )
-            self._sms_gateway.send_text(invited["phone_number"], message)
+            self._email_sender.send_email(invited["email"], subject, body)
         except Exception:  # pragma: no cover - defensive logging
             self._logger.exception("Unable to send verification code")
             return RequestCodeResult(RequestCodeStatus.FAILED)
 
-        return RequestCodeResult(RequestCodeStatus.SENT, invited["phone_number"])
+        return RequestCodeResult(RequestCodeStatus.SENT, invited["email"])
 
-    def verify_access_code(self, phone_number: str, code: str, device_id: str) -> VerifyCodeResult:
-        normalized = self._normalize_phone(phone_number)
+    def verify_access_code(self, email: str, code: str, device_id: str) -> VerifyCodeResult:
+        normalized = self._normalize_email(email)
         if not normalized:
             return VerifyCodeResult(VerifyCodeStatus.NOT_FOUND)
 
-        invited = self._repository.get_invited_user_by_phone(normalized)
+        invited = self._repository.get_invited_user_by_email(normalized)
         if not invited:
             return VerifyCodeResult(VerifyCodeStatus.NOT_FOUND)
         if invited.get("device_id") and invited.get("device_id") != device_id:
@@ -146,9 +147,11 @@ class AccessService:
     def generate_device_id(self) -> str:
         return secrets.token_hex(16)
 
-    def _normalize_phone(self, phone_number: str) -> str:
-        digits = "".join(ch for ch in (phone_number or "") if ch.isdigit())
-        return digits
+    def _normalize_email(self, email: str) -> str:
+        candidate = (email or "").strip().lower()
+        if "@" not in candidate or "." not in candidate.split("@", 1)[-1]:
+            return ""
+        return candidate
 
     def _generate_code(self) -> str:
         choices = string.digits

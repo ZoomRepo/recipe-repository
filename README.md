@@ -140,37 +140,38 @@ offers two flows:
 * Allowing invited testers to request a 6-digit code that unlocks the app on
   their device.
 
-Only phone numbers that already exist in the `invited_users` table are allowed
-to request a verification SMS. When a number that is not listed attempts to
-request a code the UI will display `Sorry but you're number is not on the invite
-list.` and no message is sent.
+Only email addresses that already exist in the `invited_users` table are allowed
+to request a verification message. When an address that is not listed attempts
+to request a code the UI will display `Sorry but you're email is not on the
+invite list.` and no message is sent.
 
-Populate the table with the phone numbers of the people you want to invite. The
-service normalises phone numbers down to digits before performing the lookup, so
-you can insert entries without punctuation or spacing (for example, `447700900123`
-for a UK mobile). If you already have numbers stored in E.164 format they will
-still match because the comparison ignores formatting characters.
+Populate the table with the email addresses of the people you want to invite.
+The service normalises emails to lower-case before the lookup so you can insert
+records with any casing and they will still match.
 
 ```sql
-INSERT INTO invited_users (phone_number) VALUES
-  ('447700900123'),
-  ('15551234567');
+INSERT INTO invited_users (email) VALUES
+  ('qa.tester@example.com'),
+  ('chef.beta@example.com');
 ```
 
-Once a tester successfully enters the SMS code their device identifier is stored
-in the same table. Subsequent visits from that device bypass the welcome screen
-entirely.
+Once a tester successfully enters the emailed code their device identifier is
+stored in the same table. Subsequent visits from that device bypass the welcome
+screen entirely.
 
-SMS delivery is handled via Twilio when the following environment variables are
-present. When they are omitted the application falls back to logging the message
-contents instead of sending them.
+Email delivery uses SMTP credentials when the following environment variables
+are present. When they are omitted the application falls back to logging the
+message contents instead of sending them.
 
 ```bash
-export SMS_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-export SMS_AUTH_TOKEN=your_twilio_auth_token
-export SMS_FROM_NUMBER=447700900000  # or another verified Twilio number
+export EMAIL_HOST=smtp.yourprovider.com
+export EMAIL_PORT=587
+export EMAIL_USERNAME=apikey_or_username
+export EMAIL_PASSWORD=secret_password
+export EMAIL_FROM_ADDRESS=Recipe Library <no-reply@yourdomain.com>
+export EMAIL_USE_TLS=true
 ```
 
-The welcome page requires Flask's session support to track the pending phone
-number while the user enters their verification code. Set `SECRET_KEY` in the
+The welcome page requires Flask's session support to track the pending email
+address while the user enters their verification code. Set `SECRET_KEY` in the
 environment to a strong random value before deploying the app.

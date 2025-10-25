@@ -9,11 +9,13 @@
     {% block extra_head %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
+    {% block header %}
     <header class="site-header">
       <div class="container">
-        <a href="{{ url_for('recipes.index') }}"><img height="75px" width="140px" src="{{ url_for('static', filename='images/Recipe Library Logo.png') }}" class="brand"/></a>
+        <a href="{{ url_for('recipes.index') }}"><img height="75" width="140" src="{{ url_for('static', filename='images/Recipe Library Logo.png') }}" class="brand"/></a>
       </div>
     </header>
+    {% endblock %}
     <main class="container">
       {% block content %}{% endblock %}
     </main>

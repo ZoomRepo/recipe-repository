@@ -35,9 +35,8 @@ def register_access_routes(app: Any, service: AccessService) -> None:
 
         subscribe_status: Optional[Dict[str, str]] = None
         invite_status: Optional[Dict[str, str]] = None
-        pending_phone = session.get("pending_invite_phone")
-        pending_display = session.get("pending_invite_display")
-        code_requested = bool(pending_phone)
+        pending_email = session.get("pending_invite_email")
+        code_requested = bool(pending_email)
 
         if request.method == "POST":
             action = request.form.get("action")
@@ -55,17 +54,15 @@ def register_access_routes(app: Any, service: AccessService) -> None:
                         "message": "Please enter a valid email address.",
                     }
             elif action == "request_code":
-                phone_input = request.form.get("phone", "")
-                result = service.request_access_code(phone_input)
+                email_input = request.form.get("invite_email", "")
+                result = service.request_access_code(email_input)
                 if result.status is RequestCodeStatus.SENT:
-                    session["pending_invite_phone"] = result.phone_number
-                    session["pending_invite_display"] = phone_input.strip()
-                    pending_phone = result.phone_number
-                    pending_display = phone_input.strip()
+                    session["pending_invite_email"] = result.email
+                    pending_email = result.email
                     code_requested = True
                     invite_status = {
                         "category": "success",
-                        "message": "A verification code has been sent to your mobile number.",
+                        "message": "A verification code has been sent to your email address.",
                     }
                 elif (
                     result.status is RequestCodeStatus.ALREADY_VERIFIED
@@ -79,15 +76,12 @@ def register_access_routes(app: Any, service: AccessService) -> None:
                         httponly=True,
                         samesite="Lax",
                     )
-                    session.pop("pending_invite_phone", None)
-                    session.pop("pending_invite_display", None)
+                    session.pop("pending_invite_email", None)
                     return response
                 else:
                     invite_status = _map_request_error(result)
-                    session.pop("pending_invite_phone", None)
-                    session.pop("pending_invite_display", None)
-                    pending_phone = None
-                    pending_display = None
+                    session.pop("pending_invite_email", None)
+                    pending_email = None
                     code_requested = False
             elif action == "verify_code":
                 code = request.form.get("code", "")
@@ -97,16 +91,16 @@ def register_access_routes(app: Any, service: AccessService) -> None:
                         "message": "Please enter the 6-digit code we sent to you.",
                     }
                 else:
-                    phone_number = pending_phone or request.form.get("phone", "")
-                    if not phone_number:
+                    invite_email = pending_email or request.form.get("invite_email", "")
+                    if not invite_email:
                         invite_status = {
                             "category": "error",
-                            "message": "We couldn't determine which number to verify. Request a new code.",
+                            "message": "We couldn't determine which email to verify. Request a new code.",
                         }
                     else:
                         existing_device = request.cookies.get(service.cookie_name)
                         device_id = existing_device or service.generate_device_id()
-                        result = service.verify_access_code(phone_number, code, device_id)
+                        result = service.verify_access_code(invite_email, code, device_id)
                         if result.status is VerifyCodeStatus.VERIFIED:
                             response = make_response(redirect(url_for("recipes.index")))
                             response.set_cookie(
@@ -116,8 +110,7 @@ def register_access_routes(app: Any, service: AccessService) -> None:
                                 httponly=True,
                                 samesite="Lax",
                             )
-                            session.pop("pending_invite_phone", None)
-                            session.pop("pending_invite_display", None)
+                            session.pop("pending_invite_email", None)
                             return response
                         if (
                             result.status is VerifyCodeStatus.ALREADY_VERIFIED
@@ -131,18 +124,15 @@ def register_access_routes(app: Any, service: AccessService) -> None:
                                 httponly=True,
                                 samesite="Lax",
                             )
-                            session.pop("pending_invite_phone", None)
-                            session.pop("pending_invite_display", None)
+                            session.pop("pending_invite_email", None)
                             return response
                         invite_status = _map_verify_error(result)
                         if result.status in (
                             VerifyCodeStatus.EXPIRED,
                             VerifyCodeStatus.NOT_FOUND,
                         ):
-                            session.pop("pending_invite_phone", None)
-                            session.pop("pending_invite_display", None)
-                            pending_phone = None
-                            pending_display = None
+                            session.pop("pending_invite_email", None)
+                            pending_email = None
                             code_requested = False
                         else:
                             code_requested = True
@@ -151,17 +141,17 @@ def register_access_routes(app: Any, service: AccessService) -> None:
             subscribe_status=subscribe_status,
             invite_status=invite_status,
             code_requested=code_requested,
-            pending_phone=pending_display,
+            pending_email=pending_email,
         )
 
     app.register_blueprint(blueprint)
 
 
 def _map_request_error(result: RequestCodeResult) -> Dict[str, str]:
-    if result.status is RequestCodeStatus.INVALID_NUMBER:
-        message = "Please enter a valid mobile number including your country code."
+    if result.status is RequestCodeStatus.INVALID_EMAIL:
+        message = "Please enter a valid email address."
     elif result.status is RequestCodeStatus.NOT_FOUND:
-        message = "Sorry but you're number is not on the invite list."
+        message = "Sorry but you're email is not on the invite list."
     else:
         message = "We couldn't send a code right now. Please try again shortly."
     return {"category": "error", "message": message}
@@ -173,7 +163,7 @@ def _map_verify_error(result: VerifyCodeResult) -> Dict[str, str]:
     elif result.status is VerifyCodeStatus.EXPIRED:
         message = "Your code has expired. Request a new one to continue."
     elif result.status is VerifyCodeStatus.NOT_FOUND:
-        message = "We couldn't find an invite for that number."
+        message = "We couldn't find an invite for that email address."
     else:
         message = "We couldn't verify the code. Please request a new one."
     return {"category": "error", "message": message}

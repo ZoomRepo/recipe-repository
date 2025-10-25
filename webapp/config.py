@@ -34,19 +34,34 @@ class DatabaseConfig:
 
 
 @dataclass(frozen=True)
-class SmsConfig:
-    """Configuration for sending SMS notifications."""
+class EmailConfig:
+    """Configuration for sending invite verification emails."""
 
-    account_sid: Optional[str] = None
-    auth_token: Optional[str] = None
-    from_number: Optional[str] = None
+    host: Optional[str] = None
+    port: int = 587
+    username: Optional[str] = None
+    password: Optional[str] = None
+    use_tls: bool = True
+    from_address: Optional[str] = None
 
     @classmethod
-    def from_env(cls, prefix: str = "SMS_") -> "SmsConfig":
+    def from_env(cls, prefix: str = "EMAIL_") -> "EmailConfig":
+        host = os.getenv(f"{prefix}HOST")
+        port = int(os.getenv(f"{prefix}PORT", cls.port))
+        username = os.getenv(f"{prefix}USERNAME")
+        password = os.getenv(f"{prefix}PASSWORD")
+        use_tls_raw = os.getenv(f"{prefix}USE_TLS")
+        use_tls = cls.use_tls
+        if use_tls_raw is not None:
+            use_tls = use_tls_raw.lower() in {"1", "true", "yes", "on"}
+        from_address = os.getenv(f"{prefix}FROM_ADDRESS")
         return cls(
-            account_sid=os.getenv(f"{prefix}ACCOUNT_SID"),
-            auth_token=os.getenv(f"{prefix}AUTH_TOKEN"),
-            from_number=os.getenv(f"{prefix}FROM_NUMBER"),
+            host=host,
+            port=port,
+            username=username,
+            password=password,
+            use_tls=use_tls,
+            from_address=from_address,
         )
 
 
@@ -71,7 +86,7 @@ class AppConfig:
     database: DatabaseConfig = DatabaseConfig()
     page_size: int = 20
     secret_key: str = "change-me"
-    sms: SmsConfig = SmsConfig()
+    email: EmailConfig = EmailConfig()
     access: AccessConfig = AccessConfig()
 
     @classmethod
@@ -81,12 +96,12 @@ class AppConfig:
         database = DatabaseConfig.from_env()
         page_size = int(os.getenv("PAGE_SIZE", cls.page_size))
         secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
-        sms = SmsConfig.from_env()
+        email = EmailConfig.from_env()
         access = AccessConfig.from_env()
         return cls(
             database=database,
             page_size=page_size,
             secret_key=secret_key,
-            sms=sms,
+            email=email,
             access=access,
         )

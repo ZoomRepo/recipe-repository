@@ -8,9 +8,9 @@ from .access_service import AccessService
 from .access_views import register_access_routes
 from .config import AppConfig
 from .db import create_connection_pool
+from .email import SmtpSettings, create_email_sender
 from .repository import RecipeQueryRepository
 from .service import RecipeService
-from .sms import create_sms_gateway
 from .views import register_routes
 
 
@@ -30,8 +30,18 @@ def create_app(config: AppConfig | None = None) -> Flask:
     service = RecipeService(recipe_repository, resolved_config.page_size)
 
     access_repository = AccessRepository.from_pool(pool)
-    sms_gateway = create_sms_gateway(resolved_config.sms)
-    access_service = AccessService(access_repository, sms_gateway, resolved_config.access)
+    email_settings = None
+    if resolved_config.email.host and resolved_config.email.from_address:
+        email_settings = SmtpSettings(
+            host=resolved_config.email.host,
+            port=resolved_config.email.port,
+            username=resolved_config.email.username,
+            password=resolved_config.email.password,
+            use_tls=resolved_config.email.use_tls,
+            from_address=resolved_config.email.from_address,
+        )
+    email_sender = create_email_sender(email_settings)
+    access_service = AccessService(access_repository, email_sender, resolved_config.access)
 
     register_access_routes(app, access_service)
     register_routes(app, service)
