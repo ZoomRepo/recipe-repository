@@ -27,6 +27,21 @@ The scraper exposes a command line interface:
 python -m scraper.cli --config config/scraper_templates.json
 ```
 
+To replay stored failures without launching a full scrape, add
+`--rerun-failures`. You can optionally cap the number of retries using
+`--max-failures`:
+
+```bash
+python -m scraper.cli --rerun-failures --max-failures 50
+```
+
+Run migrations (table creation or schema updates) at any time with
+`--migrate-only`:
+
+```bash
+python -m scraper.cli --migrate-only
+```
+
 ### Configuring scraper templates
 
 Scraper behaviour is defined through the JSON templates stored in
@@ -90,6 +105,14 @@ python -m scraper.cli \
 ```
 
 Use `--max-pages` to constrain how many listing pages are crawled per site.
+
+Convenience make targets are provided:
+
+```bash
+make migrate          # ensure database tables exist
+make run_scraper      # run the scraper normally
+make rerun_failures   # retry only the stored failures
+```
 
 Logs are emitted to stdout and can be controlled with `--log-level` (e.g.
 `--log-level DEBUG`).

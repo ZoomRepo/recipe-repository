@@ -60,6 +60,16 @@ class RecipeScraperService:
             self._scrape_template(template)
         logger.info("Scraping completed")
 
+    def replay_failures(self, max_failures: Optional[int] = None) -> None:
+        """Replay persisted failures without executing a new scrape run."""
+
+        limit_value = None if max_failures is None else max(max_failures, 0)
+        logger.info(
+            "Replaying stored failures%s",
+            "" if limit_value is None else f" (limit={limit_value})",
+        )
+        self._replay_failures(limit=limit_value)
+
     def _scrape_template(self, template: RecipeTemplate) -> None:
         logger.info("Scraping template: %s", template.name)
         try:
@@ -141,8 +151,10 @@ class RecipeScraperService:
     def __exit__(self, exc_type, exc_value, traceback) -> None:
         self.close()
 
-    def _replay_failures(self) -> None:
+    def _replay_failures(self, limit: Optional[int] = None) -> None:
         pending = list(self._repository.iter_pending_failures())
+        if limit is not None:
+            pending = pending[: max(limit, 0)]
         if not pending:
             return
 

@@ -71,6 +71,22 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         nargs="*",
         help="Optional list of template names or domains to restrict scraping to.",
     )
+    parser.add_argument(
+        "--rerun-failures",
+        action="store_true",
+        help="Only replay previously stored scrape failures instead of scraping new listings.",
+    )
+    parser.add_argument(
+        "--max-failures",
+        type=int,
+        default=None,
+        help="Maximum number of stored failures to replay when --rerun-failures is provided.",
+    )
+    parser.add_argument(
+        "--migrate-only",
+        action="store_true",
+        help="Create or update database tables and exit without running the scraper.",
+    )
     return parser.parse_args(argv)
 
 
@@ -130,12 +146,6 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
     args = parse_args(argv)
     configure_logging(args.log_level)
 
-    templates = load_templates(args.config)
-    templates = filter_templates(templates, args.sites)
-    if not templates:
-        logging.getLogger(__name__).warning("No templates matched selection; exiting")
-        return
-
     repository = MySqlRecipeRepository(
         host=args.db_host,
         user=args.db_user,
@@ -144,6 +154,21 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
         port=args.db_port,
     )
     repository.ensure_schema()
+
+    if args.migrate_only:
+        logging.getLogger(__name__).info("Database schema ensured")
+        return
+
+    templates = load_templates(args.config)
+    templates = filter_templates(templates, args.sites)
+    if not templates:
+        if args.rerun_failures:
+            logging.getLogger(__name__).warning(
+                "No templates matched selection; failure replay will skip unmatched entries"
+            )
+        else:
+            logging.getLogger(__name__).warning("No templates matched selection; exiting")
+            return
 
     with HttpClient() as http_client:
         listing_scraper = ListingScraper(http_client, max_pages=args.max_pages)
@@ -155,7 +180,10 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
             listing_scraper=listing_scraper,
             article_scraper=article_scraper,
         ) as service:
-            service.run()
+            if args.rerun_failures:
+                service.replay_failures(max_failures=args.max_failures)
+            else:
+                service.run()
 
 
 if __name__ == "__main__":

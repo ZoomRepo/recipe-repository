@@ -15,6 +15,16 @@ from bs4 import BeautifulSoup
 from .http_client import HttpClient
 from .models import ArticleConfig, ListingConfig, Recipe, RecipeTemplate, StructuredDataConfig
 
+
+class ListingDiscoveryError(RuntimeError):
+    """Raised when listing discovery fails for a template."""
+
+    def __init__(self, message: str, last_error: Optional[Exception] = None) -> None:
+        if last_error:
+            message = f"{message}: {last_error}"
+        super().__init__(message)
+        self.last_error = last_error
+
 LIST_FIELDS = {"ingredients", "instructions", "categories", "tags"}
 SITEMAP_CANDIDATES = (
     "sitemap.xml",
@@ -130,11 +140,13 @@ class ListingScraper:
     def discover(self, template: RecipeTemplate) -> Set[str]:
         discovered: Set[str] = set()
         had_listing_error = False
+        last_error: Optional[Exception] = None
         for listing in template.listings:
             try:
                 discovered.update(self._scrape_listing(listing))
             except Exception as exc:  # pylint: disable=broad-except
                 had_listing_error = True
+                last_error = exc
                 logger.warning(
                     "Listing discovery failed for %s (%s): %s",
                     template.name,
@@ -146,6 +158,7 @@ class ListingScraper:
                     },
                 )
 
+        sitemap_urls: Set[str] = set()
         if not discovered and self._enable_sitemaps:
             sitemap_urls = self._discover_from_sitemaps(template)
             if sitemap_urls:
@@ -159,6 +172,10 @@ class ListingScraper:
                     "Sitemap fallback yielded no URLs for %s", template.name
                 )
             discovered.update(sitemap_urls)
+        if had_listing_error and not discovered:
+            raise ListingDiscoveryError(
+                f"Failed to discover listings for {template.name}", last_error
+            )
         return discovered
 
     def _scrape_listing(self, listing: ListingConfig) -> Set[str]:
