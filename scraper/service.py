@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional
+from typing import Callable, Dict, Iterable, List, Optional
 
 from .config_loader import load_templates
 from .extractors import ArticleScraper, ListingScraper
@@ -53,15 +53,31 @@ class RecipeScraperService:
             article_scraper=article_scraper,
         )
 
-    def run(self) -> List[RecipeTemplate]:
-        """Execute a full scrape run and return successfully processed templates."""
+    def run(
+        self,
+        on_template_finished: Optional[Callable[[RecipeTemplate, bool], None]] = None,
+    ) -> List[RecipeTemplate]:
+        """Execute a full scrape run and return successfully processed templates.
+
+        Args:
+            on_template_finished: Optional callback invoked after each template
+                has been processed. Receives the template instance and a boolean
+                indicating whether any recipes were saved for that template.
+        """
 
         logger.info("Starting recipe scraping for %d templates", len(self._templates))
         self._replay_failures()
         completed: List[RecipeTemplate] = []
         for template in self._templates:
-            if self._scrape_template(template):
+            success = self._scrape_template(template)
+            if success:
+                template.scraped = True
                 completed.append(template)
+            if on_template_finished:
+                try:
+                    on_template_finished(template, success)
+                except Exception:  # pragma: no cover - defensive callback guard
+                    logger.exception("Template completion callback failed")
         logger.info("Scraping completed")
         return completed
 
