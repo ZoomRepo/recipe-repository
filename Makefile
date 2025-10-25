@@ -1,4 +1,4 @@
-.PHONY: setup run_app run_app_production run_scraper
+.PHONY: setup run_app run_app_production run_scraper migrate rerun_failures
 
 setup:
 	@if [ ! -d "venv" ]; then \
@@ -31,10 +31,27 @@ run_app_production:
 		waitress-serve --listen=0.0.0.0:$${PORT} webapp.wsgi:app
 
 run_scraper:
-	@if [ ! -d "venv" ]; then \
-		echo "❌ venv not found. Run 'make setup' first."; \
-		exit 1; \
-	fi
-	@. venv/bin/activate && \
-		export FLASK_DEBUG=1 && export FLASK_ENV=development && \
-		python -m scraper.cli --config config/scraper_templates.json
+        @if [ ! -d "venv" ]; then \
+                echo "❌ venv not found. Run 'make setup' first."; \
+                exit 1; \
+        fi
+        @. venv/bin/activate && \
+                export FLASK_DEBUG=1 && export FLASK_ENV=development && \
+                python -m scraper.cli --config config/scraper_templates.json
+
+migrate:
+        @if [ ! -d "venv" ]; then \
+                echo "❌ venv not found. Run 'make setup' first."; \
+                exit 1; \
+        fi
+        @. venv/bin/activate && \
+                python -m scraper.cli --migrate-only
+
+rerun_failures:
+        @if [ ! -d "venv" ]; then \
+                echo "❌ venv not found. Run 'make setup' first."; \
+                exit 1; \
+        fi
+        @. venv/bin/activate && \
+                export FLASK_DEBUG=1 && export FLASK_ENV=development && \
+                python -m scraper.cli --config config/scraper_templates.json --rerun-failures

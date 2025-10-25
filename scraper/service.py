@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Dict, Iterable, Optional
+from typing import Dict, Iterable, List, Optional
 
 from .config_loader import load_templates
 from .extractors import ArticleScraper, ListingScraper
@@ -53,14 +53,29 @@ class RecipeScraperService:
             article_scraper=article_scraper,
         )
 
-    def run(self) -> None:
+    def run(self) -> List[RecipeTemplate]:
+        """Execute a full scrape run and return successfully processed templates."""
+
         logger.info("Starting recipe scraping for %d templates", len(self._templates))
         self._replay_failures()
+        completed: List[RecipeTemplate] = []
         for template in self._templates:
-            self._scrape_template(template)
+            if self._scrape_template(template):
+                completed.append(template)
         logger.info("Scraping completed")
+        return completed
 
-    def _scrape_template(self, template: RecipeTemplate) -> None:
+    def replay_failures(self, max_failures: Optional[int] = None) -> None:
+        """Replay persisted failures without executing a new scrape run."""
+
+        limit_value = None if max_failures is None else max(max_failures, 0)
+        logger.info(
+            "Replaying stored failures%s",
+            "" if limit_value is None else f" (limit={limit_value})",
+        )
+        self._replay_failures(limit=limit_value)
+
+    def _scrape_template(self, template: RecipeTemplate) -> bool:
         logger.info("Scraping template: %s", template.name)
         try:
             article_urls = self._listing_scraper.discover(template)
@@ -77,7 +92,7 @@ class RecipeScraperService:
                     error_message=str(exc),
                 )
             )
-            return
+            return False
 
         self._repository.resolve_failure(template.name, "listing", template.url)
 
@@ -85,6 +100,7 @@ class RecipeScraperService:
             "Discovered %d article URLs for %s", len(article_urls), template.name
         )
 
+        saved_any = False
         for url in sorted(article_urls):
             try:
                 recipe = self._article_scraper.scrape(template, url)
@@ -111,6 +127,7 @@ class RecipeScraperService:
             try:
                 self._repository.save(recipe)
                 logger.info("Saved recipe: %s", recipe.title or recipe.source_url)
+                saved_any = True
                 self._repository.resolve_failure(
                     template.name, "persist", recipe.source_url
                 )
@@ -132,6 +149,8 @@ class RecipeScraperService:
                     )
                 )
 
+        return saved_any
+
     def close(self) -> None:
         self._http_client.close()
 
@@ -141,8 +160,10 @@ class RecipeScraperService:
     def __exit__(self, exc_type, exc_value, traceback) -> None:
         self.close()
 
-    def _replay_failures(self) -> None:
+    def _replay_failures(self, limit: Optional[int] = None) -> None:
         pending = list(self._repository.iter_pending_failures())
+        if limit is not None:
+            pending = pending[: max(limit, 0)]
         if not pending:
             return
 

@@ -46,6 +46,7 @@ class RecipeTemplate:
     listings: List[ListingConfig] = field(default_factory=list)
     article: ArticleConfig = field(default_factory=ArticleConfig)
     structured_data: StructuredDataConfig = field(default_factory=StructuredDataConfig)
+    scraped: bool = False
 
 
 @dataclass(frozen=True)
