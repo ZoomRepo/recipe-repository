@@ -3286,7 +3286,8 @@
       "enabled": true,
       "json_ld_selector": "script[type='application/ld+json']",
       "json_ld_path": "$..[?(@['@type']=='Recipe')]"
-    }
+    },
+    "scraper": true
   },
   {
     "name": "Boondocking Recipes - Comoros",
@@ -4581,7 +4582,8 @@
       "enabled": true,
       "json_ld_selector": "script[type='application/ld+json']",
       "json_ld_path": "$..[?(@['@type']=='Recipe')]"
-    }
+    },
+    "scraper": true
   },
   {
     "name": "Dominican Cooking",
@@ -4839,7 +4841,8 @@
       "enabled": true,
       "json_ld_selector": "script[type='application/ld+json']",
       "json_ld_path": "$..[?(@['@type']=='Recipe')]"
-    }
+    },
+    "scraper": true
   },
   {
     "name": "Lee Kum Kee UK Recipes",
@@ -5097,7 +5100,8 @@
       "enabled": true,
       "json_ld_selector": "script[type='application/ld+json']",
       "json_ld_path": "$..[?(@['@type']=='Recipe')]"
-    }
+    },
+    "scraper": true
   },
   {
     "name": "No Frills Kitchen - Pkhali",
@@ -5269,7 +5273,8 @@
       "enabled": true,
       "json_ld_selector": "script[type='application/ld+json']",
       "json_ld_path": "$..[?(@['@type']=='Recipe')]"
-    }
+    },
+    "scraper": true
   },
   {
     "name": "Recipes from Costa Rica",

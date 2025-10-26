@@ -794,3 +794,1542 @@ Traceback (most recent call last):
   File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
     raise HTTPError(http_error_msg, response=self)
 requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/potato-pirojki/
+2025-10-26 01:56:18,877 [WARNING] scraper.service source=Taste Antigua Barbuda recipe=https://tasteantiguabarbuda.com/ - Skipping failure 13 for unknown template Taste Antigua Barbuda
+2025-10-26 01:56:18,878 [WARNING] scraper.service source=Argentine Cuisine recipe=https://argentinecuisine.com/ - Skipping failure 14 for unknown template Argentine Cuisine
+2025-10-26 01:56:18,878 [WARNING] scraper.service source=Taste.com.au recipe=https://www.taste.com.au/ - Skipping failure 15 for unknown template Taste.com.au
+2025-10-26 01:56:18,878 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-finest-home-improvement-and-repair-books-for-householders.html - Skipping failure 16 for unknown template Austrian Food
+2025-10-26 01:56:18,879 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-ideas-that-can-effectively-assist-you-to-promote-a-house-quickly.html - Skipping failure 17 for unknown template Austrian Food
+2025-10-26 01:56:18,879 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-suggestions-that-can-successfully-assist-you-to-sell-a-house-shortly.html - Skipping failure 18 for unknown template Austrian Food
+2025-10-26 01:56:18,879 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/11-tasty-food-and-cooking-shows-to-stream-now.html - Skipping failure 19 for unknown template Austrian Food
+2025-10-26 01:56:18,880 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-finest-home-improvement-projects-under-100.html - Skipping failure 20 for unknown template Austrian Food
+2025-10-26 01:56:18,880 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-beneath-100.html - Skipping failure 21 for unknown template Austrian Food
+2025-10-26 01:56:18,880 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-underneath-100.html - Skipping failure 22 for unknown template Austrian Food
+2025-10-26 01:56:18,881 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/21-home-improvement-concepts-on-price-range.html - Skipping failure 23 for unknown template Austrian Food
+2025-10-26 01:56:18,881 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/ - Skipping failure 38 for unknown template AZ Cookbook
+2025-10-26 01:56:18,881 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/162-2/ - Skipping failure 39 for unknown template AZ Cookbook
+2025-10-26 01:56:18,881 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/165-2/ - Skipping failure 40 for unknown template AZ Cookbook
+2025-10-26 01:56:18,882 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/166-2/ - Skipping failure 41 for unknown template AZ Cookbook
+2025-10-26 01:56:18,882 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/spinach-salad-with-walnuts/ - Skipping failure 42 for unknown template AZ Cookbook
+2025-10-26 01:56:18,882 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/ - Skipping failure 43 for unknown template AZ Cookbook
+2025-10-26 01:56:18,883 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/178-2/ - Skipping failure 47 for unknown template AZ Cookbook
+2025-10-26 01:56:18,883 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/177-2/ - Skipping failure 46 for unknown template AZ Cookbook
+2025-10-26 01:56:18,883 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/175-2/ - Skipping failure 44 for unknown template AZ Cookbook
+2025-10-26 01:56:18,884 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/176-2/ - Skipping failure 45 for unknown template AZ Cookbook
+2025-10-26 01:56:18,884 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/179-2/ - Skipping failure 48 for unknown template AZ Cookbook
+2025-10-26 01:56:18,884 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/180-2/ - Skipping failure 49 for unknown template AZ Cookbook
+2025-10-26 01:56:18,885 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/181-2/ - Skipping failure 50 for unknown template AZ Cookbook
+2025-10-26 01:56:18,885 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/182-2/ - Skipping failure 51 for unknown template AZ Cookbook
+2025-10-26 01:56:18,886 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/183-2/ - Skipping failure 52 for unknown template AZ Cookbook
+2025-10-26 01:56:18,886 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/glazing/ - Skipping failure 56 for unknown template AZ Cookbook
+2025-10-26 01:56:18,886 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/filling1/ - Skipping failure 55 for unknown template AZ Cookbook
+2025-10-26 01:56:18,886 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/dough-ball/ - Skipping failure 54 for unknown template AZ Cookbook
+2025-10-26 01:56:18,887 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/184-2/ - Skipping failure 53 for unknown template AZ Cookbook
+2025-10-26 01:56:18,887 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/pirojki-potato/ - Skipping failure 57 for unknown template AZ Cookbook
+2025-10-26 01:56:18,887 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/potato-filling/ - Skipping failure 58 for unknown template AZ Cookbook
+2025-10-26 01:56:18,888 [WARNING] scraper.service source=Bahamas Recipes recipe=https://bahamasrecipes.com/ - Skipping failure 59 for unknown template Bahamas Recipes
+2025-10-26 01:56:18,888 [WARNING] scraper.service source=Bahrain Recipes recipe=https://bahrainrecipes.com/ - Skipping failure 60 for unknown template Bahrain Recipes
+2025-10-26 01:56:18,888 [WARNING] scraper.service source=Bangladesh Recipes recipe=https://bangladeshrecipes.com/ - Skipping failure 63 for unknown template Bangladesh Recipes
+2025-10-26 01:56:18,889 [WARNING] scraper.service source=Barbados Foodie recipe=https://barbadosfoodie.com/ - Skipping failure 64 for unknown template Barbados Foodie
+2025-10-26 01:56:18,889 [WARNING] scraper.service source=Belarus Recipes recipe=https://belarusrecipes.com/ - Skipping failure 65 for unknown template Belarus Recipes
+2025-10-26 01:56:18,889 [WARNING] scraper.service source=Belgium Recipes recipe=https://belgiumrecipes.com/ - Skipping failure 66 for unknown template Belgium Recipes
+2025-10-26 01:56:18,889 [WARNING] scraper.service source=Belize Recipes recipe=https://belizerecipes.com/ - Skipping failure 67 for unknown template Belize Recipes
+2025-10-26 01:56:18,890 [WARNING] scraper.service source=Kosher World Kitchen - Botswana recipe=mailto:trmarvin@gmail.com - Skipping failure 68 for unknown template Kosher World Kitchen - Botswana
+2025-10-26 01:59:44,435 [WARNING] scraper.extractors source=Chilean Food and Garden recipe=https://www.chileanfoodandgarden.com/chilean-recipes/ - Listing discovery failed for Chilean Food and Garden (https://www.chileanfoodandgarden.com/chilean-recipes/): 403 Client Error: Forbidden for url: https://www.chileanfoodandgarden.com/chilean-recipes/
+2025-10-26 01:59:45,334 [ERROR] scraper.service source=Chilean Food and Garden recipe=https://www.chileanfoodandgarden.com/chilean-recipes/ - Failed to discover listings for Chilean Food and Garden: Failed to discover listings for Chilean Food and Garden: 403 Client Error: Forbidden for url: https://www.chileanfoodandgarden.com/chilean-recipes/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 81, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 176, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: Failed to discover listings for Chilean Food and Garden: 403 Client Error: Forbidden for url: https://www.chileanfoodandgarden.com/chilean-recipes/
+2025-10-26 01:59:56,399 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_africa/african_proverbs/ - Failed to scrape https://www.congocookbook.com/about_africa/african_proverbs/: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_africa/african_proverbs/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_africa/african_proverbs/
+2025-10-26 01:59:58,243 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_african_cooking/index/ - Failed to scrape https://www.congocookbook.com/about_african_cooking/index/: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_african_cooking/index/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_african_cooking/index/
+2025-10-26 01:00:00,086 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_african_cooking/womens_work/ - Failed to scrape https://www.congocookbook.com/about_african_cooking/womens_work/: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_african_cooking/womens_work/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_african_cooking/womens_work/
+2025-10-26 01:00:05,308 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_this_website/faq/ - Failed to scrape https://www.congocookbook.com/about_this_website/faq/: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_this_website/faq/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/about_this_website/faq/
+2025-10-26 01:00:08,483 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/blog/ - Failed to scrape https://www.congocookbook.com/blog/: 404 Client Error: Not Found for url: https://www.congocookbook.com/blog/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/blog/
+2025-10-26 01:00:13,397 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/akoho-sy-voanio-chicken-in-coconut-milk/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/akoho-sy-voanio-chicken-in-coconut-milk/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/akoho-sy-voanio-chicken-in-coconut-milk/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/akoho-sy-voanio-chicken-in-coconut-milk/
+2025-10-26 01:00:15,037 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/ashanti-chicken/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/ashanti-chicken/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/ashanti-chicken/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/ashanti-chicken/
+2025-10-26 01:00:16,675 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-in-cumin-sauce/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/chicken-in-cumin-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/chicken-in-cumin-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/chicken-in-cumin-sauce/
+2025-10-26 01:00:18,723 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-in-peanut-tomato-sauce/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/chicken-in-peanut-tomato-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/chicken-in-peanut-tomato-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/chicken-in-peanut-tomato-sauce/
+2025-10-26 01:00:21,180 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-with-egusi/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/chicken-with-egusi/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/chicken-with-egusi/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/chicken-with-egusi/
+2025-10-26 01:00:22,820 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/doro-wat/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/doro-wat/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/doro-wat/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/doro-wat/
+2025-10-26 01:00:24,253 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/kedjenou/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/kedjenou/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/kedjenou/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/kedjenou/
+2025-10-26 01:00:25,686 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/kuku-paka/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/kuku-paka/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/kuku-paka/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/kuku-paka/
+2025-10-26 01:00:28,348 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/muamba-de-galinha/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/muamba-de-galinha/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/muamba-de-galinha/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/muamba-de-galinha/
+2025-10-26 01:00:30,805 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/muamba-nsusu-congo-chicken-soup/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/muamba-nsusu-congo-chicken-soup/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/muamba-nsusu-congo-chicken-soup/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/muamba-nsusu-congo-chicken-soup/
+2025-10-26 01:00:32,444 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/piri-piri-chicken/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/piri-piri-chicken/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/piri-piri-chicken/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/piri-piri-chicken/
+2025-10-26 01:00:34,698 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-dg-poulet-directeur-general/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/poulet-dg-poulet-directeur-general/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/poulet-dg-poulet-directeur-general/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/poulet-dg-poulet-directeur-general/
+2025-10-26 01:00:36,540 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-moambe-poulet-nyembwe/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/poulet-moambe-poulet-nyembwe/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/poulet-moambe-poulet-nyembwe/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/poulet-moambe-poulet-nyembwe/
+2025-10-26 01:00:37,682 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-yassa-chicken-yassa/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/poulet-yassa-chicken-yassa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/poulet-yassa-chicken-yassa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/poulet-yassa-chicken-yassa/
+2025-10-26 01:00:38,782 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/tagine-of-chicken-preserved-lemon-and-olives/ - Failed to scrape https://www.congocookbook.com/category-chicken-recipes/tagine-of-chicken-preserved-lemon-and-olives/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/tagine-of-chicken-preserved-lemon-and-olives/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category-chicken-recipes/tagine-of-chicken-preserved-lemon-and-olives/
+2025-10-26 01:00:39,991 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/chicken/ - Failed to scrape https://www.congocookbook.com/category/chicken/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/chicken/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/chicken/
+2025-10-26 01:00:41,193 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/fish-seafood/ - Failed to scrape https://www.congocookbook.com/category/fish-seafood/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/fish-seafood/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/fish-seafood/
+2025-10-26 01:00:43,505 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/meat/ - Failed to scrape https://www.congocookbook.com/category/meat/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/meat/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/meat/
+2025-10-26 01:00:44,735 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/rice/ - Failed to scrape https://www.congocookbook.com/category/rice/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/rice/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/rice/
+2025-10-26 01:00:46,986 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/sauce/ - Failed to scrape https://www.congocookbook.com/category/sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/sauce/
+2025-10-26 01:00:50,467 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/soup-stew/ - Failed to scrape https://www.congocookbook.com/category/soup-stew/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/soup-stew/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/soup-stew/
+2025-10-26 01:00:51,739 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/staple/ - Failed to scrape https://www.congocookbook.com/category/staple/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/staple/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/staple/
+2025-10-26 01:00:52,802 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/vegetable-side-dishes/ - Failed to scrape https://www.congocookbook.com/category/vegetable-side-dishes/: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/vegetable-side-dishes/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/category/vegetable-side-dishes/
+2025-10-26 01:00:53,953 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/chicken_recipes/poulet_yassa/ - Failed to scrape https://www.congocookbook.com/chicken_recipes/poulet_yassa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/chicken_recipes/poulet_yassa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/chicken_recipes/poulet_yassa/
+2025-10-26 01:00:56,585 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/baked-fish-and-eggplant/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/baked-fish-and-eggplant/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/baked-fish-and-eggplant/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/baked-fish-and-eggplant/
+2025-10-26 01:00:58,481 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/capitaine-and-pili-pili-in-palm-oil/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/capitaine-and-pili-pili-in-palm-oil/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/capitaine-and-pili-pili-in-palm-oil/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/capitaine-and-pili-pili-in-palm-oil/
+2025-10-26 01:00:59,815 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/dahomey-fish-stew/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/dahomey-fish-stew/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/dahomey-fish-stew/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/dahomey-fish-stew/
+2025-10-26 01:01:01,367 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/dongo-dongo/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/dongo-dongo/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/dongo-dongo/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/dongo-dongo/
+2025-10-26 01:01:03,093 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-greens/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-greens/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-greens/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-greens/
+2025-10-26 01:01:04,679 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-onions-in-tomato-sauce/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-onions-in-tomato-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-onions-in-tomato-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-onions-in-tomato-sauce/
+2025-10-26 01:01:05,687 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-with-sorrel/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/fish-with-sorrel/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fish-with-sorrel/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fish-with-sorrel/
+2025-10-26 01:01:06,784 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fried-fish-in-peanut-sauce/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/fried-fish-in-peanut-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fried-fish-in-peanut-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/fried-fish-in-peanut-sauce/
+2025-10-26 01:01:07,911 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/grilled-tilapia/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/grilled-tilapia/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/grilled-tilapia/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/grilled-tilapia/
+2025-10-26 01:01:09,166 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/liboke-de-poisson-fish-in-banana-leaf/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/liboke-de-poisson-fish-in-banana-leaf/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/liboke-de-poisson-fish-in-banana-leaf/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/liboke-de-poisson-fish-in-banana-leaf/
+2025-10-26 01:01:10,089 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/lm-prawns/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/lm-prawns/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/lm-prawns/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/lm-prawns/
+2025-10-26 01:01:11,031 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/mchuzi-wa-samaki-fish-curry/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/mchuzi-wa-samaki-fish-curry/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/mchuzi-wa-samaki-fish-curry/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/mchuzi-wa-samaki-fish-curry/
+2025-10-26 01:01:12,124 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/mulet-farci-a-la-saint-louisienne/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/mulet-farci-a-la-saint-louisienne/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/mulet-farci-a-la-saint-louisienne/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/mulet-farci-a-la-saint-louisienne/
+2025-10-26 01:01:13,128 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/ngege-tilapia-with-groundnut-sauce/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/ngege-tilapia-with-groundnut-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/ngege-tilapia-with-groundnut-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/ngege-tilapia-with-groundnut-sauce/
+2025-10-26 01:01:14,472 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/oysters-mombasa/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/oysters-mombasa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/oysters-mombasa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/oysters-mombasa/
+2025-10-26 01:01:15,657 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/pastels-aux-poisson/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/pastels-aux-poisson/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/pastels-aux-poisson/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/pastels-aux-poisson/
+2025-10-26 01:01:18,933 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/poisson-yassa-fish-yassa/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/poisson-yassa-fish-yassa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/poisson-yassa-fish-yassa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/poisson-yassa-fish-yassa/
+2025-10-26 01:01:22,512 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/samaki-wa-kupaka-grilled-fish/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/samaki-wa-kupaka-grilled-fish/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/samaki-wa-kupaka-grilled-fish/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/samaki-wa-kupaka-grilled-fish/
+2025-10-26 01:01:24,767 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/sardines-and-greens-stew/ - Failed to scrape https://www.congocookbook.com/fish-and-seafood-recipes/sardines-and-greens-stew/: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/sardines-and-greens-stew/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/fish-and-seafood-recipes/sardines-and-greens-stew/
+2025-10-26 01:01:29,068 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-and-greens-in-peanut-sauce/ - Failed to scrape https://www.congocookbook.com/meat-recipes/beef-and-greens-in-peanut-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/beef-and-greens-in-peanut-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/beef-and-greens-in-peanut-sauce/
+2025-10-26 01:01:31,730 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-in-cumin-sauce/ - Failed to scrape https://www.congocookbook.com/meat-recipes/beef-in-cumin-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/beef-in-cumin-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/beef-in-cumin-sauce/
+2025-10-26 01:01:33,367 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-in-wild-mango-kernel-sauce/ - Failed to scrape https://www.congocookbook.com/meat-recipes/beef-in-wild-mango-kernel-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/beef-in-wild-mango-kernel-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/beef-in-wild-mango-kernel-sauce/
+2025-10-26 01:01:35,210 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/boko-boko/ - Failed to scrape https://www.congocookbook.com/meat-recipes/boko-boko/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/boko-boko/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/boko-boko/
+2025-10-26 01:01:38,487 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/brochettes/ - Failed to scrape https://www.congocookbook.com/meat-recipes/brochettes/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/brochettes/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/brochettes/
+2025-10-26 01:01:40,740 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/coupe-coupe/ - Failed to scrape https://www.congocookbook.com/meat-recipes/coupe-coupe/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/coupe-coupe/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/coupe-coupe/
+2025-10-26 01:01:42,377 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/domoda/ - Failed to scrape https://www.congocookbook.com/meat-recipes/domoda/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/domoda/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/domoda/
+2025-10-26 01:01:44,732 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/kitoza/ - Failed to scrape https://www.congocookbook.com/meat-recipes/kitoza/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/kitoza/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/kitoza/
+2025-10-26 01:01:46,293 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/liboke-de-viande-meat-in-banana-leaf/ - Failed to scrape https://www.congocookbook.com/meat-recipes/liboke-de-viande-meat-in-banana-leaf/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/liboke-de-viande-meat-in-banana-leaf/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/liboke-de-viande-meat-in-banana-leaf/
+2025-10-26 01:01:47,377 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/mafe/ - Failed to scrape https://www.congocookbook.com/meat-recipes/mafe/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/mafe/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/mafe/
+2025-10-26 01:01:48,706 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/matoke/ - Failed to scrape https://www.congocookbook.com/meat-recipes/matoke/: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/matoke/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/meat-recipes/matoke/
+2025-10-26 01:01:49,893 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/profile/ - Failed to scrape https://www.congocookbook.com/profile/: 404 Client Error: Not Found for url: https://www.congocookbook.com/profile/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/profile/
+2025-10-26 01:01:52,197 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/rare_recipes/index/ - Failed to scrape https://www.congocookbook.com/rare_recipes/index/: 404 Client Error: Not Found for url: https://www.congocookbook.com/rare_recipes/index/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/rare_recipes/index/
+2025-10-26 01:01:53,219 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/excerpts/ - Failed to scrape https://www.congocookbook.com/recipe_indexes/excerpts/: 404 Client Error: Not Found for url: https://www.congocookbook.com/recipe_indexes/excerpts/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/recipe_indexes/excerpts/
+2025-10-26 01:01:56,199 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/how_to_have_an_african_dinner_party/ - Failed to scrape https://www.congocookbook.com/recipe_indexes/how_to_have_an_african_dinner_party/: 404 Client Error: Not Found for url: https://www.congocookbook.com/recipe_indexes/how_to_have_an_african_dinner_party/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/recipe_indexes/how_to_have_an_african_dinner_party/
+2025-10-26 01:01:57,428 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/recipes_by_country_and_region/ - Failed to scrape https://www.congocookbook.com/recipe_indexes/recipes_by_country_and_region/: 404 Client Error: Not Found for url: https://www.congocookbook.com/recipe_indexes/recipes_by_country_and_region/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/recipe_indexes/recipes_by_country_and_region/
+2025-10-26 01:01:58,658 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/rice-recipes/ - Failed to scrape https://www.congocookbook.com/rice-recipes/: 404 Client Error: Not Found for url: https://www.congocookbook.com/rice-recipes/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/rice-recipes/
+2025-10-26 01:01:59,913 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/sitemap/ - Failed to scrape https://www.congocookbook.com/sitemap/: 404 Client Error: Not Found for url: https://www.congocookbook.com/sitemap/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/sitemap/
+2025-10-26 01:02:01,049 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/soup-and-stew-recipes/ - Failed to scrape https://www.congocookbook.com/soup-and-stew-recipes/: 404 Client Error: Not Found for url: https://www.congocookbook.com/soup-and-stew-recipes/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/soup-and-stew-recipes/
+2025-10-26 01:02:02,751 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/bay-leaf/ - Failed to scrape https://www.congocookbook.com/tag/bay-leaf/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/bay-leaf/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/bay-leaf/
+2025-10-26 01:02:06,994 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/beef-broth-or-beef-stock/ - Failed to scrape https://www.congocookbook.com/tag/beef-broth-or-beef-stock/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/beef-broth-or-beef-stock/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/beef-broth-or-beef-stock/
+2025-10-26 01:02:08,331 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/black-pepper/ - Failed to scrape https://www.congocookbook.com/tag/black-pepper/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/black-pepper/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/black-pepper/
+2025-10-26 01:02:09,332 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/boiling/ - Failed to scrape https://www.congocookbook.com/tag/boiling/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/boiling/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/boiling/
+2025-10-26 01:02:10,364 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/butter/ - Failed to scrape https://www.congocookbook.com/tag/butter/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/butter/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/butter/
+2025-10-26 01:02:11,502 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/canned-tomato/ - Failed to scrape https://www.congocookbook.com/tag/canned-tomato/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/canned-tomato/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/canned-tomato/
+2025-10-26 01:02:12,638 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/carrot/ - Failed to scrape https://www.congocookbook.com/tag/carrot/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/carrot/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/carrot/
+2025-10-26 01:02:13,949 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cayenne-pepper-or-red-pepper/ - Failed to scrape https://www.congocookbook.com/tag/cayenne-pepper-or-red-pepper/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/cayenne-pepper-or-red-pepper/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/cayenne-pepper-or-red-pepper/
+2025-10-26 01:02:15,197 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/central-africa/ - Failed to scrape https://www.congocookbook.com/tag/central-africa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/central-africa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/central-africa/
+2025-10-26 01:02:16,397 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chicken-broth-or-chicken-stock/ - Failed to scrape https://www.congocookbook.com/tag/chicken-broth-or-chicken-stock/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/chicken-broth-or-chicken-stock/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/chicken-broth-or-chicken-stock/
+2025-10-26 01:02:17,479 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chicken/ - Failed to scrape https://www.congocookbook.com/tag/chicken/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/chicken/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/chicken/
+2025-10-26 01:02:18,584 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chile-pepper/ - Failed to scrape https://www.congocookbook.com/tag/chile-pepper/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/chile-pepper/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/chile-pepper/
+2025-10-26 01:02:19,604 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cinnamon/ - Failed to scrape https://www.congocookbook.com/tag/cinnamon/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/cinnamon/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/cinnamon/
+2025-10-26 01:02:20,636 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/coriander/ - Failed to scrape https://www.congocookbook.com/tag/coriander/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/coriander/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/coriander/
+2025-10-26 01:02:21,639 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cumin/ - Failed to scrape https://www.congocookbook.com/tag/cumin/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/cumin/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/cumin/
+2025-10-26 01:02:22,658 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/curry-powder/ - Failed to scrape https://www.congocookbook.com/tag/curry-powder/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/curry-powder/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/curry-powder/
+2025-10-26 01:02:23,904 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/dried-prawns-dried-shrimp/ - Failed to scrape https://www.congocookbook.com/tag/dried-prawns-dried-shrimp/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/dried-prawns-dried-shrimp/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/dried-prawns-dried-shrimp/
+2025-10-26 01:02:24,905 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/eastern-africa/ - Failed to scrape https://www.congocookbook.com/tag/eastern-africa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/eastern-africa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/eastern-africa/
+2025-10-26 01:02:25,965 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/eggplant/ - Failed to scrape https://www.congocookbook.com/tag/eggplant/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/eggplant/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/eggplant/
+2025-10-26 01:02:27,018 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/fish-dried-or-salted-or-smoked/ - Failed to scrape https://www.congocookbook.com/tag/fish-dried-or-salted-or-smoked/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/fish-dried-or-salted-or-smoked/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/fish-dried-or-salted-or-smoked/
+2025-10-26 01:02:28,349 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/fish/ - Failed to scrape https://www.congocookbook.com/tag/fish/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/fish/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/fish/
+2025-10-26 01:02:29,581 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/frying/ - Failed to scrape https://www.congocookbook.com/tag/frying/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/frying/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/frying/
+2025-10-26 01:02:30,521 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/garlic/ - Failed to scrape https://www.congocookbook.com/tag/garlic/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/garlic/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/garlic/
+2025-10-26 01:02:31,481 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/ginger-root/ - Failed to scrape https://www.congocookbook.com/tag/ginger-root/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/ginger-root/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/ginger-root/
+2025-10-26 01:02:32,520 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/ginger/ - Failed to scrape https://www.congocookbook.com/tag/ginger/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/ginger/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/ginger/
+2025-10-26 01:02:33,831 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/greens/ - Failed to scrape https://www.congocookbook.com/tag/greens/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/greens/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/greens/
+2025-10-26 01:02:34,804 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/lemon-juice/ - Failed to scrape https://www.congocookbook.com/tag/lemon-juice/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/lemon-juice/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/lemon-juice/
+2025-10-26 01:02:35,779 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/maggi-sauce-or-maggi-cube/ - Failed to scrape https://www.congocookbook.com/tag/maggi-sauce-or-maggi-cube/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/maggi-sauce-or-maggi-cube/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/maggi-sauce-or-maggi-cube/
+2025-10-26 01:02:36,815 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/oil/ - Failed to scrape https://www.congocookbook.com/tag/oil/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/oil/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/oil/
+2025-10-26 01:02:37,950 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/okra/ - Failed to scrape https://www.congocookbook.com/tag/okra/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/okra/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/okra/
+2025-10-26 01:02:39,011 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/onion/ - Failed to scrape https://www.congocookbook.com/tag/onion/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/onion/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/onion/
+2025-10-26 01:02:39,977 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/parsley/ - Failed to scrape https://www.congocookbook.com/tag/parsley/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/parsley/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/parsley/
+2025-10-26 01:02:40,915 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/peanut-butter/ - Failed to scrape https://www.congocookbook.com/tag/peanut-butter/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/peanut-butter/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/peanut-butter/
+2025-10-26 01:02:41,886 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/potato/ - Failed to scrape https://www.congocookbook.com/tag/potato/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/potato/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/potato/
+2025-10-26 01:02:42,964 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/red-palm-oil/ - Failed to scrape https://www.congocookbook.com/tag/red-palm-oil/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/red-palm-oil/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/red-palm-oil/
+2025-10-26 01:02:44,074 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/roasting/ - Failed to scrape https://www.congocookbook.com/tag/roasting/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/roasting/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/roasting/
+2025-10-26 01:02:45,083 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/salt/ - Failed to scrape https://www.congocookbook.com/tag/salt/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/salt/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/salt/
+2025-10-26 01:02:46,298 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/simmering-stewing/ - Failed to scrape https://www.congocookbook.com/tag/simmering-stewing/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/simmering-stewing/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/simmering-stewing/
+2025-10-26 01:02:47,232 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/southern-africa/ - Failed to scrape https://www.congocookbook.com/tag/southern-africa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/southern-africa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/southern-africa/
+2025-10-26 01:02:48,383 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/squash/ - Failed to scrape https://www.congocookbook.com/tag/squash/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/squash/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/squash/
+2025-10-26 01:02:49,380 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/sweet-green-pepper-bell-pepper/ - Failed to scrape https://www.congocookbook.com/tag/sweet-green-pepper-bell-pepper/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/sweet-green-pepper-bell-pepper/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/sweet-green-pepper-bell-pepper/
+2025-10-26 01:02:50,451 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato-paste-or-tomato-sauce/ - Failed to scrape https://www.congocookbook.com/tag/tomato-paste-or-tomato-sauce/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/tomato-paste-or-tomato-sauce/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/tomato-paste-or-tomato-sauce/
+2025-10-26 01:02:51,411 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato-paste/ - Failed to scrape https://www.congocookbook.com/tag/tomato-paste/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/tomato-paste/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/tomato-paste/
+2025-10-26 01:02:52,452 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato/ - Failed to scrape https://www.congocookbook.com/tag/tomato/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/tomato/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/tomato/
+2025-10-26 01:02:53,600 [ERROR] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/western-africa/ - Failed to scrape https://www.congocookbook.com/tag/western-africa/: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/western-africa/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 299, in scrape
+    response = self._http.get(url)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/http_client.py", line 59, in get
+    response.raise_for_status()
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.congocookbook.com/tag/western-africa/
+2025-10-26 01:11:49,550 [ERROR] scraper.service source=Little Bit of Czech recipe=https://www.littlebitofczech.com/wp-content/uploads/2014/04/IMG_2464.jpg - Failed to scrape https://www.littlebitofczech.com/wp-content/uploads/2014/04/IMG_2464.jpg: The markup you provided was rejected by the parser. Trying a different parser or a different encoding may help.
+
+Original exception(s) from parser:
+ AssertionError: expected name token at '<![8����8��I\x168�+\x1f\\��'
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 300, in scrape
+    soup = BeautifulSoup(response.text, "html.parser")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/bs4/__init__.py", line 485, in __init__
+    raise ParserRejectedMarkup(
+bs4.exceptions.ParserRejectedMarkup: The markup you provided was rejected by the parser. Trying a different parser or a different encoding may help.
+
+Original exception(s) from parser:
+ AssertionError: expected name token at '<![8����8��I\x168�+\x1f\\��'
+2025-10-26 01:11:57,566 [ERROR] scraper.service source=Little Bit of Czech recipe=https://www.littlebitofczech.com/wp-content/uploads/2014/04/IMG_2744.jpg - Failed to scrape https://www.littlebitofczech.com/wp-content/uploads/2014/04/IMG_2744.jpg: The markup you provided was rejected by the parser. Trying a different parser or a different encoding may help.
+
+Original exception(s) from parser:
+ AssertionError: expected name token at '<![�s�p�\x03�VŮ��0��\x00\x08q'
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 106, in _scrape_template
+    recipe = self._article_scraper.scrape(template, url)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 300, in scrape
+    soup = BeautifulSoup(response.text, "html.parser")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/venv/lib/python3.12/site-packages/bs4/__init__.py", line 485, in __init__
+    raise ParserRejectedMarkup(
+bs4.exceptions.ParserRejectedMarkup: The markup you provided was rejected by the parser. Trying a different parser or a different encoding may help.
+
+Original exception(s) from parser:
+ AssertionError: expected name token at '<![�s�p�\x03�VŮ��0��\x00\x08q'
