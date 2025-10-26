@@ -5905,7 +5905,7 @@
     "name": "Little Zurich Kitchen (Switzerland)",
     "url": "https://www.littlezurichkitchen.ch/recipes/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -6083,7 +6083,7 @@
     "name": "Polyphagic Abby - Taiwanese Recipes (Taiwan)",
     "url": "https://polyphagicabby.com/taiwanese/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -6261,7 +6261,7 @@
     "name": "United Republic of Tanzania - Traditional Recipes (Tanzania)",
     "url": "https://unitedrepublicoftanzania.com/topic/tanzania-culture/tanzania-food-recipes-traditional/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -6439,7 +6439,7 @@
     "name": "Boondocking Recipes - Togo (Togo)",
     "url": "https://boondockingrecipes.com/8-traditional-togo-recipes/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -6528,7 +6528,7 @@
     "name": "Cuisine Togolaise (Togo)",
     "url": "https://cuisinetogolaise.com/category/recipe/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -6795,7 +6795,7 @@
     "name": "Cooking with Ria (Trinidad & Tobago)",
     "url": "https://cookingwithria.com/recipe-index-2/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -7151,7 +7151,7 @@
     "name": "Turkmen Kitchen (Turkmenistan)",
     "url": "https://turkmenkitchen.com/en",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -7685,7 +7685,7 @@
     "name": "196 Flavors - Uruguayan Recipes (Uruguay)",
     "url": "https://www.196flavors.com/most-popular-uruguayan-recipes",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
