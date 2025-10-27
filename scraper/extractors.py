@@ -122,6 +122,70 @@ def _normalise_instructions(value) -> List[str]:
     return [item for item in instructions if item]
 
 
+def _same_domain(base_url: str, candidate: str) -> bool:
+    base = urlparse(base_url)
+    target = urlparse(candidate)
+    base_host = base.netloc.lower().lstrip("www.")
+    target_host = target.netloc.lower().lstrip("www.")
+    if target_host and target_host != base_host:
+        return False
+    return bool(target_host) or (not target.netloc and bool(target.path))
+
+
+def _collect_json_ld_urls(node) -> Set[str]:
+    """Return potential article URLs discovered within a JSON-LD node."""
+
+    urls: Set[str] = set()
+    if isinstance(node, dict):
+        for key in ("url", "@id"):
+            value = node.get(key)
+            if isinstance(value, str):
+                candidate = value.strip()
+                if candidate:
+                    urls.add(candidate)
+
+        main_entity = node.get("mainEntityOfPage")
+        if isinstance(main_entity, str):
+            candidate = main_entity.strip()
+            if candidate:
+                urls.add(candidate)
+        elif isinstance(main_entity, (dict, list)):
+            urls.update(_collect_json_ld_urls(main_entity))
+
+        if node.get("@type") == "ItemList":
+            urls.update(_collect_json_ld_urls(node.get("itemListElement")))
+
+        for value in node.values():
+            if isinstance(value, (dict, list)):
+                urls.update(_collect_json_ld_urls(value))
+
+    elif isinstance(node, list):
+        for item in node:
+            urls.update(_collect_json_ld_urls(item))
+
+    return urls
+
+
+def _extract_listing_links_from_jsonld(soup: BeautifulSoup, base_url: str) -> Set[str]:
+    """Derive article URLs from JSON-LD blobs embedded on listing pages."""
+
+    discovered: Set[str] = set()
+    for script in soup.find_all("script", attrs={"type": "application/ld+json"}):
+        payload = script.string or script.get_text()
+        for candidate in _safe_json_loads(payload):
+            for url in _collect_json_ld_urls(candidate):
+                if not url:
+                    continue
+                absolute = urljoin(base_url, url)
+                if not absolute:
+                    continue
+                if not _same_domain(base_url, absolute):
+                    continue
+                discovered.add(absolute)
+
+    return discovered
+
+
 class ListingScraper:
     """Scrape recipe article URLs from listing pages."""
 
@@ -141,9 +205,10 @@ class ListingScraper:
         discovered: Set[str] = set()
         had_listing_error = False
         last_error: Optional[Exception] = None
+        had_listing_results = False
         for listing in template.listings:
             try:
-                discovered.update(self._scrape_listing(listing))
+                urls = self._scrape_listing(listing)
             except Exception as exc:  # pylint: disable=broad-except
                 had_listing_error = True
                 last_error = exc
@@ -156,6 +221,17 @@ class ListingScraper:
                         "source_name": template.name,
                         "recipe": listing.url,
                     },
+                )
+                continue
+
+            if urls:
+                discovered.update(urls)
+                had_listing_results = True
+            else:
+                logger.debug(
+                    "Listing discovery yielded no URLs for %s using selector %s",
+                    listing.url,
+                    listing.link_selector,
                 )
 
         sitemap_urls: Set[str] = set()
@@ -176,6 +252,11 @@ class ListingScraper:
             raise ListingDiscoveryError(
                 f"Failed to discover listings for {template.name}", last_error
             )
+        if not discovered and not had_listing_results:
+            raise ListingDiscoveryError(
+                f"No article URLs discovered for {template.name} "
+                f"({template.url}). Verify the listing link selector configuration."
+            )
         return discovered
 
     def _scrape_listing(self, listing: ListingConfig) -> Set[str]:
@@ -187,11 +268,24 @@ class ListingScraper:
             response = self._http.get(next_page)
             soup = BeautifulSoup(response.text, "html.parser")
             base_url = response.url
+            page_urls: Set[str] = set()
             for element in soup.select(listing.link_selector):
                 href = element.get("href")
                 if not href:
                     continue
-                article_urls.add(urljoin(base_url, href))
+                page_urls.add(urljoin(base_url, href))
+
+            if not page_urls:
+                json_ld_links = _extract_listing_links_from_jsonld(soup, base_url)
+                if json_ld_links:
+                    logger.debug(
+                        "Listing discovery recovered %d URLs from JSON-LD on %s",
+                        len(json_ld_links),
+                        base_url,
+                    )
+                page_urls.update(json_ld_links)
+
+            article_urls.update(page_urls)
 
             pages_processed += 1
             pages_seen.add(base_url)
@@ -264,13 +358,7 @@ class ListingScraper:
 
     @staticmethod
     def _same_domain(base_url: str, candidate: str) -> bool:
-        base = urlparse(base_url)
-        target = urlparse(candidate)
-        base_host = base.netloc.lower().lstrip("www.")
-        target_host = target.netloc.lower().lstrip("www.")
-        if target_host and target_host != base_host:
-            return False
-        return bool(target_host) or (not target.netloc and bool(target.path))
+        return _same_domain(base_url, candidate)
 
     @staticmethod
     def _decode_sitemap_content(url: str, payload: bytes) -> Optional[bytes]:
