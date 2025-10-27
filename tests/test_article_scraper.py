@@ -208,6 +208,88 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             "https://www.tootingfamilykitchen.com/images/zaalouk.jpg",
         )
 
+    def test_subsections_do_not_split_single_recipe(self) -> None:
+        html = """
+        <html>
+            <body>
+                <h1>Carrot Cake Sourdough Muffins</h1>
+                <div>
+                    <h2>Ingredients</h2>
+                </div>
+                <div>
+                    <h3>For the muffins</h3>
+                </div>
+                <div>
+                    <ul>
+                        <li>200g sourdough starter</li>
+                        <li>150g flour</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>For the frosting</h3>
+                </div>
+                <div>
+                    <ul>
+                        <li>100g cream cheese</li>
+                        <li>50g icing sugar</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>Instructions</h2>
+                </div>
+                <div>
+                    <ol>
+                        <li>Mix muffin ingredients.</li>
+                        <li>Bake until golden.</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3>For the frosting</h3>
+                </div>
+                <div>
+                    <p>Beat together cream cheese and icing sugar.</p>
+                </div>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Pantry Mama",
+            url="https://www.pantrymama.com/carrot-cake-sourdough-muffins/",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
+
+        self.assertEqual(recipe.title, "Carrot Cake Sourdough Muffins")
+        self.assertEqual(
+            recipe.ingredients,
+            [
+                "200g sourdough starter",
+                "150g flour",
+                "100g cream cheese",
+                "50g icing sugar",
+            ],
+        )
+        self.assertEqual(
+            recipe.instructions,
+            [
+                "Mix muffin ingredients.",
+                "Bake until golden.",
+                "Beat together cream cheese and icing sugar.",
+            ],
+        )
+
     def test_selectors_preferred_when_present(self) -> None:
         html = """
         <html>

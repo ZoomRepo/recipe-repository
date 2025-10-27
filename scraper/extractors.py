@@ -286,9 +286,20 @@ def _find_section_image(heading: Tag) -> Optional[str]:
     return search_forward() or search_backward()
 
 
+def _heading_level(element: Tag) -> int:
+    if element.name in HEADING_TAGS:
+        try:
+            return int(element.name[1])
+        except (IndexError, ValueError):
+            return 7
+    return 7
+
+
 def _extract_recipe_sections(soup: BeautifulSoup) -> List[RecipeSection]:
     sections: List[RecipeSection] = []
     current: Optional[RecipeSection] = None
+    current_title_level: Optional[int] = None
+    last_field: Optional[str] = None
 
     def ensure_current() -> RecipeSection:
         nonlocal current
@@ -301,42 +312,91 @@ def _extract_recipe_sections(soup: BeautifulSoup) -> List[RecipeSection]:
             section.container = element.parent if isinstance(element.parent, Tag) else element
 
     def finalise_current() -> None:
-        nonlocal current
+        nonlocal current, current_title_level, last_field
         if current:
             current.ingredients = _dedupe_preserve_order(current.ingredients)
             current.instructions = _dedupe_preserve_order(current.instructions)
             if current.has_content():
                 sections.append(current)
         current = None
+        current_title_level = None
+        last_field = None
 
     for element in soup.find_all(list(SECTION_CONTAINER_TAGS)):
         label = _section_label(element)
         if not label:
             continue
         lowered = label.lower()
+        level = _heading_level(element)
+
         if any(keyword in lowered for keyword in INGREDIENT_HEADINGS):
             section = ensure_current()
             section.ingredients.extend(_extract_section_items(element))
             attach_container(section, element)
+            last_field = "ingredients"
+            if element.name in HEADING_TAGS:
+                heading_level = _heading_level(element)
+                if current_title_level is None or heading_level < current_title_level:
+                    current_title_level = heading_level
             continue
         if any(keyword in lowered for keyword in INSTRUCTION_HEADINGS):
             section = ensure_current()
             section.instructions.extend(_extract_section_items(element))
             attach_container(section, element)
+            last_field = "instructions"
+            if element.name in HEADING_TAGS:
+                heading_level = _heading_level(element)
+                if current_title_level is None or heading_level < current_title_level:
+                    current_title_level = heading_level
             continue
 
-        # Non-content heading marks a potential recipe boundary.
-        if current and current.has_content():
-            finalise_current()
-        elif current and not current.has_content():
+        if current and not current.has_content() and last_field is None:
             current = None
+            current_title_level = None
+            last_field = None
 
-        current = RecipeSection(
-            title=label,
-            anchor=(element.get("id") or element.get("data-id")),
-            image=_find_section_image(element),
-            container=element.parent if isinstance(element.parent, Tag) else element,
-        )
+        if current and current.instructions:
+            boundary_level = current_title_level if current_title_level is not None else 0
+            if level <= boundary_level:
+                if current.has_content():
+                    finalise_current()
+                else:
+                    current = None
+            else:
+                # Treat as a subsection that continues instruction content.
+                items = _extract_section_items(element)
+                if items:
+                    current.instructions.extend(items)
+                    last_field = "instructions"
+                    attach_container(current, element)
+                continue
+
+        if current is None:
+            current = RecipeSection(
+                title=label,
+                anchor=(element.get("id") or element.get("data-id")),
+                image=_find_section_image(element),
+                container=element.parent if isinstance(element.parent, Tag) else element,
+            )
+            current_title_level = level
+            continue
+
+        # Treat as a subsection of the current recipe.
+        if not current.title:
+            current.title = label
+            current.anchor = current.anchor or element.get("id") or element.get("data-id")
+            if not current.image:
+                current.image = _find_section_image(element)
+            current_title_level = level
+        else:
+            items = _extract_section_items(element)
+            if items:
+                if last_field == "instructions":
+                    current.instructions.extend(items)
+                else:
+                    current.ingredients.extend(items)
+                    last_field = "ingredients"
+            attach_container(current, element)
 
     if current and current.has_content():
         finalise_current()
