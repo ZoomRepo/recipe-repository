@@ -211,5 +211,66 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
 
+    def test_wprm_fallback_markup(self) -> None:
+        html = """
+        <html>
+            <body>
+                <h1>African Fried chicken</h1>
+                <div class="wprm-fallback-recipe">
+                    <div class="wprm-fallback-recipe-ingredients">
+                        <ul>
+                            <li>2 chicken</li>
+                            <li>1 onion (1/2 sliced)</li>
+                            <li>1 tablespoon ginger</li>
+                        </ul>
+                    </div>
+                    <div class="wprm-fallback-recipe-instructions">
+                        <ol>
+                            <li>Grind the spices with the least amount of water as possible.</li>
+                            <li>Mix the chicken with the blended spices and simmer.</li>
+                            <li>Fry in batches until golden.</li>
+                        </ol>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/article",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1"],
+                    "ingredients": [".ingredients li"],
+                    "instructions": [".instructions li"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipe = scraper.scrape(template, template.url)
+
+        self.assertEqual(recipe.title, "African Fried chicken")
+        self.assertEqual(
+            recipe.ingredients,
+            [
+                "2 chicken",
+                "1 onion (1/2 sliced)",
+                "1 tablespoon ginger",
+            ],
+        )
+        self.assertEqual(
+            recipe.instructions,
+            [
+                "Grind the spices with the least amount of water as possible.",
+                "Mix the chicken with the blended spices and simmer.",
+                "Fry in batches until golden.",
+            ],
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

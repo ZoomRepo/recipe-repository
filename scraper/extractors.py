@@ -325,6 +325,44 @@ def _extract_semistructured_lists(soup: BeautifulSoup, keywords: Set[str]) -> Li
     return values
 
 
+def _extract_wprm_fallback_lists(soup: BeautifulSoup, field_name: str) -> List[str]:
+    """Extract lists from WP Recipe Maker fallback markup."""
+
+    suffix = None
+    if field_name == "ingredients":
+        suffix = "ingredients"
+    elif field_name == "instructions":
+        suffix = "instructions"
+
+    if not suffix:
+        return []
+
+    selector = f".wprm-fallback-recipe-{suffix}"
+    values: List[str] = []
+    for container in soup.select(selector):
+        items: List[str] = []
+        for li in container.find_all("li"):
+            items.extend(_split_multiline_text(li.get_text(separator="\n")))
+
+        if not items:
+            for paragraph in container.find_all("p"):
+                items.extend(_split_multiline_text(paragraph.get_text(separator="\n")))
+
+        for item in items:
+            cleaned = item.strip()
+            if cleaned:
+                values.append(cleaned)
+
+    # Deduplicate while preserving order
+    seen: Set[str] = set()
+    unique_values: List[str] = []
+    for value in values:
+        if value not in seen:
+            seen.add(value)
+            unique_values.append(value)
+    return unique_values
+
+
 class ListingScraper:
     """Scrape recipe article URLs from listing pages."""
 
@@ -655,8 +693,14 @@ class ArticleScraper:
             for selector in selector_list:
                 values.extend(_extract_text_list(soup, selector))
             if not values and field_name == "ingredients":
+                values = _extract_wprm_fallback_lists(soup, field_name)
+                if values:
+                    return values
                 values = _extract_semistructured_lists(soup, INGREDIENT_HEADINGS)
             elif not values and field_name == "instructions":
+                values = _extract_wprm_fallback_lists(soup, field_name)
+                if values:
+                    return values
                 values = _extract_semistructured_lists(soup, INSTRUCTION_HEADINGS)
             # Remove duplicates while preserving order
             seen = set()
