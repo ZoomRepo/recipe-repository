@@ -333,6 +333,81 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             ],
         )
 
+    def test_generic_meta_title_and_image_fallback(self) -> None:
+        html = """
+        <html>
+            <head>
+                <title>Poached Apricots - Ozlem's Turkish Table</title>
+                <meta property="og:title" content="Poached Dried Apricots in Light Syrup with Kaymak" />
+                <meta property="og:image" content="https://cdn.example.com/images/apricots.jpg" />
+            </head>
+            <body>
+                <article>
+                    <p>Recipe content.</p>
+                </article>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/apricots",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": [".missing-title"],
+                    "image": [".missing-image"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipe = scraper.scrape(template, template.url)
+
+        self.assertEqual(
+            recipe.title, "Poached Dried Apricots in Light Syrup with Kaymak"
+        )
+        self.assertEqual(
+            recipe.image, "https://cdn.example.com/images/apricots.jpg"
+        )
+
+    def test_data_attribute_image_fallback_is_absolute(self) -> None:
+        html = """
+        <html>
+            <head>
+                <title>Baobab Drink</title>
+            </head>
+            <body>
+                <div class="entry-content">
+                    <img data-lazy-src="/wp-content/uploads/baobab-drink.jpg" alt="Baobab Drink" />
+                </div>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Test",
+            url="https://naturallyzimbabwean.com/baobab-drink/",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": [".missing-title"],
+                    "image": [".missing-image"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipe = scraper.scrape(template, template.url)
+
+        self.assertEqual(recipe.title, "Baobab Drink")
+        self.assertEqual(
+            recipe.image,
+            "https://naturallyzimbabwean.com/wp-content/uploads/baobab-drink.jpg",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

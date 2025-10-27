@@ -77,13 +77,30 @@ def _extract_image(soup: BeautifulSoup, selector: str) -> Optional[str]:
             return str(element["content"]).strip()
         if element.has_attr("srcset"):
             return element["srcset"].split()[0]
+        if element.has_attr("data-srcset"):
+            return element["data-srcset"].split()[0]
         if element.has_attr("src"):
             return element["src"].strip()
         if element.has_attr("data-src"):
             return element["data-src"].strip()
+        if element.has_attr("data-lazy-src"):
+            return element["data-lazy-src"].strip()
+        if element.has_attr("data-original"):
+            return element["data-original"].strip()
+        if element.has_attr("data-pin-media"):
+            return element["data-pin-media"].strip()
         if element.name == "img":
             return element.get("src")
     return None
+
+
+def _normalise_url(candidate: Optional[str], base_url: str) -> Optional[str]:
+    if not candidate:
+        return None
+    cleaned = candidate.strip()
+    if not cleaned:
+        return None
+    return urljoin(base_url, cleaned)
 
 
 def _detect_list_field(field: str) -> bool:
@@ -628,6 +645,7 @@ class ArticleScraper:
             self._populate_from_structured(recipe, structured_recipe)
 
         self._populate_from_selectors(recipe, soup, template.article)
+        self._apply_generic_fallbacks(recipe, soup, response.url)
         return recipe
 
     def _extract_structured_data(
@@ -777,3 +795,52 @@ class ArticleScraper:
             if value:
                 return value
         return None
+
+    def _apply_generic_fallbacks(
+        self, recipe: Recipe, soup: BeautifulSoup, base_url: str
+    ) -> None:
+        if not recipe.title:
+            for selector in (
+                "meta[property='og:title']",
+                "meta[property='og:title:alt']",
+                "meta[name='twitter:title']",
+                "meta[name='title']",
+                "title",
+            ):
+                value = _extract_first_text(soup, selector)
+                if value:
+                    recipe.title = value
+                    break
+
+        if not recipe.image:
+            for selector in (
+                "meta[property='og:image']",
+                "meta[property='og:image:url']",
+                "meta[property='og:image:secure_url']",
+                "meta[name='twitter:image']",
+                "meta[name='twitter:image:src']",
+                "link[rel='image_src']",
+            ):
+                candidate = _extract_image(soup, selector)
+                if not candidate:
+                    continue
+                absolute = _normalise_url(candidate, base_url)
+                if absolute:
+                    recipe.image = absolute
+                    break
+
+        if not recipe.image:
+            for selector in (
+                "article img",
+                "div.entry-content img",
+                "div.post-content img",
+                "main img",
+                "img",
+            ):
+                candidate = _extract_image(soup, selector)
+                if not candidate:
+                    continue
+                absolute = _normalise_url(candidate, base_url)
+                if absolute:
+                    recipe.image = absolute
+                    break
