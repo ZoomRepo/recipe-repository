@@ -55,3 +55,6 @@ rerun_failures:
 	@. venv/bin/activate && \
 			export FLASK_DEBUG=1 && export FLASK_ENV=development && \
 			python -m scraper.cli --config config/scraper_templates.json --rerun-failures
+
+compile_scraping_failures:
+	python3 scraper/scripts/compile_scraping_failures.py
