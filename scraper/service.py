@@ -123,7 +123,7 @@ class RecipeScraperService:
         saved_any = False
         for url in sorted(article_urls):
             try:
-                recipe = self._article_scraper.scrape(template, url)
+                recipes = self._article_scraper.scrape(template, url)
             except Exception as exc:  # pylint: disable=broad-except
                 logger.exception(
                     "Failed to scrape %s: %s", url, exc,
@@ -139,35 +139,41 @@ class RecipeScraperService:
                 )
                 continue
 
-            if not recipe.title and not recipe.ingredients:
-                logger.debug("Skipping %s due to missing essential data", url)
-                continue
+            if recipes:
+                self._repository.resolve_failure(template.name, "article", url)
 
-            self._repository.resolve_failure(template.name, "article", recipe.source_url)
-            try:
-                self._repository.save(recipe)
-                logger.info("Saved recipe: %s", recipe.title or recipe.source_url)
-                saved_any = True
+            for recipe in recipes:
+                if not recipe.title and not recipe.ingredients:
+                    logger.debug("Skipping %s due to missing essential data", url)
+                    continue
+
                 self._repository.resolve_failure(
-                    template.name, "persist", recipe.source_url
+                    template.name, "article", recipe.source_url
                 )
-            except Exception as exc:  # pylint: disable=broad-except
-                logger.exception(
-                    "Failed to persist recipe %s: %s", url, exc,
-                    extra={
-                        "source_name": template.name,
-                        "recipe": recipe.title or recipe.source_url or url,
-                    },
-                )
-                self._repository.record_failure(
-                    ScrapeFailure(
-                        template_name=template.name,
-                        stage="persist",
-                        source_url=recipe.source_url,
-                        error_message=str(exc),
-                        context={"recipe": recipe.as_record()},
+                try:
+                    self._repository.save(recipe)
+                    logger.info("Saved recipe: %s", recipe.title or recipe.source_url)
+                    saved_any = True
+                    self._repository.resolve_failure(
+                        template.name, "persist", recipe.source_url
                     )
-                )
+                except Exception as exc:  # pylint: disable=broad-except
+                    logger.exception(
+                        "Failed to persist recipe %s: %s", url, exc,
+                        extra={
+                            "source_name": template.name,
+                            "recipe": recipe.title or recipe.source_url or url,
+                        },
+                    )
+                    self._repository.record_failure(
+                        ScrapeFailure(
+                            template_name=template.name,
+                            stage="persist",
+                            source_url=recipe.source_url,
+                            error_message=str(exc),
+                            context={"recipe": recipe.as_record()},
+                        )
+                    )
 
         return saved_any
 
@@ -224,7 +230,7 @@ class RecipeScraperService:
             return
 
         try:
-            recipe = self._article_scraper.scrape(template, url)
+            recipes = self._article_scraper.scrape(template, url)
         except Exception as exc:  # pylint: disable=broad-except
             logger.warning(
                 "Replay scrape failed again for %s (%s): %s",
@@ -243,49 +249,62 @@ class RecipeScraperService:
             )
             return
 
-        if not recipe.title and not recipe.ingredients:
+        if not recipes:
             logger.debug(
-                "Replay scrape for %s produced insufficient data; skipping",
+                "Replay scrape for %s returned no recipes; skipping",
                 url,
             )
             return
 
-        self._repository.resolve_failure(template.name, "article", recipe.source_url)
-        try:
-            self._repository.save(recipe)
-            logger.info("Replay succeeded for %s", recipe.source_url)
-            self._repository.resolve_failure(
-                template.name, "persist", recipe.source_url
-            )
-        except Exception as exc:  # pylint: disable=broad-except
-            logger.exception(
-                "Replay persistence failed for %s: %s", recipe.source_url, exc,
-                extra={
-                    "source_name": template.name,
-                    "recipe": recipe.title or recipe.source_url or "-",
-                },
-            )
-            self._repository.record_failure(
-                ScrapeFailure(
-                    template_name=template.name,
-                    stage="persist",
-                    source_url=recipe.source_url,
-                    error_message=str(exc),
-                    context={"recipe": recipe.as_record()},
+        self._repository.resolve_failure(template.name, "article", url)
+
+        for recipe in recipes:
+            if not recipe.title and not recipe.ingredients:
+                logger.debug(
+                    "Replay scrape produced insufficient data for %s; skipping", url
                 )
+                continue
+
+            self._repository.resolve_failure(
+                template.name, "article", recipe.source_url
             )
+            try:
+                self._repository.save(recipe)
+                logger.info("Replay succeeded for %s", recipe.source_url)
+                self._repository.resolve_failure(
+                    template.name, "persist", recipe.source_url
+                )
+            except Exception as exc:  # pylint: disable=broad-except
+                logger.exception(
+                    "Replay persistence failed for %s: %s", recipe.source_url, exc,
+                    extra={
+                        "source_name": template.name,
+                        "recipe": recipe.title or recipe.source_url or "-",
+                    },
+                )
+                self._repository.record_failure(
+                    ScrapeFailure(
+                        template_name=template.name,
+                        stage="persist",
+                        source_url=recipe.source_url,
+                        error_message=str(exc),
+                        context={"recipe": recipe.as_record()},
+                    )
+                )
 
     def _retry_persist_failure(
         self, template: RecipeTemplate, failure: PendingFailure
     ) -> None:
         context = failure.context or {}
         recipe_payload = context.get("recipe")
-        recipe: Optional[Recipe]
+        recipe: Optional[Recipe] = None
         if recipe_payload:
             recipe = Recipe.from_record(recipe_payload)
         elif failure.source_url:
             try:
-                recipe = self._article_scraper.scrape(template, failure.source_url)
+                scraped_recipes = self._article_scraper.scrape(
+                    template, failure.source_url
+                )
             except Exception as exc:  # pylint: disable=broad-except
                 logger.warning(
                     "Unable to re-scrape %s during persistence replay: %s",
@@ -305,9 +324,23 @@ class RecipeScraperService:
                     )
                 )
                 return
+            else:
+                for candidate in scraped_recipes:
+                    if candidate.source_url == failure.source_url:
+                        recipe = candidate
+                        break
+                if recipe is None and scraped_recipes:
+                    recipe = scraped_recipes[0]
         else:
             logger.debug(
                 "Failure %s for %s lacks context; skipping", failure.id, template.name
+            )
+            return
+
+        if recipe is None:
+            logger.debug(
+                "Unable to identify matching recipe for persistence replay %s",
+                failure.id,
             )
             return
 

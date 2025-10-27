@@ -4,7 +4,9 @@ from __future__ import annotations
 import gzip
 import json
 import logging
+import re
 from collections import deque
+from dataclasses import dataclass, field
 from io import BytesIO
 from typing import Iterable, Iterator, List, Optional, Sequence, Set
 from urllib.parse import urljoin, urlparse
@@ -53,6 +55,21 @@ NAVIGATION_FRAGMENT_KEYWORDS = {
 }
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class RecipeSection:
+    """Represents a logical recipe grouping discovered within a page."""
+
+    title: Optional[str] = None
+    anchor: Optional[str] = None
+    ingredients: List[str] = field(default_factory=list)
+    instructions: List[str] = field(default_factory=list)
+    image: Optional[str] = None
+    container: Optional[Tag] = None
+
+    def has_content(self) -> bool:
+        return bool(self.ingredients or self.instructions)
 
 
 def _clean_text(value: str) -> str:
@@ -188,6 +205,183 @@ def _normalise_base_url(url: str) -> str:
     return url.split("#", 1)[0].rstrip("/")
 
 
+def _dedupe_preserve_order(items: Iterable[str]) -> List[str]:
+    seen: Set[str] = set()
+    unique: List[str] = []
+    for item in items:
+        if item not in seen:
+            seen.add(item)
+            unique.append(item)
+    return unique
+
+
+_SLUG_RE = re.compile(r"[^a-z0-9]+")
+
+
+def _slugify(value: Optional[str]) -> str:
+    if not value:
+        return ""
+    slug = _SLUG_RE.sub("-", value.lower()).strip("-")
+    return slug
+
+
+def _extract_image_from_tag(element: Tag) -> Optional[str]:
+    if element.has_attr("content"):
+        candidate = str(element["content"]).strip()
+        if candidate:
+            return candidate
+    if element.has_attr("srcset"):
+        candidate = str(element["srcset"]).strip()
+        if candidate:
+            return candidate.split()[0]
+    if element.has_attr("data-srcset"):
+        candidate = str(element["data-srcset"]).strip()
+        if candidate:
+            return candidate.split()[0]
+    for attribute in (
+        "src",
+        "data-src",
+        "data-lazy-src",
+        "data-original",
+        "data-pin-media",
+    ):
+        if element.has_attr(attribute):
+            candidate = str(element[attribute]).strip()
+            if candidate:
+                return candidate
+    if element.name == "img":
+        candidate = element.get("src")
+        if candidate:
+            return str(candidate)
+    return None
+
+
+def _find_section_image(heading: Tag) -> Optional[str]:
+    def search_forward() -> Optional[str]:
+        for element in heading.next_elements:
+            if element is heading:
+                continue
+            if isinstance(element, Tag):
+                label = _section_label(element)
+                if label and not _is_content_heading_text(label):
+                    return None
+                if element.name == "img":
+                    candidate = _extract_image_from_tag(element)
+                    if candidate:
+                        return candidate
+        return None
+
+    def search_backward() -> Optional[str]:
+        for element in heading.previous_elements:
+            if isinstance(element, Tag):
+                label = _section_label(element)
+                if label and not _is_content_heading_text(label):
+                    return None
+                if element.name == "img":
+                    candidate = _extract_image_from_tag(element)
+                    if candidate:
+                        return candidate
+        return None
+
+    return search_forward() or search_backward()
+
+
+def _extract_recipe_sections(soup: BeautifulSoup) -> List[RecipeSection]:
+    sections: List[RecipeSection] = []
+    current: Optional[RecipeSection] = None
+
+    def ensure_current() -> RecipeSection:
+        nonlocal current
+        if current is None:
+            current = RecipeSection()
+        return current
+
+    def attach_container(section: RecipeSection, element: Tag) -> None:
+        if section.container is None:
+            section.container = element.parent if isinstance(element.parent, Tag) else element
+
+    def finalise_current() -> None:
+        nonlocal current
+        if current:
+            current.ingredients = _dedupe_preserve_order(current.ingredients)
+            current.instructions = _dedupe_preserve_order(current.instructions)
+            if current.has_content():
+                sections.append(current)
+        current = None
+
+    for element in soup.find_all(list(SECTION_CONTAINER_TAGS)):
+        label = _section_label(element)
+        if not label:
+            continue
+        lowered = label.lower()
+        if any(keyword in lowered for keyword in INGREDIENT_HEADINGS):
+            section = ensure_current()
+            section.ingredients.extend(_extract_section_items(element))
+            attach_container(section, element)
+            continue
+        if any(keyword in lowered for keyword in INSTRUCTION_HEADINGS):
+            section = ensure_current()
+            section.instructions.extend(_extract_section_items(element))
+            attach_container(section, element)
+            continue
+
+        # Non-content heading marks a potential recipe boundary.
+        if current and current.has_content():
+            finalise_current()
+        elif current and not current.has_content():
+            current = None
+
+        current = RecipeSection(
+            title=label,
+            anchor=(element.get("id") or element.get("data-id")),
+            image=_find_section_image(element),
+            container=element.parent if isinstance(element.parent, Tag) else element,
+        )
+
+    if current and current.has_content():
+        finalise_current()
+    elif current and not current.has_content():
+        current = None
+
+    return sections
+
+
+def _ensure_unique_anchor(anchor: str, used: Set[str]) -> str:
+    candidate = anchor
+    index = 2
+    while candidate in used:
+        candidate = f"{anchor}-{index}"
+        index += 1
+    used.add(candidate)
+    return candidate
+
+
+def _resolve_section_anchor(
+    section: Optional[RecipeSection],
+    index: int,
+    fallback_title: Optional[str],
+    used: Set[str],
+) -> str:
+    if section and section.anchor:
+        anchor = section.anchor.strip().lstrip("#")
+        if anchor:
+            return _ensure_unique_anchor(anchor, used)
+
+    for candidate in (
+        section.title if section else None,
+        fallback_title,
+        f"recipe-{index + 1}",
+    ):
+        slug = _slugify(candidate)
+        if slug:
+            anchor = slug
+            if not anchor.startswith("recipe-"):
+                anchor = f"recipe-{anchor}"
+            return _ensure_unique_anchor(anchor, used)
+
+    return _ensure_unique_anchor(f"recipe-{index + 1}", used)
+
+
 def _collect_json_ld_urls(node) -> Set[str]:
     """Return potential article URLs discovered within a JSON-LD node."""
 
@@ -271,6 +465,8 @@ INSTRUCTION_HEADINGS = {
     "prep",
 }
 
+SECTION_CONTENT_KEYWORDS = INGREDIENT_HEADINGS | INSTRUCTION_HEADINGS
+
 
 def _section_label(element: Tag) -> Optional[str]:
     if element.name not in SECTION_CONTAINER_TAGS:
@@ -294,6 +490,11 @@ def _section_label(element: Tag) -> Optional[str]:
     if cleaned.endswith(":"):
         cleaned = cleaned[:-1].strip()
     return cleaned or None
+
+
+def _is_content_heading_text(value: str) -> bool:
+    lowered = value.lower()
+    return any(keyword in lowered for keyword in SECTION_CONTENT_KEYWORDS)
 
 
 def _matches_heading(heading: Tag, keywords: Set[str]) -> bool:
@@ -693,23 +894,73 @@ class ArticleScraper:
     def __init__(self, http_client: HttpClient) -> None:
         self._http = http_client
 
-    def scrape(self, template: RecipeTemplate, url: str) -> Recipe:
+    def scrape(self, template: RecipeTemplate, url: str) -> List[Recipe]:
         response = self._http.get(url)
         soup = BeautifulSoup(response.text, "html.parser")
         content_soup = self._derive_content_soup(soup, url)
 
-        structured_recipe = self._extract_structured_data(template.structured_data, soup)
-        recipe = Recipe(
-            source_name=template.name,
-            source_url=url,
-        )
-        if structured_recipe:
-            self._populate_from_structured(recipe, structured_recipe)
+        structured_recipes = self._extract_structured_data(template.structured_data, soup)
+        sections = _extract_recipe_sections(content_soup)
 
-        self._populate_from_selectors(recipe, soup, content_soup, template.article)
-        self._apply_generic_fallbacks(recipe, soup, response.url)
-        self._validate_recipe(recipe, response.url)
-        return recipe
+        recipe_count = max(len(structured_recipes), len(sections), 1)
+        multi_mode = recipe_count > 1
+
+        base_response_url = response.url
+        base_url = _normalise_base_url(base_response_url)
+
+        recipes: List[Recipe] = []
+        used_anchors: Set[str] = set()
+
+        for index in range(recipe_count):
+            section = sections[index] if index < len(sections) else None
+            recipe = Recipe(
+                source_name=template.name,
+                source_url=base_response_url,
+            )
+
+            if index < len(structured_recipes):
+                self._populate_from_structured(recipe, structured_recipes[index])
+
+            skip_fields: Optional[Set[str]] = None
+            if multi_mode:
+                skip_fields = {"ingredients", "instructions"}
+
+            self._populate_from_selectors(
+                recipe,
+                soup,
+                content_soup,
+                template.article,
+                skip_fields=skip_fields,
+            )
+
+            if section:
+                self._populate_from_section(
+                    recipe,
+                    section,
+                    base_response_url,
+                    prefer_section=multi_mode,
+                )
+            self._apply_generic_fallbacks(recipe, soup, base_response_url)
+
+            if multi_mode:
+                anchor = _resolve_section_anchor(section, index, recipe.title, used_anchors)
+                recipe.source_url = f"{base_url}#{anchor}" if base_url else f"{base_response_url}#{anchor}"
+
+            try:
+                self._validate_recipe(recipe, recipe.source_url)
+            except ArticleExtractionError:
+                if multi_mode:
+                    continue
+                raise
+
+            recipes.append(recipe)
+
+        if not recipes:
+            raise ArticleExtractionError(
+                "Missing ingredients and instructions while scraping %s" % url
+            )
+
+        return recipes
 
     def _derive_content_soup(self, soup: BeautifulSoup, url: str) -> BeautifulSoup:
         parsed = urlparse(url)
@@ -780,16 +1031,17 @@ class ArticleScraper:
 
     def _extract_structured_data(
         self, config: StructuredDataConfig, soup: BeautifulSoup
-    ) -> Optional[dict]:
+    ) -> List[dict]:
         if not config.enabled or not config.json_ld_selector:
-            return None
+            return []
 
+        recipes: List[dict] = []
         for script in soup.select(config.json_ld_selector):
             payload = script.string or script.get_text()
             for candidate in _safe_json_loads(payload):
                 for recipe in _walk_recipe_nodes(candidate):
-                    return recipe
-        return None
+                    recipes.append(recipe)
+        return recipes
 
     def _populate_from_structured(self, recipe: Recipe, data: dict) -> None:
         recipe.title = recipe.title or data.get("name")
@@ -839,18 +1091,42 @@ class ArticleScraper:
 
         recipe.raw.update({"json_ld": data})
 
+    def _populate_from_section(
+        self,
+        recipe: Recipe,
+        section: RecipeSection,
+        base_url: str,
+        prefer_section: bool = False,
+    ) -> None:
+        if section.title and (prefer_section or not recipe.title):
+            recipe.title = section.title
+
+        if section.ingredients and not recipe.ingredients:
+            recipe.ingredients = _dedupe_preserve_order(section.ingredients)
+
+        if section.instructions and not recipe.instructions:
+            recipe.instructions = _dedupe_preserve_order(section.instructions)
+
+        if section.image and (prefer_section or not recipe.image):
+            normalised = _normalise_url(section.image, base_url)
+            recipe.image = normalised or section.image
+
     def _populate_from_selectors(
         self,
         recipe: Recipe,
         full_soup: BeautifulSoup,
         content_soup: BeautifulSoup,
         selectors: ArticleConfig,
+        skip_fields: Optional[Set[str]] = None,
     ) -> None:
         soups_to_try = [content_soup]
         if content_soup is not full_soup:
             soups_to_try.append(full_soup)
 
         for field in selectors.iter_fields():
+            if skip_fields and field in skip_fields:
+                continue
+
             selector_list = selectors.selectors_for(field)
             if not selector_list:
                 continue

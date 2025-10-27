@@ -81,7 +81,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(recipe.title, "Our Moroccan Family Feast")
         self.assertEqual(
@@ -104,6 +107,105 @@ class ArticleScraperFallbackTests(unittest.TestCase):
                 "Cut the aubergines in half and grill.",
                 "Combine with tomatoes and spices, then simmer.",
             ],
+        )
+
+    def test_multiple_semistructured_sections_produce_distinct_recipes(self) -> None:
+        html = """
+        <html>
+            <body>
+                <h1>Moroccan Feast</h1>
+                <div>
+                    <h4>Herb Couscous</h4>
+                </div>
+                <div>
+                    <img src="/images/couscous.jpg" />
+                </div>
+                <div>
+                    <h5>What’s in it...</h5>
+                </div>
+                <div>
+                    <p>1 cup couscous<br/>2 tbsp olive oil</p>
+                </div>
+                <div>
+                    <h5>What to do with it...</h5>
+                </div>
+                <div>
+                    <ol>
+                        <li>Cook couscous as per instructions.</li>
+                    </ol>
+                </div>
+                <div>
+                    <h4>Zaalouk</h4>
+                </div>
+                <div>
+                    <img src="https://www.tootingfamilykitchen.com/images/zaalouk.jpg" />
+                </div>
+                <div>
+                    <h5>What’s in it...</h5>
+                </div>
+                <div>
+                    <p>3 aubergines<br/>2 tomatoes</p>
+                </div>
+                <div>
+                    <h5>What to do with it...</h5>
+                </div>
+                <div>
+                    <ol>
+                        <li>Roast aubergines.</li>
+                        <li>Simmer with tomatoes.</li>
+                    </ol>
+                </div>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Tooting",
+            url="https://www.tootingfamilykitchen.com/feast/",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 2)
+
+        first, second = recipes
+
+        self.assertEqual(first.title, "Herb Couscous")
+        self.assertEqual(
+            first.ingredients,
+            ["1 cup couscous", "2 tbsp olive oil"],
+        )
+        self.assertEqual(first.instructions, ["Cook couscous as per instructions."])
+        self.assertTrue(
+            first.source_url.endswith("#recipe-herb-couscous"),
+            msg=f"Unexpected source URL: {first.source_url}",
+        )
+        self.assertEqual(
+            first.image,
+            "https://www.tootingfamilykitchen.com/images/couscous.jpg",
+        )
+
+        self.assertEqual(second.title, "Zaalouk")
+        self.assertEqual(second.ingredients, ["3 aubergines", "2 tomatoes"])
+        self.assertEqual(
+            second.instructions,
+            ["Roast aubergines.", "Simmer with tomatoes."],
+        )
+        self.assertTrue(
+            second.source_url.endswith("#recipe-zaalouk"),
+            msg=f"Unexpected source URL: {second.source_url}",
+        )
+        self.assertEqual(
+            second.image,
+            "https://www.tootingfamilykitchen.com/images/zaalouk.jpg",
         )
 
     def test_selectors_preferred_when_present(self) -> None:
@@ -145,7 +247,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(recipe.title, "Structured Recipe")
         self.assertEqual(recipe.ingredients, ["1 cup flour", "2 eggs"])
@@ -191,7 +296,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(recipe.title, "Ewa Agoyin")
         self.assertEqual(
@@ -267,7 +375,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(recipe.title, "Second Recipe")
         self.assertEqual(recipe.ingredients, ["2 cups rice", "1 tsp salt"])
@@ -321,7 +432,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(recipe.title, "Bajan Sweet Bread")
         self.assertEqual(
@@ -382,7 +496,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(recipe.title, "African Fried chicken")
         self.assertEqual(
@@ -438,7 +555,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(
             recipe.title, "Poached Dried Apricots in Light Syrup with Kaymak"
@@ -481,7 +601,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
         )
 
         scraper = ArticleScraper(DummyHttpClient(html))
-        recipe = scraper.scrape(template, template.url)
+        recipes = scraper.scrape(template, template.url)
+
+        self.assertEqual(len(recipes), 1)
+        recipe = recipes[0]
 
         self.assertEqual(recipe.title, "Baobab Drink")
         self.assertEqual(
