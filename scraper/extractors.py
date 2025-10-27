@@ -10,7 +10,7 @@ from typing import Iterable, Iterator, List, Optional, Sequence, Set
 from urllib.parse import urljoin, urlparse
 from xml.etree import ElementTree
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from .http_client import HttpClient
 from .models import ArticleConfig, ListingConfig, Recipe, RecipeTemplate, StructuredDataConfig
@@ -40,12 +40,23 @@ def _clean_text(value: str) -> str:
     return " ".join(value.strip().split())
 
 
+def _split_multiline_text(value: str) -> List[str]:
+    parts: List[str] = []
+    for raw in value.splitlines():
+        cleaned = _clean_text(raw)
+        if cleaned:
+            parts.append(cleaned)
+    return parts
+
+
 def _extract_text_list(soup: BeautifulSoup, selector: str) -> List[str]:
-    return [
-        _clean_text(element.get_text(separator=" "))
-        for element in soup.select(selector)
-        if element.get_text(strip=True)
-    ]
+    values: List[str] = []
+    for element in soup.select(selector):
+        if not element.get_text(strip=True):
+            continue
+        raw_text = element.get_text(separator="\n")
+        values.extend(_split_multiline_text(raw_text))
+    return values
 
 
 def _extract_first_text(soup: BeautifulSoup, selector: str) -> Optional[str]:
@@ -184,6 +195,71 @@ def _extract_listing_links_from_jsonld(soup: BeautifulSoup, base_url: str) -> Se
                 discovered.add(absolute)
 
     return discovered
+
+
+HEADING_TAGS = ("h1", "h2", "h3", "h4", "h5", "h6")
+INGREDIENT_HEADINGS = {
+    "ingredient",
+    "ingredients",
+    "what's in",
+    "what’s in",
+    "whats in",
+    "you will need",
+    "you'll need",
+    "you will require",
+    "shopping list",
+}
+INSTRUCTION_HEADINGS = {
+    "instruction",
+    "instructions",
+    "method",
+    "methods",
+    "direction",
+    "directions",
+    "step",
+    "steps",
+    "how to",
+    "what to do",
+    "preparation",
+}
+
+
+def _matches_heading(heading: Tag, keywords: Set[str]) -> bool:
+    text = _clean_text(heading.get_text(separator=" "))
+    if not text:
+        return False
+    lowered = text.lower()
+    return any(keyword in lowered for keyword in keywords)
+
+
+def _extract_section_items(heading: Tag) -> List[str]:
+    items: List[str] = []
+    for element in heading.next_elements:
+        if element is heading:
+            continue
+        if isinstance(element, Tag) and element.name in HEADING_TAGS:
+            break
+        if isinstance(element, Tag):
+            if element.name in {"ul", "ol"}:
+                for item in element.find_all("li"):
+                    items.extend(_split_multiline_text(item.get_text(separator="\n")))
+            elif element.name == "p":
+                items.extend(_split_multiline_text(element.get_text(separator="\n")))
+    seen: Set[str] = set()
+    unique_items: List[str] = []
+    for item in items:
+        if item not in seen:
+            seen.add(item)
+            unique_items.append(item)
+    return unique_items
+
+
+def _extract_semistructured_lists(soup: BeautifulSoup, keywords: Set[str]) -> List[str]:
+    values: List[str] = []
+    for heading in soup.find_all(HEADING_TAGS):
+        if _matches_heading(heading, keywords):
+            values.extend(_extract_section_items(heading))
+    return values
 
 
 class ListingScraper:
@@ -471,12 +547,19 @@ class ArticleScraper:
                 continue
 
             if field == "image":
-                value = self._extract_field(selector_list, soup, image=True)
+                value = self._extract_field(
+                    selector_list, soup, image=True, field_name=field
+                )
                 if value and not recipe.image:
                     recipe.image = value
                 continue
 
-            value = self._extract_field(selector_list, soup, multiple=_detect_list_field(field))
+            value = self._extract_field(
+                selector_list,
+                soup,
+                multiple=_detect_list_field(field),
+                field_name=field,
+            )
             if value is None:
                 continue
 
@@ -495,6 +578,7 @@ class ArticleScraper:
         soup: BeautifulSoup,
         multiple: bool = False,
         image: bool = False,
+        field_name: Optional[str] = None,
     ):
         if image:
             for selector in selector_list:
@@ -507,6 +591,10 @@ class ArticleScraper:
             values: List[str] = []
             for selector in selector_list:
                 values.extend(_extract_text_list(soup, selector))
+            if not values and field_name == "ingredients":
+                values = _extract_semistructured_lists(soup, INGREDIENT_HEADINGS)
+            elif not values and field_name == "instructions":
+                values = _extract_semistructured_lists(soup, INSTRUCTION_HEADINGS)
             # Remove duplicates while preserving order
             seen = set()
             unique_values = []
