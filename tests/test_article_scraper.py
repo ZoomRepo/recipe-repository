@@ -157,6 +157,59 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             ],
         )
 
+    def test_semistructured_strong_heading_sections(self) -> None:
+        html = """
+        <html>
+            <body>
+                <h1>Ewa Agoyin</h1>
+                <p><strong>Ingredients:</strong></p>
+                <ul>
+                    <li>2 cups honey beans</li>
+                    <li>1 cup palm oil</li>
+                </ul>
+                <div>
+                    <p><strong>Method</strong></p>
+                </div>
+                <div>
+                    <p>Soak beans overnight.<br/>Cook until tender.<br/>Blend pepper mix and fry in palm oil.</p>
+                </div>
+            </body>
+        </html>
+        """
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/article",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1"],
+                    "ingredients": [".ingredients li"],
+                    "instructions": [".instructions li"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipe = scraper.scrape(template, template.url)
+
+        self.assertEqual(recipe.title, "Ewa Agoyin")
+        self.assertEqual(
+            recipe.ingredients,
+            [
+                "2 cups honey beans",
+                "1 cup palm oil",
+            ],
+        )
+        self.assertEqual(
+            recipe.instructions,
+            [
+                "Soak beans overnight.",
+                "Cook until tender.",
+                "Blend pepper mix and fry in palm oil.",
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

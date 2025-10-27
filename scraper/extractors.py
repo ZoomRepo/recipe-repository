@@ -198,6 +198,8 @@ def _extract_listing_links_from_jsonld(soup: BeautifulSoup, base_url: str) -> Se
 
 
 HEADING_TAGS = ("h1", "h2", "h3", "h4", "h5", "h6")
+STRONG_TAGS = {"strong", "b"}
+SECTION_CONTAINER_TAGS = set(HEADING_TAGS) | {"p", "div", "span", "section"}
 INGREDIENT_HEADINGS = {
     "ingredient",
     "ingredients",
@@ -221,23 +223,84 @@ INSTRUCTION_HEADINGS = {
     "how to",
     "what to do",
     "preparation",
+    "prep",
 }
 
 
+def _section_label(element: Tag) -> Optional[str]:
+    if element.name not in SECTION_CONTAINER_TAGS:
+        return None
+
+    if element.name in HEADING_TAGS:
+        text = element.get_text(separator=" ")
+    else:
+        strong = None
+        for candidate in element.find_all(list(STRONG_TAGS)):
+            preceding = "".join(
+                str(sibling).strip() for sibling in candidate.previous_siblings if str(sibling).strip()
+            )
+            if not preceding:
+                strong = candidate
+                break
+        if strong is None:
+            return None
+        text = strong.get_text(separator=" ")
+    cleaned = _clean_text(text) if text else ""
+    if cleaned.endswith(":"):
+        cleaned = cleaned[:-1].strip()
+    return cleaned or None
+
+
 def _matches_heading(heading: Tag, keywords: Set[str]) -> bool:
-    text = _clean_text(heading.get_text(separator=" "))
+    text = _section_label(heading)
     if not text:
         return False
     lowered = text.lower()
     return any(keyword in lowered for keyword in keywords)
 
 
+def _is_section_heading(element: Tag) -> bool:
+    return _section_label(element) is not None
+
+
+def _extract_inline_section_items(heading: Tag) -> List[str]:
+    if heading.name in HEADING_TAGS:
+        return []
+
+    strong = heading.find(list(STRONG_TAGS))
+    if strong is None:
+        return []
+
+    parts: List[str] = []
+    for sibling in strong.next_siblings:
+        if isinstance(sibling, Tag):
+            if sibling.name in STRONG_TAGS:
+                continue
+            if sibling.name == "br":
+                parts.append("\n")
+                continue
+            parts.append(sibling.get_text(separator="\n"))
+        else:
+            parts.append(str(sibling))
+
+    combined = "".join(parts)
+    inline_items: List[str] = []
+    for text in _split_multiline_text(combined):
+        stripped = text.lstrip(":;-–— ").strip()
+        if stripped:
+            inline_items.append(stripped)
+    return inline_items
+
+
 def _extract_section_items(heading: Tag) -> List[str]:
-    items: List[str] = []
+    items: List[str] = _extract_inline_section_items(heading)
+    heading_parents = set(heading.parents)
     for element in heading.next_elements:
         if element is heading:
             continue
-        if isinstance(element, Tag) and element.name in HEADING_TAGS:
+        if isinstance(element, Tag) and _is_section_heading(element):
+            if heading in element.parents or element in heading_parents:
+                continue
             break
         if isinstance(element, Tag):
             if element.name in {"ul", "ol"}:
@@ -256,7 +319,7 @@ def _extract_section_items(heading: Tag) -> List[str]:
 
 def _extract_semistructured_lists(soup: BeautifulSoup, keywords: Set[str]) -> List[str]:
     values: List[str] = []
-    for heading in soup.find_all(HEADING_TAGS):
+    for heading in soup.find_all(list(SECTION_CONTAINER_TAGS)):
         if _matches_heading(heading, keywords):
             values.extend(_extract_section_items(heading))
     return values
