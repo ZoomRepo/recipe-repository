@@ -210,6 +210,68 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             ],
         )
 
+    def test_microdata_fallback_extracts_lists(self) -> None:
+        html = """
+        <html>
+            <body>
+                <article itemscope itemtype="https://schema.org/Recipe">
+                    <h1 itemprop="name">Bajan Sweet Bread</h1>
+                    <section>
+                        <ul>
+                            <li itemprop="recipeIngredient">3 cups flour</li>
+                            <li itemprop="recipeIngredient">1 cup sugar</li>
+                        </ul>
+                        <p itemprop="recipeIngredient">1 cup grated coconut</p>
+                    </section>
+                    <div itemprop="recipeInstructions">
+                        <ol>
+                            <li>Combine dry ingredients.</li>
+                            <li>Stir in coconut and bake.</li>
+                        </ol>
+                    </div>
+                    <div itemprop="recipeInstructions">
+                        <p itemprop="text">Cool before slicing.</p>
+                    </div>
+                </article>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/article",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1[itemprop='name']"],
+                    "ingredients": [".ingredients li"],
+                    "instructions": [".instructions li"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipe = scraper.scrape(template, template.url)
+
+        self.assertEqual(recipe.title, "Bajan Sweet Bread")
+        self.assertEqual(
+            recipe.ingredients,
+            [
+                "3 cups flour",
+                "1 cup sugar",
+                "1 cup grated coconut",
+            ],
+        )
+        self.assertEqual(
+            recipe.instructions,
+            [
+                "Combine dry ingredients.",
+                "Stir in coconut and bake.",
+                "Cool before slicing.",
+            ],
+        )
+
 
     def test_wprm_fallback_markup(self) -> None:
         html = """

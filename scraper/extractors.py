@@ -363,6 +363,61 @@ def _extract_wprm_fallback_lists(soup: BeautifulSoup, field_name: str) -> List[s
     return unique_values
 
 
+def _extract_microdata_lists(soup: BeautifulSoup, field_name: str) -> List[str]:
+    """Extract lists from schema.org microdata when available."""
+
+    if field_name == "ingredients":
+        props = ("recipeIngredient", "ingredients")
+    elif field_name == "instructions":
+        props = (
+            "recipeInstructions",
+            "instructions",
+        )
+    else:
+        return []
+
+    values: List[str] = []
+
+    def collect_text(element: Tag) -> None:
+        nonlocal values
+
+        text_nodes = element.find_all(attrs={"itemprop": "text"})
+        if text_nodes:
+            for node in text_nodes:
+                values.extend(
+                    _split_multiline_text(node.get_text(separator="\n"))
+                )
+            return
+
+        if element.name in {"ul", "ol"}:
+            for item in element.find_all("li"):
+                values.extend(
+                    _split_multiline_text(item.get_text(separator="\n"))
+                )
+            return
+
+        if element.name in {"li", "p", "span", "div"}:
+            values.extend(
+                _split_multiline_text(element.get_text(separator="\n"))
+            )
+
+    for prop in props:
+        for element in soup.find_all(attrs={"itemprop": prop}):
+            if element.find_parent(attrs={"itemprop": prop}):
+                continue
+            collect_text(element)
+
+    seen: Set[str] = set()
+    unique_values: List[str] = []
+    for value in values:
+        cleaned = value.strip()
+        if not cleaned or cleaned in seen:
+            continue
+        seen.add(cleaned)
+        unique_values.append(cleaned)
+    return unique_values
+
+
 class ListingScraper:
     """Scrape recipe article URLs from listing pages."""
 
@@ -696,9 +751,15 @@ class ArticleScraper:
                 values = _extract_wprm_fallback_lists(soup, field_name)
                 if values:
                     return values
+                values = _extract_microdata_lists(soup, field_name)
+                if values:
+                    return values
                 values = _extract_semistructured_lists(soup, INGREDIENT_HEADINGS)
             elif not values and field_name == "instructions":
                 values = _extract_wprm_fallback_lists(soup, field_name)
+                if values:
+                    return values
+                values = _extract_microdata_lists(soup, field_name)
                 if values:
                     return values
                 values = _extract_semistructured_lists(soup, INSTRUCTION_HEADINGS)
