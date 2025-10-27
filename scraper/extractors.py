@@ -25,6 +25,11 @@ class ListingDiscoveryError(RuntimeError):
         super().__init__(message)
         self.last_error = last_error
 
+
+class ArticleExtractionError(RuntimeError):
+    """Raised when a recipe article cannot be populated with core content."""
+
+
 LIST_FIELDS = {"ingredients", "instructions", "categories", "tags"}
 SITEMAP_CANDIDATES = (
     "sitemap.xml",
@@ -32,6 +37,20 @@ SITEMAP_CANDIDATES = (
     "sitemap-index.xml",
     "wp-sitemap.xml",
 )
+
+NAVIGATION_FRAGMENT_KEYWORDS = {
+    "breadcrumb",
+    "comment",
+    "comments",
+    "respond",
+    "reply",
+    "share",
+    "print",
+    "menu",
+    "nav",
+    "footer",
+    "header",
+}
 
 logger = logging.getLogger(__name__)
 
@@ -158,6 +177,15 @@ def _same_domain(base_url: str, candidate: str) -> bool:
     if target_host and target_host != base_host:
         return False
     return bool(target_host) or (not target.netloc and bool(target.path))
+
+
+def _is_navigation_fragment(fragment: str) -> bool:
+    lowered = fragment.lower()
+    return any(keyword in lowered for keyword in NAVIGATION_FRAGMENT_KEYWORDS)
+
+
+def _normalise_base_url(url: str) -> str:
+    return url.split("#", 1)[0].rstrip("/")
 
 
 def _collect_json_ld_urls(node) -> Set[str]:
@@ -457,7 +485,7 @@ class ListingScraper:
         had_listing_results = False
         for listing in template.listings:
             try:
-                urls = self._scrape_listing(listing)
+                urls = self._scrape_listing(template.url, listing)
             except Exception as exc:  # pylint: disable=broad-except
                 had_listing_error = True
                 last_error = exc
@@ -508,7 +536,9 @@ class ListingScraper:
             )
         return discovered
 
-    def _scrape_listing(self, listing: ListingConfig) -> Set[str]:
+    def _scrape_listing(
+        self, template_url: str, listing: ListingConfig
+    ) -> Set[str]:
         pages_seen: Set[str] = set()
         article_urls: Set[str] = set()
         next_page = listing.url
@@ -522,7 +552,9 @@ class ListingScraper:
                 href = element.get("href")
                 if not href:
                     continue
-                page_urls.add(urljoin(base_url, href))
+                absolute = urljoin(base_url, href)
+                if self._should_include_url(template_url, listing.url, absolute):
+                    page_urls.add(absolute)
 
             if not page_urls:
                 json_ld_links = _extract_listing_links_from_jsonld(soup, base_url)
@@ -532,7 +564,15 @@ class ListingScraper:
                         len(json_ld_links),
                         base_url,
                     )
-                page_urls.update(json_ld_links)
+                page_urls.update(
+                    {
+                        link
+                        for link in json_ld_links
+                        if self._should_include_url(
+                            template_url, listing.url, link
+                        )
+                    }
+                )
 
             article_urls.update(page_urls)
 
@@ -595,7 +635,8 @@ class ListingScraper:
                         queue.append(loc_text)
                     continue
 
-                article_urls.add(loc_text)
+                if self._should_include_url(template.url, template.url, loc_text):
+                    article_urls.add(loc_text)
                 if len(article_urls) >= self._sitemap_max_urls:
                     break
 
@@ -608,6 +649,26 @@ class ListingScraper:
     @staticmethod
     def _same_domain(base_url: str, candidate: str) -> bool:
         return _same_domain(base_url, candidate)
+
+    @staticmethod
+    def _should_include_url(
+        template_url: str, listing_url: str, candidate_url: str
+    ) -> bool:
+        parsed = urlparse(candidate_url)
+        if parsed.fragment and _is_navigation_fragment(parsed.fragment):
+            return False
+
+        candidate_base = _normalise_base_url(candidate_url)
+        if not candidate_base:
+            return False
+
+        listing_base = _normalise_base_url(listing_url)
+        template_base = _normalise_base_url(template_url)
+
+        if not parsed.fragment and candidate_base in {listing_base, template_base}:
+            return False
+
+        return True
 
     @staticmethod
     def _decode_sitemap_content(url: str, payload: bytes) -> Optional[bytes]:
@@ -647,6 +708,7 @@ class ArticleScraper:
 
         self._populate_from_selectors(recipe, soup, content_soup, template.article)
         self._apply_generic_fallbacks(recipe, soup, response.url)
+        self._validate_recipe(recipe, response.url)
         return recipe
 
     def _derive_content_soup(self, soup: BeautifulSoup, url: str) -> BeautifulSoup:
@@ -924,3 +986,11 @@ class ArticleScraper:
                 if absolute:
                     recipe.image = absolute
                     break
+
+    def _validate_recipe(self, recipe: Recipe, url: str) -> None:
+        if recipe.ingredients or recipe.instructions:
+            return
+
+        raise ArticleExtractionError(
+            "Missing ingredients and instructions while scraping %s" % url
+        )

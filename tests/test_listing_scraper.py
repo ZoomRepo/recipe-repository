@@ -122,6 +122,62 @@ class ListingScraperJsonLdTests(unittest.TestCase):
 
         self.assertEqual(urls, {"https://example.com/recipes/local"})
 
+    def test_listing_page_url_is_not_returned(self) -> None:
+        html = """
+        <html>
+          <body>
+            <a class="link" href="https://example.com/recipes/">Archive</a>
+            <a class="link" href="/recipes/best-soup/">Recipe</a>
+          </body>
+        </html>
+        """
+
+        http = DummyHttpClient(html)
+        scraper = ListingScraper(http, enable_sitemaps=False)
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/recipes/",
+            type="cooking",
+            listings=[
+                ListingConfig(
+                    url="https://example.com/recipes/",
+                    link_selector="a.link",
+                )
+            ],
+        )
+
+        urls = scraper.discover(template)
+
+        self.assertEqual(urls, {"https://example.com/recipes/best-soup/"})
+
+    def test_navigation_fragments_are_filtered(self) -> None:
+        html = """
+        <html>
+          <body>
+            <a class="link" href="#breadcrumb">Breadcrumbs</a>
+            <a class="link" href="#recipe-section">Recipe Section</a>
+          </body>
+        </html>
+        """
+
+        http = DummyHttpClient(html)
+        scraper = ListingScraper(http, enable_sitemaps=False)
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/recipes/",
+            type="cooking",
+            listings=[
+                ListingConfig(
+                    url="https://example.com/recipes/",
+                    link_selector="a.link",
+                )
+            ],
+        )
+
+        urls = scraper.discover(template)
+
+        self.assertEqual(urls, {"https://example.com/recipes/#recipe-section"})
+
 
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

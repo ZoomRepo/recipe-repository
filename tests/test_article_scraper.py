@@ -1,6 +1,6 @@
 import unittest
 
-from scraper.extractors import ArticleScraper
+from scraper.extractors import ArticleExtractionError, ArticleScraper
 from scraper.models import ArticleConfig, RecipeTemplate, StructuredDataConfig
 
 
@@ -413,6 +413,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             <body>
                 <article>
                     <p>Recipe content.</p>
+                    <h3>Ingredients</h3>
+                    <p>1 cup dried apricots</p>
+                    <h3>Instructions</h3>
+                    <p>Simmer apricots with syrup until tender.</p>
                 </article>
             </body>
         </html>
@@ -426,6 +430,8 @@ class ArticleScraperFallbackTests(unittest.TestCase):
                 selectors={
                     "title": [".missing-title"],
                     "image": [".missing-image"],
+                    "ingredients": [".missing-ingredients"],
+                    "instructions": [".missing-instructions"],
                 }
             ),
             structured_data=StructuredDataConfig(enabled=False),
@@ -450,6 +456,10 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             <body>
                 <div class="entry-content">
                     <img data-lazy-src="/wp-content/uploads/baobab-drink.jpg" alt="Baobab Drink" />
+                    <h3>Ingredients</h3>
+                    <p>Baobab powder</p>
+                    <h3>Instructions</h3>
+                    <p>Blend with water and sweetener.</p>
                 </div>
             </body>
         </html>
@@ -463,6 +473,8 @@ class ArticleScraperFallbackTests(unittest.TestCase):
                 selectors={
                     "title": [".missing-title"],
                     "image": [".missing-image"],
+                    "ingredients": [".missing-ingredients"],
+                    "instructions": [".missing-instructions"],
                 }
             ),
             structured_data=StructuredDataConfig(enabled=False),
@@ -476,6 +488,42 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             recipe.image,
             "https://naturallyzimbabwean.com/wp-content/uploads/baobab-drink.jpg",
         )
+
+    def test_missing_lists_raise_article_extraction_error(self) -> None:
+        html = """
+        <html>
+            <head>
+                <title>Recipes Archive - National Dishes of the World</title>
+            </head>
+            <body>
+                <main>
+                    <article>
+                        <h1>Recipes Archive - National Dishes of the World</h1>
+                        <p>Navigation only content.</p>
+                    </article>
+                </main>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/recipes/",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1"],
+                    "ingredients": ["ul.ingredients li"],
+                    "instructions": ["ol.instructions li"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+
+        with self.assertRaises(ArticleExtractionError):
+            scraper.scrape(template, template.url)
 
 
 if __name__ == "__main__":
