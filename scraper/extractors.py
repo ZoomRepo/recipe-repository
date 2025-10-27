@@ -635,6 +635,7 @@ class ArticleScraper:
     def scrape(self, template: RecipeTemplate, url: str) -> Recipe:
         response = self._http.get(url)
         soup = BeautifulSoup(response.text, "html.parser")
+        content_soup = self._derive_content_soup(soup, url)
 
         structured_recipe = self._extract_structured_data(template.structured_data, soup)
         recipe = Recipe(
@@ -644,9 +645,76 @@ class ArticleScraper:
         if structured_recipe:
             self._populate_from_structured(recipe, structured_recipe)
 
-        self._populate_from_selectors(recipe, soup, template.article)
+        self._populate_from_selectors(recipe, soup, content_soup, template.article)
         self._apply_generic_fallbacks(recipe, soup, response.url)
         return recipe
+
+    def _derive_content_soup(self, soup: BeautifulSoup, url: str) -> BeautifulSoup:
+        parsed = urlparse(url)
+        fragment = parsed.fragment
+        if not fragment:
+            return soup
+
+        target = soup.find(id=fragment) or soup.find(attrs={"name": fragment})
+        if not isinstance(target, Tag):
+            return soup
+
+        def is_navigation(tag: Tag) -> bool:
+            classes = " ".join(tag.get("class", [])).lower()
+            return any(
+                keyword in classes
+                for keyword in (
+                    "breadcrumb",
+                    "nav",
+                    "menu",
+                    "header",
+                    "footer",
+                    "pagination",
+                )
+            )
+
+        container = target
+        best_match: Optional[Tag] = None
+        while isinstance(container, Tag) and container.parent is not None:
+            if container.name in {"article", "section"}:
+                best_match = container
+                break
+            if container.name == "div":
+                classes = " ".join(container.get("class", [])).lower()
+                if any(keyword in classes for keyword in ("recipe", "post", "entry")) and not is_navigation(container):
+                    best_match = container
+                    break
+            if container.parent.name in {"body", "html"}:
+                break
+            container = container.parent
+
+        if not best_match:
+            container = target
+            while isinstance(container, Tag):
+                if container.name in {"article", "section"} and not is_navigation(container):
+                    best_match = container
+                    break
+                if container.parent is None or container.parent.name in {"body", "html"}:
+                    break
+                container = container.parent
+
+        if not best_match:
+            container = target
+            while isinstance(container, Tag):
+                if not is_navigation(container):
+                    best_match = container
+                    break
+                parent = container.parent
+                if not isinstance(parent, Tag):
+                    break
+                if parent.name in {"body", "html"} and is_navigation(parent):
+                    break
+                container = parent
+
+        if isinstance(best_match, Tag):
+            return BeautifulSoup(str(best_match), "html.parser")
+
+        return soup
 
     def _extract_structured_data(
         self, config: StructuredDataConfig, soup: BeautifulSoup
@@ -710,8 +778,16 @@ class ArticleScraper:
         recipe.raw.update({"json_ld": data})
 
     def _populate_from_selectors(
-        self, recipe: Recipe, soup: BeautifulSoup, selectors: ArticleConfig
+        self,
+        recipe: Recipe,
+        full_soup: BeautifulSoup,
+        content_soup: BeautifulSoup,
+        selectors: ArticleConfig,
     ) -> None:
+        soups_to_try = [content_soup]
+        if content_soup is not full_soup:
+            soups_to_try.append(full_soup)
+
         for field in selectors.iter_fields():
             selector_list = selectors.selectors_for(field)
             if not selector_list:
@@ -720,31 +796,35 @@ class ArticleScraper:
             if not hasattr(recipe, field):
                 continue
 
-            if field == "image":
-                value = self._extract_field(
-                    selector_list, soup, image=True, field_name=field
-                )
-                if value and not recipe.image:
-                    recipe.image = value
+            current_value = getattr(recipe, field)
+            if current_value:
                 continue
 
-            value = self._extract_field(
-                selector_list,
-                soup,
-                multiple=_detect_list_field(field),
-                field_name=field,
-            )
-            if value is None:
-                continue
+            for soup in soups_to_try:
+                if field == "image":
+                    value = self._extract_field(
+                        selector_list, soup, image=True, field_name=field
+                    )
+                else:
+                    value = self._extract_field(
+                        selector_list,
+                        soup,
+                        multiple=_detect_list_field(field),
+                        field_name=field,
+                    )
 
-            if isinstance(value, list):
-                current = getattr(recipe, field)
-                if not current:
+                if value is None:
+                    continue
+
+                if isinstance(value, list):
+                    if not value:
+                        continue
                     setattr(recipe, field, value)
-            else:
-                current = getattr(recipe, field)
-                if not current:
+                    break
+
+                if value:
                     setattr(recipe, field, value)
+                    break
 
     def _extract_field(
         self,

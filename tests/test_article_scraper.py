@@ -210,6 +210,75 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             ],
         )
 
+    def test_fragment_focuses_on_target_section(self) -> None:
+        html = """
+        <html>
+            <body>
+                <nav class="breadcrumb">
+                    <ol>
+                        <li>Home</li>
+                        <li>Recipes</li>
+                    </ol>
+                </nav>
+                <article id="first">
+                    <h1>First Recipe</h1>
+                    <div class="ingredients">
+                        <ul>
+                            <li>1 cup flour</li>
+                        </ul>
+                    </div>
+                    <div class="instructions">
+                        <ol>
+                            <li>Bake at 180C.</li>
+                        </ol>
+                    </div>
+                </article>
+                <article id="second">
+                    <h1>Second Recipe</h1>
+                    <div class="ingredients">
+                        <ul>
+                            <li>2 cups rice</li>
+                            <li>1 tsp salt</li>
+                        </ul>
+                    </div>
+                    <div class="instructions">
+                        <ol>
+                            <li>Rinse the rice.</li>
+                            <li>Simmer until tender.</li>
+                        </ol>
+                    </div>
+                </article>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Test",
+            url="https://example.com/recipes#second",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1"],
+                    "ingredients": [".ingredients li"],
+                    "instructions": [".instructions li"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(DummyHttpClient(html))
+        recipe = scraper.scrape(template, template.url)
+
+        self.assertEqual(recipe.title, "Second Recipe")
+        self.assertEqual(recipe.ingredients, ["2 cups rice", "1 tsp salt"])
+        self.assertEqual(
+            recipe.instructions,
+            [
+                "Rinse the rice.",
+                "Simmer until tender.",
+            ],
+        )
+
     def test_microdata_fallback_extracts_lists(self) -> None:
         html = """
         <html>
