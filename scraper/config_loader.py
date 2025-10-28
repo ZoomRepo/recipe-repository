@@ -69,6 +69,8 @@ def parse_templates(raw_templates: Iterable[dict]) -> List[RecipeTemplate]:
                 article=article_config,
                 structured_data=structured_config,
                 scraped=bool(raw.get("scraped") or raw.get("scraper")),
+                discover_via_json_ld=bool(recipes_section.get("use_json_ld")),
+                discover_via_sitemaps=bool(recipes_section.get("use_sitemaps")),
             )
         )
 

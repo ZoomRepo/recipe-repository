@@ -538,6 +538,7 @@
     "type": "cooking",
     "scraped": true,
     "recipes": {
+      "use_sitemaps": true,
       "listing": [
         {
           "url": "https://foodnetwork.co.uk/collections/argentinian-recipes#all-recipes",

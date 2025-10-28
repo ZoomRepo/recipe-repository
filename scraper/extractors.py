@@ -94,11 +94,9 @@ ASSET_EXTENSIONS = {
 
 LISTING_JSONLD_ALLOWED_TYPES = {
     "recipe",
-    "article",
-    "blogposting",
-    "newsarticle",
     "howto",
-    "creativework",
+    "itemlist",
+    "listitem",
 }
 
 logger = logging.getLogger(__name__)
@@ -869,7 +867,7 @@ class ListingScraper:
         last_error: Optional[Exception] = None
         had_listing_results = False
 
-        if self._enable_sitemaps:
+        if self._enable_sitemaps and template.discover_via_sitemaps:
             sitemap_urls = self._discover_from_sitemaps(template)
             if sitemap_urls:
                 logger.info(
@@ -883,7 +881,7 @@ class ListingScraper:
                 discovered.update(sitemap_urls)
         for listing in template.listings:
             try:
-                urls = self._scrape_listing(template.url, listing)
+                urls = self._scrape_listing(template, listing)
             except Exception as exc:  # pylint: disable=broad-except
                 had_listing_error = True
                 last_error = exc
@@ -921,7 +919,7 @@ class ListingScraper:
         return discovered
 
     def _scrape_listing(
-        self, template_url: str, listing: ListingConfig
+        self, template: RecipeTemplate, listing: ListingConfig
     ) -> Set[str]:
         pages_seen: Set[str] = set()
         queued_pages: Set[str] = set()
@@ -953,10 +951,10 @@ class ListingScraper:
                 if not href:
                     continue
                 absolute = urljoin(base_url, href)
-                if self._should_include_url(template_url, listing.url, absolute):
+                if self._should_include_url(template.url, listing.url, absolute):
                     page_urls.add(absolute)
 
-            if not page_urls:
+            if not page_urls and template.discover_via_json_ld:
                 json_ld_links = _extract_listing_links_from_jsonld(soup, base_url)
                 if json_ld_links:
                     logger.debug(
@@ -969,7 +967,7 @@ class ListingScraper:
                         link
                         for link in json_ld_links
                         if self._should_include_url(
-                            template_url, listing.url, link
+                            template.url, listing.url, link
                         )
                     }
                 )
@@ -1073,6 +1071,11 @@ class ListingScraper:
         if not _same_domain(template_url, sitemap_url):
             return False
         path = urlparse(sitemap_url).path.lower()
+        if "wp-sitemap" in path:
+            if "attachment" in path or "author" in path or "user" in path:
+                return False
+            if "taxonomies" in path and "recipe" not in path:
+                return False
         if "/storage/" in path and "recipe" not in path:
             if any(keyword in path for keyword in STORAGE_SITEMAP_EXCLUDE_KEYWORDS):
                 return False

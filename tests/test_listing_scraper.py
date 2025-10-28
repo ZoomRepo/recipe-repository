@@ -51,6 +51,7 @@ class ListingScraperJsonLdTests(unittest.TestCase):
                     link_selector="a.selector-that-will-not-match",
                 )
             ],
+            discover_via_json_ld=True,
         )
 
     def test_json_ld_item_list_used_when_selectors_empty(self) -> None:
@@ -392,6 +393,7 @@ class ListingScraperSitemapTests(unittest.TestCase):
                     link_selector="article h2 a",
                 )
             ],
+            discover_via_sitemaps=True,
         )
 
         urls = scraper.discover(template)
