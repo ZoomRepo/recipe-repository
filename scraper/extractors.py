@@ -9,7 +9,7 @@ from collections import deque
 from dataclasses import dataclass, field
 from io import BytesIO
 from typing import Iterable, Iterator, List, Optional, Sequence, Set
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from xml.etree import ElementTree
 
 from bs4 import BeautifulSoup, Tag
@@ -52,6 +52,43 @@ NAVIGATION_FRAGMENT_KEYWORDS = {
     "nav",
     "footer",
     "header",
+}
+
+ASSET_EXTENSIONS = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".bmp",
+    ".svg",
+    ".webp",
+    ".tif",
+    ".tiff",
+    ".ico",
+    ".pdf",
+    ".zip",
+    ".rar",
+    ".7z",
+    ".tar",
+    ".gz",
+    ".mp4",
+    ".mp3",
+    ".mov",
+    ".avi",
+    ".m4v",
+    ".webm",
+    ".ogg",
+    ".ogv",
+    ".wav",
+}
+
+LISTING_JSONLD_ALLOWED_TYPES = {
+    "recipe",
+    "article",
+    "blogposting",
+    "newsarticle",
+    "howto",
+    "creativework",
 }
 
 logger = logging.getLogger(__name__)
@@ -201,6 +238,20 @@ def _is_navigation_fragment(fragment: str) -> bool:
     return any(keyword in lowered for keyword in NAVIGATION_FRAGMENT_KEYWORDS)
 
 
+def _looks_like_asset_url(url: str) -> bool:
+    parsed = urlparse(url)
+    path = parsed.path.lower()
+    if any(path.endswith(ext) for ext in ASSET_EXTENSIONS):
+        return True
+    if path.endswith("/feed/") or path.endswith("/feed"):
+        return True
+    if parsed.query:
+        query = parse_qs(parsed.query)
+        if any(key in query for key in ("attachment_id", "download")):
+            return True
+    return False
+
+
 def _normalise_base_url(url: str) -> str:
     return url.split("#", 1)[0].rstrip("/")
 
@@ -213,6 +264,17 @@ def _dedupe_preserve_order(items: Iterable[str]) -> List[str]:
             seen.add(item)
             unique.append(item)
     return unique
+
+
+def _normalise_jsonld_types(value) -> Set[str]:
+    types: Set[str] = set()
+    if isinstance(value, str):
+        types.add(value.lower())
+    elif isinstance(value, list):
+        for item in value:
+            if isinstance(item, str):
+                types.add(item.lower())
+    return types
 
 
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
@@ -447,22 +509,26 @@ def _collect_json_ld_urls(node) -> Set[str]:
 
     urls: Set[str] = set()
     if isinstance(node, dict):
+        types = _normalise_jsonld_types(node.get("@type"))
+        is_allowed = not types or any(
+            item in LISTING_JSONLD_ALLOWED_TYPES for item in types
+        )
         for key in ("url", "@id"):
             value = node.get(key)
-            if isinstance(value, str):
+            if isinstance(value, str) and is_allowed:
                 candidate = value.strip()
                 if candidate:
                     urls.add(candidate)
 
         main_entity = node.get("mainEntityOfPage")
-        if isinstance(main_entity, str):
+        if isinstance(main_entity, str) and is_allowed:
             candidate = main_entity.strip()
             if candidate:
                 urls.add(candidate)
         elif isinstance(main_entity, (dict, list)):
             urls.update(_collect_json_ld_urls(main_entity))
 
-        if node.get("@type") == "ItemList":
+        if "itemlist" in types:
             urls.update(_collect_json_ld_urls(node.get("itemListElement")))
 
         for value in node.values():
@@ -488,6 +554,8 @@ def _extract_listing_links_from_jsonld(soup: BeautifulSoup, base_url: str) -> Se
                     continue
                 absolute = urljoin(base_url, url)
                 if not absolute:
+                    continue
+                if _looks_like_asset_url(absolute):
                     continue
                 if not _same_domain(base_url, absolute):
                     continue
@@ -916,8 +984,15 @@ class ListingScraper:
         template_url: str, listing_url: str, candidate_url: str
     ) -> bool:
         parsed = urlparse(candidate_url)
-        if parsed.fragment and _is_navigation_fragment(parsed.fragment):
-            return False
+        if parsed.fragment:
+            fragment = parsed.fragment
+            if _is_navigation_fragment(fragment):
+                return False
+            lowered_fragment = fragment.lower()
+            if lowered_fragment.startswith("/"):
+                return False
+            if any(keyword in lowered_fragment for keyword in ("schema", "image", "logo")):
+                return False
 
         candidate_base = _normalise_base_url(candidate_url)
         if not candidate_base:
@@ -927,6 +1002,9 @@ class ListingScraper:
         template_base = _normalise_base_url(template_url)
 
         if not parsed.fragment and candidate_base in {listing_base, template_base}:
+            return False
+
+        if _looks_like_asset_url(candidate_url):
             return False
 
         return True
