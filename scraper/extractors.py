@@ -104,6 +104,7 @@ class RecipeSection:
     instructions: List[str] = field(default_factory=list)
     image: Optional[str] = None
     container: Optional[Tag] = None
+    heading: Optional[Tag] = None
 
     def has_content(self) -> bool:
         return bool(self.ingredients or self.instructions)
@@ -439,6 +440,7 @@ def _extract_recipe_sections(soup: BeautifulSoup) -> List[RecipeSection]:
                 anchor=(element.get("id") or element.get("data-id")),
                 image=_find_section_image(element),
                 container=element.parent if isinstance(element.parent, Tag) else element,
+                heading=element if isinstance(element, Tag) else None,
             )
             current_title_level = level
             continue
@@ -449,6 +451,8 @@ def _extract_recipe_sections(soup: BeautifulSoup) -> List[RecipeSection]:
             current.anchor = current.anchor or element.get("id") or element.get("data-id")
             if not current.image:
                 current.image = _find_section_image(element)
+            if current.heading is None and isinstance(element, Tag):
+                current.heading = element
             current_title_level = level
         else:
             items = _extract_section_items(element)
@@ -502,6 +506,38 @@ def _resolve_section_anchor(
             return _ensure_unique_anchor(anchor, used)
 
     return _ensure_unique_anchor(f"recipe-{index + 1}", used)
+
+
+def _resolve_section_image(section: RecipeSection, base_url: str) -> Optional[str]:
+    seen: Set[str] = set()
+
+    def consider(candidate: Optional[str]) -> Optional[str]:
+        if not candidate:
+            return None
+        cleaned = candidate.strip()
+        if not cleaned or cleaned in seen:
+            return None
+        seen.add(cleaned)
+        normalised = _normalise_url(cleaned, base_url)
+        return normalised or cleaned
+
+    image = consider(section.image)
+    if image:
+        return image
+
+    if section.heading is not None:
+        heading_image = _find_section_image(section.heading)
+        image = consider(heading_image)
+        if image:
+            return image
+
+    if section.container is not None:
+        for img in section.container.find_all("img"):
+            image = consider(_extract_image_from_tag(img))
+            if image:
+                return image
+
+    return None
 
 
 def _collect_json_ld_urls(node) -> Set[str]:
@@ -603,14 +639,24 @@ def _section_label(element: Tag) -> Optional[str]:
     if element.name in HEADING_TAGS:
         text = element.get_text(separator=" ")
     else:
+        if element.find(list(HEADING_TAGS)):
+            return None
+
         strong = None
-        for candidate in element.find_all(list(STRONG_TAGS)):
-            preceding = "".join(
-                str(sibling).strip() for sibling in candidate.previous_siblings if str(sibling).strip()
-            )
-            if not preceding:
-                strong = candidate
-                break
+        for child in element.children:
+            if isinstance(child, Tag):
+                if child.name in STRONG_TAGS:
+                    strong = child
+                    break
+                nested = child.find(list(STRONG_TAGS), recursive=False)
+                if nested is not None:
+                    strong = nested
+                    break
+                if child.name not in {"br"} and child.get_text(strip=True):
+                    return None
+            else:
+                if str(child).strip():
+                    return None
         if strong is None:
             return None
         text = strong.get_text(separator=" ")
@@ -869,13 +915,29 @@ class ListingScraper:
         self, template_url: str, listing: ListingConfig
     ) -> Set[str]:
         pages_seen: Set[str] = set()
+        queued_pages: Set[str] = set()
         article_urls: Set[str] = set()
-        next_page = listing.url
+        queue = deque([listing.url])
+        queued_pages.add(_normalise_base_url(listing.url))
         pages_processed = 0
-        while next_page and pages_processed < self._max_pages:
+
+        while queue and pages_processed < self._max_pages:
+            next_page = queue.popleft()
+            queued_pages.discard(_normalise_base_url(next_page))
+
+            normalised_next = _normalise_base_url(next_page)
+            if normalised_next in pages_seen:
+                continue
+
             response = self._http.get(next_page)
             soup = BeautifulSoup(response.text, "html.parser")
             base_url = response.url
+            base_normalised = _normalise_base_url(base_url)
+
+            if base_normalised in pages_seen:
+                pages_processed += 1
+                continue
+
             page_urls: Set[str] = set()
             for element in soup.select(listing.link_selector):
                 href = element.get("href")
@@ -906,15 +968,27 @@ class ListingScraper:
             article_urls.update(page_urls)
 
             pages_processed += 1
-            pages_seen.add(base_url)
+            pages_seen.add(base_normalised)
+            if normalised_next:
+                pages_seen.add(normalised_next)
+
             if listing.pagination_selector:
-                next_link = soup.select_one(listing.pagination_selector)
-                if next_link and next_link.get("href"):
-                    candidate = urljoin(base_url, next_link.get("href"))
-                    if candidate not in pages_seen:
-                        next_page = candidate
+                for link in soup.select(listing.pagination_selector):
+                    href = link.get("href")
+                    if not href:
                         continue
-            break
+                    candidate = urljoin(base_url, href)
+                    if not candidate:
+                        continue
+                    if not _same_domain(listing.url, candidate):
+                        continue
+                    candidate_base = _normalise_base_url(candidate)
+                    if not candidate_base:
+                        continue
+                    if candidate_base in pages_seen or candidate_base in queued_pages:
+                        continue
+                    queue.append(candidate)
+                    queued_pages.add(candidate_base)
         return article_urls
 
     def _discover_from_sitemaps(self, template: RecipeTemplate) -> Set[str]:
@@ -1245,9 +1319,10 @@ class ArticleScraper:
         if section.instructions and not recipe.instructions:
             recipe.instructions = _dedupe_preserve_order(section.instructions)
 
-        if section.image and (prefer_section or not recipe.image):
-            normalised = _normalise_url(section.image, base_url)
-            recipe.image = normalised or section.image
+        if prefer_section or not recipe.image:
+            section_image = _resolve_section_image(section, base_url)
+            if section_image:
+                recipe.image = section_image
 
     def _populate_from_selectors(
         self,

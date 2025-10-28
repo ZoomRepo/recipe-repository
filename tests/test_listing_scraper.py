@@ -24,6 +24,21 @@ class DummyHttpClient:
         return DummyResponse(url, self._html)
 
 
+class MultiPageHttpClient:
+    def __init__(self, pages: dict[str, str]) -> None:
+        self._pages = pages
+        self.calls: list[str] = []
+
+    def get(self, url: str, **_: object) -> DummyResponse:
+        self.calls.append(url)
+        html = self._pages.get(url)
+        if html is None and not url.endswith("/"):
+            html = self._pages.get(f"{url}/")
+        if html is None:
+            raise AssertionError(f"Unexpected URL requested: {url}")
+        return DummyResponse(url, html)
+
+
 class ListingScraperJsonLdTests(unittest.TestCase):
     def _create_template(self) -> RecipeTemplate:
         return RecipeTemplate(
@@ -217,6 +232,82 @@ class ListingScraperJsonLdTests(unittest.TestCase):
         urls = scraper.discover(template)
 
         self.assertEqual(urls, {"https://example.com/recipes/final/"})
+
+    def test_pagination_discovers_additional_pages(self) -> None:
+        page_one = """
+        <html>
+          <body>
+            <article><h2><a href="/recipes/seffa/">Seffa</a></h2></article>
+            <article><h2><a href="/recipes/mint-tea/">Mint Tea</a></h2></article>
+            <nav class="pagination">
+              <a class="page-numbers" href="/recipes/page/2/">2</a>
+              <a class="page-numbers" href="/recipes/page/3/">3</a>
+            </nav>
+          </body>
+        </html>
+        """
+
+        page_two = """
+        <html>
+          <body>
+            <article><h2><a href="/recipes/bread/">Coconut Bread</a></h2></article>
+            <nav class="pagination">
+              <a class="page-numbers" href="/recipes/page/3/">3</a>
+            </nav>
+          </body>
+        </html>
+        """
+
+        page_three = """
+        <html>
+          <body>
+            <article><h2><a href="/recipes/drink/">Sorrel Drink</a></h2></article>
+          </body>
+        </html>
+        """
+
+        http = MultiPageHttpClient(
+            {
+                "https://example.com/recipes/": page_one,
+                "https://example.com/recipes/page/2/": page_two,
+                "https://example.com/recipes/page/3/": page_three,
+            }
+        )
+
+        scraper = ListingScraper(http, enable_sitemaps=False, max_pages=10)
+        template = RecipeTemplate(
+            name="Come Chop",
+            url="https://example.com/recipes/",
+            type="cooking",
+            listings=[
+                ListingConfig(
+                    url="https://example.com/recipes/",
+                    link_selector="article h2 a",
+                    pagination_selector="a.page-numbers",
+                )
+            ],
+        )
+
+        urls = scraper.discover(template)
+
+        self.assertEqual(
+            urls,
+            {
+                "https://example.com/recipes/seffa/",
+                "https://example.com/recipes/mint-tea/",
+                "https://example.com/recipes/bread/",
+                "https://example.com/recipes/drink/",
+            },
+        )
+        self.assertEqual(len(http.calls), 3)
+        self.assertEqual(
+            set(http.calls),
+            {
+                "https://example.com/recipes/",
+                "https://example.com/recipes/page/2/",
+                "https://example.com/recipes/page/3/",
+            },
+        )
 
     def test_navigation_fragments_are_filtered(self) -> None:
         html = """

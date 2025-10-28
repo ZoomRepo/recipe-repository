@@ -208,6 +208,96 @@ class ArticleScraperFallbackTests(unittest.TestCase):
             "https://www.tootingfamilykitchen.com/images/zaalouk.jpg",
         )
 
+    def test_multiple_recipes_capture_first_image_per_section(self) -> None:
+        html = """
+        <html>
+            <body>
+                <div class="recipe">
+                    <h2>Seffa</h2>
+                    <div class="gallery">
+                        <img src="/images/seffa-1.jpg" />
+                        <img src="/images/seffa-2.jpg" />
+                    </div>
+                    <p><strong>Ingredients</strong></p>
+                    <ul>
+                        <li>2 cups couscous</li>
+                        <li>2 tbsp butter</li>
+                    </ul>
+                    <p><strong>Instructions</strong></p>
+                    <ol>
+                        <li>Steam couscous until fluffy.</li>
+                    </ol>
+                </div>
+                <div class="recipe">
+                    <h2>Mint Tea</h2>
+                    <div class="gallery">
+                        <picture>
+                            <source srcset="https://cdn.example.com/images/mint.webp 600w" />
+                            <img data-src="https://cdn.example.com/images/mint.jpg" />
+                        </picture>
+                        <img src="https://cdn.example.com/images/mint-extra.jpg" />
+                    </div>
+                    <p><strong>Ingredients</strong></p>
+                    <ul>
+                        <li>Handful of mint leaves</li>
+                        <li>2 tbsp sugar</li>
+                    </ul>
+                    <p><strong>Instructions</strong></p>
+                    <p>Brew leaves in boiling water.<br/>Sweeten to taste.</p>
+                </div>
+            </body>
+        </html>
+        """
+
+        template = RecipeTemplate(
+            name="Come Chop",
+            url="https://www.comechop.africa/recipes/",
+            type="cooking",
+            article=ArticleConfig(
+                selectors={
+                    "title": ["h1"],
+                }
+            ),
+            structured_data=StructuredDataConfig(enabled=False),
+        )
+
+        scraper = ArticleScraper(
+            DummyHttpClient(html)
+        )
+        recipes = scraper.scrape(
+            template,
+            "https://www.comechop.africa/recipes/seffa-moroccan-sweet-couscous/",
+        )
+
+        self.assertEqual(len(recipes), 2)
+        first, second = recipes
+
+        self.assertEqual(
+            first.image,
+            "https://www.comechop.africa/images/seffa-1.jpg",
+        )
+        self.assertEqual(
+            first.ingredients,
+            ["2 cups couscous", "2 tbsp butter"],
+        )
+        self.assertEqual(
+            first.instructions,
+            ["Steam couscous until fluffy."],
+        )
+
+        self.assertEqual(second.image, "https://cdn.example.com/images/mint.jpg")
+        self.assertEqual(
+            second.ingredients,
+            ["Handful of mint leaves", "2 tbsp sugar"],
+        )
+        self.assertEqual(
+            second.instructions,
+            [
+                "Brew leaves in boiling water.",
+                "Sweeten to taste.",
+            ],
+        )
+
     def test_subsections_do_not_split_single_recipe(self) -> None:
         html = """
         <html>
