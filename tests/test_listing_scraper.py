@@ -338,5 +338,80 @@ class ListingScraperJsonLdTests(unittest.TestCase):
         self.assertEqual(urls, {"https://example.com/recipes/#recipe-section"})
 
 
+class ListingScraperSitemapTests(unittest.TestCase):
+    def test_sitemaps_used_before_listing_and_skip_non_recipe_storage(self) -> None:
+        sitemap_index = """<?xml version='1.0' encoding='UTF-8'?>
+        <sitemapindex xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+          <sitemap>
+            <loc>https://example.com/storage/recipes-1.xml</loc>
+          </sitemap>
+          <sitemap>
+            <loc>https://example.com/storage/pages-1.xml</loc>
+          </sitemap>
+        </sitemapindex>
+        """
+
+        recipe_sitemap = """<?xml version='1.0' encoding='UTF-8'?>
+        <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+          <url><loc>https://example.com/recipes/first/</loc></url>
+          <url><loc>https://example.com/recipes/second/</loc></url>
+        </urlset>
+        """
+
+        empty_sitemap = """<?xml version='1.0' encoding='UTF-8'?>
+        <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'></urlset>
+        """
+
+        listing_html = """
+        <html>
+          <body>
+            <article><h2><a href="/recipes/from-listing/">Listing Recipe</a></h2></article>
+          </body>
+        </html>
+        """
+
+        http = MultiPageHttpClient(
+            {
+                "https://example.com/sitemap.xml": sitemap_index,
+                "https://example.com/sitemap_index.xml": empty_sitemap,
+                "https://example.com/sitemap-index.xml": empty_sitemap,
+                "https://example.com/wp-sitemap.xml": empty_sitemap,
+                "https://example.com/storage/recipes-1.xml": recipe_sitemap,
+                "https://example.com/recipes/": listing_html,
+            }
+        )
+
+        scraper = ListingScraper(http, enable_sitemaps=True)
+        template = RecipeTemplate(
+            name="Food Network",
+            url="https://example.com/collections/argentinian-recipes#all-recipes",
+            type="cooking",
+            listings=[
+                ListingConfig(
+                    url="https://example.com/recipes/",
+                    link_selector="article h2 a",
+                )
+            ],
+        )
+
+        urls = scraper.discover(template)
+
+        self.assertEqual(
+            urls,
+            {
+                "https://example.com/recipes/first/",
+                "https://example.com/recipes/second/",
+                "https://example.com/recipes/from-listing/",
+            },
+        )
+
+        self.assertIn("https://example.com/sitemap.xml", http.calls)
+        self.assertNotIn("https://example.com/storage/pages-1.xml", http.calls)
+        self.assertLess(
+            http.calls.index("https://example.com/sitemap.xml"),
+            http.calls.index("https://example.com/recipes/"),
+        )
+
+
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

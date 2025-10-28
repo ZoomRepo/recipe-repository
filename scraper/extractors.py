@@ -40,6 +40,16 @@ SITEMAP_CANDIDATES = (
     "wp-sitemap.xml",
 )
 
+STORAGE_SITEMAP_EXCLUDE_KEYWORDS = {
+    "pages",
+    "chefs",
+    "collections",
+    "playlists",
+    "shows",
+    "spotlights",
+    "videos",
+}
+
 NAVIGATION_FRAGMENT_KEYWORDS = {
     "breadcrumb",
     "comment",
@@ -858,6 +868,19 @@ class ListingScraper:
         had_listing_error = False
         last_error: Optional[Exception] = None
         had_listing_results = False
+
+        if self._enable_sitemaps:
+            sitemap_urls = self._discover_from_sitemaps(template)
+            if sitemap_urls:
+                logger.info(
+                    "Discovered %d article URLs for %s via sitemaps",
+                    len(sitemap_urls),
+                    template.name,
+                    extra={
+                        "source_name": template.name,
+                    },
+                )
+                discovered.update(sitemap_urls)
         for listing in template.listings:
             try:
                 urls = self._scrape_listing(template.url, listing)
@@ -886,20 +909,6 @@ class ListingScraper:
                     listing.link_selector,
                 )
 
-        sitemap_urls: Set[str] = set()
-        if not discovered and self._enable_sitemaps:
-            sitemap_urls = self._discover_from_sitemaps(template)
-            if sitemap_urls:
-                logger.info(
-                    "Sitemap fallback discovered %d article URLs for %s",
-                    len(sitemap_urls),
-                    template.name,
-                )
-            elif had_listing_error:
-                logger.info(
-                    "Sitemap fallback yielded no URLs for %s", template.name
-                )
-            discovered.update(sitemap_urls)
         if had_listing_error and not discovered:
             raise ListingDiscoveryError(
                 f"Failed to discover listings for {template.name}", last_error
@@ -1034,6 +1043,8 @@ class ListingScraper:
                     continue
 
                 if loc_text.endswith((".xml", ".xml.gz")):
+                    if not self._should_queue_sitemap(template.url, loc_text):
+                        continue
                     if loc_text not in visited:
                         queue.append(loc_text)
                     continue
@@ -1046,12 +1057,26 @@ class ListingScraper:
         return article_urls
 
     def _candidate_sitemaps(self, base_url: str) -> List[str]:
-        base = base_url.rstrip("/") + "/"
+        parsed = urlparse(base_url)
+        if parsed.scheme and parsed.netloc:
+            base = f"{parsed.scheme}://{parsed.netloc}/"
+        else:
+            base = base_url.split("#", 1)[0].rstrip("/") + "/"
         return [urljoin(base, candidate) for candidate in SITEMAP_CANDIDATES]
 
     @staticmethod
     def _same_domain(base_url: str, candidate: str) -> bool:
         return _same_domain(base_url, candidate)
+
+    @staticmethod
+    def _should_queue_sitemap(template_url: str, sitemap_url: str) -> bool:
+        if not _same_domain(template_url, sitemap_url):
+            return False
+        path = urlparse(sitemap_url).path.lower()
+        if "/storage/" in path and "recipe" not in path:
+            if any(keyword in path for keyword in STORAGE_SITEMAP_EXCLUDE_KEYWORDS):
+                return False
+        return True
 
     @staticmethod
     def _should_include_url(
