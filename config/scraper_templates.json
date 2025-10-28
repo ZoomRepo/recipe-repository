@@ -269,7 +269,7 @@
     "name": "Petite Paniere - Algerian Food",
     "url": "https://petitepaniere.com/tag/algerian-food/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -2945,7 +2945,7 @@
     "name": "Naturally Zimbabwean - Recipes",
     "url": "https://naturallyzimbabwean.com/category/recipes/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -3299,7 +3299,7 @@
     "name": "Boondocking Recipes - Comoros",
     "url": "https://boondockingrecipes.com/10-comoros-recipes-you-cant-afford-to-miss/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -3388,7 +3388,7 @@
     "name": "Boondocking Recipes - Equatorial Guinea",
     "url": "https://boondockingrecipes.com/11-authentic-equatorial-guinea-recipes/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -3477,7 +3477,7 @@
     "name": "Boondocking Recipes - Eritrea",
     "url": "https://boondockingrecipes.com/12-must-try-eritrean-recipes",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {
@@ -4081,7 +4081,7 @@
     "name": "Congo Cookbook",
     "url": "https://www.congocookbook.com/",
     "type": "cooking",
-    "scraped": false,
+    "scraped": true,
     "recipes": {
       "listing": [
         {

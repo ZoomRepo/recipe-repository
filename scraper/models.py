@@ -47,6 +47,8 @@ class RecipeTemplate:
     article: ArticleConfig = field(default_factory=ArticleConfig)
     structured_data: StructuredDataConfig = field(default_factory=StructuredDataConfig)
     scraped: bool = False
+    discover_via_json_ld: bool = False
+    discover_via_sitemaps: bool = False
 
 
 @dataclass(frozen=True)
