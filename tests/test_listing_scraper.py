@@ -415,5 +415,41 @@ class ListingScraperSitemapTests(unittest.TestCase):
         )
 
 
+class ListingScraperIsRecipeUrlTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.http = DummyHttpClient("<html></html>")
+        self.scraper = ListingScraper(self.http, enable_sitemaps=False)
+        self.template = RecipeTemplate(
+            name="Filter",
+            url="https://example.com/recipes/",
+            type="cooking",
+            listings=[],
+        )
+
+    def test_rejects_asset_urls(self) -> None:
+        self.assertFalse(
+            self.scraper.is_recipe_url(
+                self.template,
+                "https://example.com/wp-content/uploads/PHOTO.jpg",
+            )
+        )
+
+    def test_rejects_navigation_fragments(self) -> None:
+        self.assertFalse(
+            self.scraper.is_recipe_url(
+                self.template,
+                "https://example.com/recipes/#people",
+            )
+        )
+
+    def test_accepts_recipe_page(self) -> None:
+        self.assertTrue(
+            self.scraper.is_recipe_url(
+                self.template,
+                "https://example.com/recipes/lemon-cake/",
+            )
+        )
+
+
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

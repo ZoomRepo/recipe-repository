@@ -122,6 +122,14 @@ class RecipeScraperService:
 
         saved_any = False
         for url in sorted(article_urls):
+            if not self._listing_scraper.is_recipe_url(template, url):
+                logger.debug(
+                    "Skipping non-recipe candidate discovered for %s: %s",
+                    template.name,
+                    url,
+                )
+                self._repository.resolve_failure(template.name, "article", url)
+                continue
             try:
                 recipes = self._article_scraper.scrape(template, url)
             except Exception as exc:  # pylint: disable=broad-except
@@ -227,6 +235,15 @@ class RecipeScraperService:
                 failure.id,
                 template.name,
             )
+            return
+
+        if not self._listing_scraper.is_recipe_url(template, url):
+            logger.debug(
+                "Discarding stale failure for %s that targets a non-recipe URL: %s",
+                template.name,
+                url,
+            )
+            self._repository.resolve_failure(template.name, failure.stage, url)
             return
 
         try:

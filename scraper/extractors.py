@@ -62,6 +62,7 @@ NAVIGATION_FRAGMENT_KEYWORDS = {
     "nav",
     "footer",
     "header",
+    "people",
 }
 
 ASSET_EXTENSIONS = {
@@ -997,6 +998,15 @@ class ListingScraper:
                     queue.append(candidate)
                     queued_pages.add(candidate_base)
         return article_urls
+
+    def is_recipe_url(self, template: RecipeTemplate, candidate_url: str) -> bool:
+        """Return ``True`` if ``candidate_url`` looks like a recipe article."""
+
+        return self._should_include_url(
+            template.url,
+            template.url,
+            candidate_url,
+        )
 
     def _discover_from_sitemaps(self, template: RecipeTemplate) -> Set[str]:
         """Attempt to discover recipe URLs via sitemap crawling."""
