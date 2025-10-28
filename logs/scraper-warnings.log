@@ -1667,3 +1667,812 @@ Traceback (most recent call last):
   File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 176, in discover
     raise ListingDiscoveryError(
 scraper.extractors.ListingDiscoveryError: Failed to discover listings for ExpatWoman Food - UAE (United Arab Emirates): 403 Client Error: Forbidden for url: https://www.expatwoman.com/ewfood/recipes
+2025-10-28 15:20:14,353 [WARNING] scraper.service source=Taste Antigua Barbuda recipe=https://tasteantiguabarbuda.com/ - Skipping failure 13 for unknown template Taste Antigua Barbuda
+2025-10-28 15:20:14,353 [WARNING] scraper.service source=Argentine Cuisine recipe=https://argentinecuisine.com/ - Skipping failure 14 for unknown template Argentine Cuisine
+2025-10-28 15:20:14,353 [WARNING] scraper.service source=Taste.com.au recipe=https://www.taste.com.au/ - Skipping failure 15 for unknown template Taste.com.au
+2025-10-28 15:20:14,354 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-finest-home-improvement-and-repair-books-for-householders.html - Skipping failure 16 for unknown template Austrian Food
+2025-10-28 15:20:14,354 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-ideas-that-can-effectively-assist-you-to-promote-a-house-quickly.html - Skipping failure 17 for unknown template Austrian Food
+2025-10-28 15:20:14,354 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-suggestions-that-can-successfully-assist-you-to-sell-a-house-shortly.html - Skipping failure 18 for unknown template Austrian Food
+2025-10-28 15:20:14,355 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/11-tasty-food-and-cooking-shows-to-stream-now.html - Skipping failure 19 for unknown template Austrian Food
+2025-10-28 15:20:14,355 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-finest-home-improvement-projects-under-100.html - Skipping failure 20 for unknown template Austrian Food
+2025-10-28 15:20:14,355 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-beneath-100.html - Skipping failure 21 for unknown template Austrian Food
+2025-10-28 15:20:14,356 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-underneath-100.html - Skipping failure 22 for unknown template Austrian Food
+2025-10-28 15:20:14,356 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/21-home-improvement-concepts-on-price-range.html - Skipping failure 23 for unknown template Austrian Food
+2025-10-28 15:20:14,356 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/ - Skipping failure 38 for unknown template AZ Cookbook
+2025-10-28 15:20:14,356 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/162-2/ - Skipping failure 39 for unknown template AZ Cookbook
+2025-10-28 15:20:14,357 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/165-2/ - Skipping failure 40 for unknown template AZ Cookbook
+2025-10-28 15:20:14,357 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/166-2/ - Skipping failure 41 for unknown template AZ Cookbook
+2025-10-28 15:20:14,357 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/spinach-salad-with-walnuts/ - Skipping failure 42 for unknown template AZ Cookbook
+2025-10-28 15:20:14,358 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/ - Skipping failure 43 for unknown template AZ Cookbook
+2025-10-28 15:20:14,358 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/175-2/ - Skipping failure 44 for unknown template AZ Cookbook
+2025-10-28 15:20:14,358 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/176-2/ - Skipping failure 45 for unknown template AZ Cookbook
+2025-10-28 15:20:14,359 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/177-2/ - Skipping failure 46 for unknown template AZ Cookbook
+2025-10-28 15:20:14,359 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/178-2/ - Skipping failure 47 for unknown template AZ Cookbook
+2025-10-28 15:20:14,359 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/179-2/ - Skipping failure 48 for unknown template AZ Cookbook
+2025-10-28 15:20:14,360 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/180-2/ - Skipping failure 49 for unknown template AZ Cookbook
+2025-10-28 15:20:14,360 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/181-2/ - Skipping failure 50 for unknown template AZ Cookbook
+2025-10-28 15:20:14,360 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/182-2/ - Skipping failure 51 for unknown template AZ Cookbook
+2025-10-28 15:20:14,361 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/183-2/ - Skipping failure 52 for unknown template AZ Cookbook
+2025-10-28 15:20:14,362 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/184-2/ - Skipping failure 53 for unknown template AZ Cookbook
+2025-10-28 15:20:14,362 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/dough-ball/ - Skipping failure 54 for unknown template AZ Cookbook
+2025-10-28 15:20:14,362 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/filling1/ - Skipping failure 55 for unknown template AZ Cookbook
+2025-10-28 15:20:14,363 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/glazing/ - Skipping failure 56 for unknown template AZ Cookbook
+2025-10-28 15:20:14,363 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/pirojki-potato/ - Skipping failure 57 for unknown template AZ Cookbook
+2025-10-28 15:20:14,363 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/potato-filling/ - Skipping failure 58 for unknown template AZ Cookbook
+2025-10-28 15:20:14,364 [WARNING] scraper.service source=Bahamas Recipes recipe=https://bahamasrecipes.com/ - Skipping failure 59 for unknown template Bahamas Recipes
+2025-10-28 15:20:14,364 [WARNING] scraper.service source=Bahrain Recipes recipe=https://bahrainrecipes.com/ - Skipping failure 60 for unknown template Bahrain Recipes
+2025-10-28 15:20:14,364 [WARNING] scraper.service source=Bangladesh Recipes recipe=https://bangladeshrecipes.com/ - Skipping failure 63 for unknown template Bangladesh Recipes
+2025-10-28 15:20:14,364 [WARNING] scraper.service source=Barbados Foodie recipe=https://barbadosfoodie.com/ - Skipping failure 64 for unknown template Barbados Foodie
+2025-10-28 15:20:14,365 [WARNING] scraper.service source=Belarus Recipes recipe=https://belarusrecipes.com/ - Skipping failure 65 for unknown template Belarus Recipes
+2025-10-28 15:20:14,365 [WARNING] scraper.service source=Belgium Recipes recipe=https://belgiumrecipes.com/ - Skipping failure 66 for unknown template Belgium Recipes
+2025-10-28 15:20:14,365 [WARNING] scraper.service source=Belize Recipes recipe=https://belizerecipes.com/ - Skipping failure 67 for unknown template Belize Recipes
+2025-10-28 15:20:14,366 [WARNING] scraper.service source=Kosher World Kitchen - Botswana recipe=mailto:trmarvin@gmail.com - Skipping failure 68 for unknown template Kosher World Kitchen - Botswana
+2025-10-28 15:20:14,367 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_african_cooking/womens_work/ - Skipping failure 72 for unknown template Congo Cookbook
+2025-10-28 15:20:14,367 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_this_website/faq/ - Skipping failure 73 for unknown template Congo Cookbook
+2025-10-28 15:20:14,368 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/blog/ - Skipping failure 74 for unknown template Congo Cookbook
+2025-10-28 15:20:14,368 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/akoho-sy-voanio-chicken-in-coconut-milk/ - Skipping failure 75 for unknown template Congo Cookbook
+2025-10-28 15:20:14,368 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/ashanti-chicken/ - Skipping failure 76 for unknown template Congo Cookbook
+2025-10-28 15:20:14,369 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-in-cumin-sauce/ - Skipping failure 77 for unknown template Congo Cookbook
+2025-10-28 15:20:14,369 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-in-peanut-tomato-sauce/ - Skipping failure 78 for unknown template Congo Cookbook
+2025-10-28 15:20:14,369 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-with-egusi/ - Skipping failure 79 for unknown template Congo Cookbook
+2025-10-28 15:20:14,370 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/doro-wat/ - Skipping failure 80 for unknown template Congo Cookbook
+2025-10-28 15:20:14,370 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/kedjenou/ - Skipping failure 81 for unknown template Congo Cookbook
+2025-10-28 15:20:14,370 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/kuku-paka/ - Skipping failure 82 for unknown template Congo Cookbook
+2025-10-28 15:20:14,371 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/muamba-de-galinha/ - Skipping failure 83 for unknown template Congo Cookbook
+2025-10-28 15:20:14,371 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/muamba-nsusu-congo-chicken-soup/ - Skipping failure 84 for unknown template Congo Cookbook
+2025-10-28 15:20:14,371 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/piri-piri-chicken/ - Skipping failure 85 for unknown template Congo Cookbook
+2025-10-28 15:20:14,372 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-dg-poulet-directeur-general/ - Skipping failure 86 for unknown template Congo Cookbook
+2025-10-28 15:20:14,372 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-moambe-poulet-nyembwe/ - Skipping failure 87 for unknown template Congo Cookbook
+2025-10-28 15:20:14,373 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-yassa-chicken-yassa/ - Skipping failure 88 for unknown template Congo Cookbook
+2025-10-28 15:20:14,373 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/tagine-of-chicken-preserved-lemon-and-olives/ - Skipping failure 89 for unknown template Congo Cookbook
+2025-10-28 15:20:14,373 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/chicken/ - Skipping failure 90 for unknown template Congo Cookbook
+2025-10-28 15:20:14,373 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/fish-seafood/ - Skipping failure 91 for unknown template Congo Cookbook
+2025-10-28 15:20:14,374 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/meat/ - Skipping failure 92 for unknown template Congo Cookbook
+2025-10-28 15:20:14,374 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/rice/ - Skipping failure 93 for unknown template Congo Cookbook
+2025-10-28 15:20:14,374 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/sauce/ - Skipping failure 94 for unknown template Congo Cookbook
+2025-10-28 15:20:14,375 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/soup-stew/ - Skipping failure 95 for unknown template Congo Cookbook
+2025-10-28 15:20:14,375 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/staple/ - Skipping failure 96 for unknown template Congo Cookbook
+2025-10-28 15:20:14,375 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/vegetable-side-dishes/ - Skipping failure 97 for unknown template Congo Cookbook
+2025-10-28 15:20:14,375 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/chicken_recipes/poulet_yassa/ - Skipping failure 98 for unknown template Congo Cookbook
+2025-10-28 15:20:14,376 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/baked-fish-and-eggplant/ - Skipping failure 99 for unknown template Congo Cookbook
+2025-10-28 15:20:14,376 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/capitaine-and-pili-pili-in-palm-oil/ - Skipping failure 100 for unknown template Congo Cookbook
+2025-10-28 15:20:14,376 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/dahomey-fish-stew/ - Skipping failure 101 for unknown template Congo Cookbook
+2025-10-28 15:20:14,376 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/dongo-dongo/ - Skipping failure 102 for unknown template Congo Cookbook
+2025-10-28 15:20:14,377 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-greens/ - Skipping failure 103 for unknown template Congo Cookbook
+2025-10-28 15:20:14,377 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-onions-in-tomato-sauce/ - Skipping failure 104 for unknown template Congo Cookbook
+2025-10-28 15:20:14,377 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-with-sorrel/ - Skipping failure 105 for unknown template Congo Cookbook
+2025-10-28 15:20:14,378 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fried-fish-in-peanut-sauce/ - Skipping failure 106 for unknown template Congo Cookbook
+2025-10-28 15:20:14,378 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/grilled-tilapia/ - Skipping failure 107 for unknown template Congo Cookbook
+2025-10-28 15:20:14,378 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/liboke-de-poisson-fish-in-banana-leaf/ - Skipping failure 108 for unknown template Congo Cookbook
+2025-10-28 15:20:14,378 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/lm-prawns/ - Skipping failure 109 for unknown template Congo Cookbook
+2025-10-28 15:20:14,379 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/mchuzi-wa-samaki-fish-curry/ - Skipping failure 110 for unknown template Congo Cookbook
+2025-10-28 15:20:14,379 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/mulet-farci-a-la-saint-louisienne/ - Skipping failure 111 for unknown template Congo Cookbook
+2025-10-28 15:20:14,379 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/ngege-tilapia-with-groundnut-sauce/ - Skipping failure 112 for unknown template Congo Cookbook
+2025-10-28 15:20:14,380 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/oysters-mombasa/ - Skipping failure 113 for unknown template Congo Cookbook
+2025-10-28 15:20:14,380 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/pastels-aux-poisson/ - Skipping failure 114 for unknown template Congo Cookbook
+2025-10-28 15:20:14,380 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/poisson-yassa-fish-yassa/ - Skipping failure 115 for unknown template Congo Cookbook
+2025-10-28 15:20:14,381 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/samaki-wa-kupaka-grilled-fish/ - Skipping failure 116 for unknown template Congo Cookbook
+2025-10-28 15:20:14,381 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/sardines-and-greens-stew/ - Skipping failure 117 for unknown template Congo Cookbook
+2025-10-28 15:20:14,381 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-and-greens-in-peanut-sauce/ - Skipping failure 118 for unknown template Congo Cookbook
+2025-10-28 15:20:14,382 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-in-cumin-sauce/ - Skipping failure 119 for unknown template Congo Cookbook
+2025-10-28 15:20:14,382 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-in-wild-mango-kernel-sauce/ - Skipping failure 120 for unknown template Congo Cookbook
+2025-10-28 15:20:14,382 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/boko-boko/ - Skipping failure 121 for unknown template Congo Cookbook
+2025-10-28 15:20:14,383 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/brochettes/ - Skipping failure 122 for unknown template Congo Cookbook
+2025-10-28 15:20:14,383 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/coupe-coupe/ - Skipping failure 123 for unknown template Congo Cookbook
+2025-10-28 15:20:14,383 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/domoda/ - Skipping failure 124 for unknown template Congo Cookbook
+2025-10-28 15:20:14,384 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/kitoza/ - Skipping failure 125 for unknown template Congo Cookbook
+2025-10-28 15:20:14,384 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/liboke-de-viande-meat-in-banana-leaf/ - Skipping failure 126 for unknown template Congo Cookbook
+2025-10-28 15:20:14,384 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/mafe/ - Skipping failure 127 for unknown template Congo Cookbook
+2025-10-28 15:20:14,384 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/matoke/ - Skipping failure 128 for unknown template Congo Cookbook
+2025-10-28 15:20:14,385 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/profile/ - Skipping failure 129 for unknown template Congo Cookbook
+2025-10-28 15:20:14,385 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/rare_recipes/index/ - Skipping failure 130 for unknown template Congo Cookbook
+2025-10-28 15:20:14,385 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/excerpts/ - Skipping failure 131 for unknown template Congo Cookbook
+2025-10-28 15:20:14,386 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/how_to_have_an_african_dinner_party/ - Skipping failure 132 for unknown template Congo Cookbook
+2025-10-28 15:20:14,386 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/recipes_by_country_and_region/ - Skipping failure 133 for unknown template Congo Cookbook
+2025-10-28 15:20:14,386 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/rice-recipes/ - Skipping failure 134 for unknown template Congo Cookbook
+2025-10-28 15:20:14,387 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/sitemap/ - Skipping failure 135 for unknown template Congo Cookbook
+2025-10-28 15:20:14,387 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/soup-and-stew-recipes/ - Skipping failure 136 for unknown template Congo Cookbook
+2025-10-28 15:20:14,387 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/bay-leaf/ - Skipping failure 137 for unknown template Congo Cookbook
+2025-10-28 15:20:14,387 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/beef-broth-or-beef-stock/ - Skipping failure 138 for unknown template Congo Cookbook
+2025-10-28 15:20:14,388 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/black-pepper/ - Skipping failure 139 for unknown template Congo Cookbook
+2025-10-28 15:20:14,388 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/boiling/ - Skipping failure 140 for unknown template Congo Cookbook
+2025-10-28 15:20:14,388 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/butter/ - Skipping failure 141 for unknown template Congo Cookbook
+2025-10-28 15:20:14,389 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/canned-tomato/ - Skipping failure 142 for unknown template Congo Cookbook
+2025-10-28 15:20:14,389 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/carrot/ - Skipping failure 143 for unknown template Congo Cookbook
+2025-10-28 15:20:14,389 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cayenne-pepper-or-red-pepper/ - Skipping failure 144 for unknown template Congo Cookbook
+2025-10-28 15:20:14,389 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/central-africa/ - Skipping failure 145 for unknown template Congo Cookbook
+2025-10-28 15:20:14,390 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chicken-broth-or-chicken-stock/ - Skipping failure 146 for unknown template Congo Cookbook
+2025-10-28 15:20:14,390 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chicken/ - Skipping failure 147 for unknown template Congo Cookbook
+2025-10-28 15:20:14,390 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chile-pepper/ - Skipping failure 148 for unknown template Congo Cookbook
+2025-10-28 15:20:14,390 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cinnamon/ - Skipping failure 149 for unknown template Congo Cookbook
+2025-10-28 15:20:14,391 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/coriander/ - Skipping failure 150 for unknown template Congo Cookbook
+2025-10-28 15:20:14,391 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cumin/ - Skipping failure 151 for unknown template Congo Cookbook
+2025-10-28 15:20:14,391 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/curry-powder/ - Skipping failure 152 for unknown template Congo Cookbook
+2025-10-28 15:20:14,392 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/dried-prawns-dried-shrimp/ - Skipping failure 153 for unknown template Congo Cookbook
+2025-10-28 15:20:14,392 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/eastern-africa/ - Skipping failure 154 for unknown template Congo Cookbook
+2025-10-28 15:20:14,392 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/eggplant/ - Skipping failure 155 for unknown template Congo Cookbook
+2025-10-28 15:20:14,393 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/fish-dried-or-salted-or-smoked/ - Skipping failure 156 for unknown template Congo Cookbook
+2025-10-28 15:20:14,393 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/fish/ - Skipping failure 157 for unknown template Congo Cookbook
+2025-10-28 15:20:14,393 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/frying/ - Skipping failure 158 for unknown template Congo Cookbook
+2025-10-28 15:20:14,394 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/garlic/ - Skipping failure 159 for unknown template Congo Cookbook
+2025-10-28 15:20:14,394 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/ginger-root/ - Skipping failure 160 for unknown template Congo Cookbook
+2025-10-28 15:20:14,394 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/ginger/ - Skipping failure 161 for unknown template Congo Cookbook
+2025-10-28 15:20:14,395 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/greens/ - Skipping failure 162 for unknown template Congo Cookbook
+2025-10-28 15:20:14,395 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/lemon-juice/ - Skipping failure 163 for unknown template Congo Cookbook
+2025-10-28 15:20:14,395 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/maggi-sauce-or-maggi-cube/ - Skipping failure 164 for unknown template Congo Cookbook
+2025-10-28 15:20:14,395 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/oil/ - Skipping failure 165 for unknown template Congo Cookbook
+2025-10-28 15:20:14,396 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/okra/ - Skipping failure 166 for unknown template Congo Cookbook
+2025-10-28 15:20:14,396 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/onion/ - Skipping failure 167 for unknown template Congo Cookbook
+2025-10-28 15:20:14,396 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/parsley/ - Skipping failure 168 for unknown template Congo Cookbook
+2025-10-28 15:20:14,397 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/peanut-butter/ - Skipping failure 169 for unknown template Congo Cookbook
+2025-10-28 15:20:14,397 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/potato/ - Skipping failure 170 for unknown template Congo Cookbook
+2025-10-28 15:20:14,397 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/red-palm-oil/ - Skipping failure 171 for unknown template Congo Cookbook
+2025-10-28 15:20:14,398 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/roasting/ - Skipping failure 172 for unknown template Congo Cookbook
+2025-10-28 15:20:14,398 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/salt/ - Skipping failure 173 for unknown template Congo Cookbook
+2025-10-28 15:20:14,398 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/simmering-stewing/ - Skipping failure 174 for unknown template Congo Cookbook
+2025-10-28 15:20:14,398 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/southern-africa/ - Skipping failure 175 for unknown template Congo Cookbook
+2025-10-28 15:20:14,399 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/squash/ - Skipping failure 176 for unknown template Congo Cookbook
+2025-10-28 15:20:14,399 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/sweet-green-pepper-bell-pepper/ - Skipping failure 177 for unknown template Congo Cookbook
+2025-10-28 15:20:14,399 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato-paste-or-tomato-sauce/ - Skipping failure 178 for unknown template Congo Cookbook
+2025-10-28 15:20:14,400 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato-paste/ - Skipping failure 179 for unknown template Congo Cookbook
+2025-10-28 15:20:14,400 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato/ - Skipping failure 180 for unknown template Congo Cookbook
+2025-10-28 15:20:14,400 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/western-africa/ - Skipping failure 181 for unknown template Congo Cookbook
+2025-10-28 15:20:14,401 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_africa/african_proverbs/ - Skipping failure 70 for unknown template Congo Cookbook
+2025-10-28 15:20:14,401 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_african_cooking/index/ - Skipping failure 71 for unknown template Congo Cookbook
+2025-10-28 15:22:34,404 [WARNING] scraper.service source=Taste Antigua Barbuda recipe=https://tasteantiguabarbuda.com/ - Skipping failure 13 for unknown template Taste Antigua Barbuda
+2025-10-28 15:22:34,405 [WARNING] scraper.service source=Argentine Cuisine recipe=https://argentinecuisine.com/ - Skipping failure 14 for unknown template Argentine Cuisine
+2025-10-28 15:22:34,405 [WARNING] scraper.service source=Taste.com.au recipe=https://www.taste.com.au/ - Skipping failure 15 for unknown template Taste.com.au
+2025-10-28 15:22:34,406 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-finest-home-improvement-and-repair-books-for-householders.html - Skipping failure 16 for unknown template Austrian Food
+2025-10-28 15:22:34,406 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-ideas-that-can-effectively-assist-you-to-promote-a-house-quickly.html - Skipping failure 17 for unknown template Austrian Food
+2025-10-28 15:22:34,406 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/10-home-improvement-suggestions-that-can-successfully-assist-you-to-sell-a-house-shortly.html - Skipping failure 18 for unknown template Austrian Food
+2025-10-28 15:22:34,407 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/11-tasty-food-and-cooking-shows-to-stream-now.html - Skipping failure 19 for unknown template Austrian Food
+2025-10-28 15:22:34,407 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-finest-home-improvement-projects-under-100.html - Skipping failure 20 for unknown template Austrian Food
+2025-10-28 15:22:34,407 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-beneath-100.html - Skipping failure 21 for unknown template Austrian Food
+2025-10-28 15:22:34,407 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/12-greatest-home-improvement-tasks-underneath-100.html - Skipping failure 22 for unknown template Austrian Food
+2025-10-28 15:22:34,408 [WARNING] scraper.service source=Austrian Food recipe=https://austrianfood.net/21-home-improvement-concepts-on-price-range.html - Skipping failure 23 for unknown template Austrian Food
+2025-10-28 15:22:34,408 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/ - Skipping failure 38 for unknown template AZ Cookbook
+2025-10-28 15:22:34,408 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/162-2/ - Skipping failure 39 for unknown template AZ Cookbook
+2025-10-28 15:22:34,409 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/165-2/ - Skipping failure 40 for unknown template AZ Cookbook
+2025-10-28 15:22:34,409 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/166-2/ - Skipping failure 41 for unknown template AZ Cookbook
+2025-10-28 15:22:34,409 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/03/25/spinach-salad-with-cheese/spinach-salad-with-walnuts/ - Skipping failure 42 for unknown template AZ Cookbook
+2025-10-28 15:22:34,411 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/ - Skipping failure 43 for unknown template AZ Cookbook
+2025-10-28 15:22:34,411 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/175-2/ - Skipping failure 44 for unknown template AZ Cookbook
+2025-10-28 15:22:34,412 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/176-2/ - Skipping failure 45 for unknown template AZ Cookbook
+2025-10-28 15:22:34,412 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/177-2/ - Skipping failure 46 for unknown template AZ Cookbook
+2025-10-28 15:22:34,412 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/178-2/ - Skipping failure 47 for unknown template AZ Cookbook
+2025-10-28 15:22:34,412 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/179-2/ - Skipping failure 48 for unknown template AZ Cookbook
+2025-10-28 15:22:34,413 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/180-2/ - Skipping failure 49 for unknown template AZ Cookbook
+2025-10-28 15:22:34,413 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/181-2/ - Skipping failure 50 for unknown template AZ Cookbook
+2025-10-28 15:22:34,413 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/182-2/ - Skipping failure 51 for unknown template AZ Cookbook
+2025-10-28 15:22:34,414 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/183-2/ - Skipping failure 52 for unknown template AZ Cookbook
+2025-10-28 15:22:34,414 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/184-2/ - Skipping failure 53 for unknown template AZ Cookbook
+2025-10-28 15:22:34,414 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/dough-ball/ - Skipping failure 54 for unknown template AZ Cookbook
+2025-10-28 15:22:34,415 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/filling1/ - Skipping failure 55 for unknown template AZ Cookbook
+2025-10-28 15:22:34,415 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/glazing/ - Skipping failure 56 for unknown template AZ Cookbook
+2025-10-28 15:22:34,415 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/pirojki-potato/ - Skipping failure 57 for unknown template AZ Cookbook
+2025-10-28 15:22:34,415 [WARNING] scraper.service source=AZ Cookbook recipe=https://azcookbook.com/2008/04/01/pirojki-piroshki-with-potato-or-meat/potato-filling/ - Skipping failure 58 for unknown template AZ Cookbook
+2025-10-28 15:22:34,416 [WARNING] scraper.service source=Bahamas Recipes recipe=https://bahamasrecipes.com/ - Skipping failure 59 for unknown template Bahamas Recipes
+2025-10-28 15:22:34,416 [WARNING] scraper.service source=Bahrain Recipes recipe=https://bahrainrecipes.com/ - Skipping failure 60 for unknown template Bahrain Recipes
+2025-10-28 15:22:34,416 [WARNING] scraper.service source=Bangladesh Recipes recipe=https://bangladeshrecipes.com/ - Skipping failure 63 for unknown template Bangladesh Recipes
+2025-10-28 15:22:34,417 [WARNING] scraper.service source=Barbados Foodie recipe=https://barbadosfoodie.com/ - Skipping failure 64 for unknown template Barbados Foodie
+2025-10-28 15:22:34,417 [WARNING] scraper.service source=Belarus Recipes recipe=https://belarusrecipes.com/ - Skipping failure 65 for unknown template Belarus Recipes
+2025-10-28 15:22:34,417 [WARNING] scraper.service source=Belgium Recipes recipe=https://belgiumrecipes.com/ - Skipping failure 66 for unknown template Belgium Recipes
+2025-10-28 15:22:34,418 [WARNING] scraper.service source=Belize Recipes recipe=https://belizerecipes.com/ - Skipping failure 67 for unknown template Belize Recipes
+2025-10-28 15:22:34,418 [WARNING] scraper.service source=Kosher World Kitchen - Botswana recipe=mailto:trmarvin@gmail.com - Skipping failure 68 for unknown template Kosher World Kitchen - Botswana
+2025-10-28 15:22:34,418 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_african_cooking/womens_work/ - Skipping failure 72 for unknown template Congo Cookbook
+2025-10-28 15:22:34,419 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_this_website/faq/ - Skipping failure 73 for unknown template Congo Cookbook
+2025-10-28 15:22:34,420 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/blog/ - Skipping failure 74 for unknown template Congo Cookbook
+2025-10-28 15:22:34,420 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/akoho-sy-voanio-chicken-in-coconut-milk/ - Skipping failure 75 for unknown template Congo Cookbook
+2025-10-28 15:22:34,421 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/ashanti-chicken/ - Skipping failure 76 for unknown template Congo Cookbook
+2025-10-28 15:22:34,421 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-in-cumin-sauce/ - Skipping failure 77 for unknown template Congo Cookbook
+2025-10-28 15:22:34,422 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-in-peanut-tomato-sauce/ - Skipping failure 78 for unknown template Congo Cookbook
+2025-10-28 15:22:34,422 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/chicken-with-egusi/ - Skipping failure 79 for unknown template Congo Cookbook
+2025-10-28 15:22:34,422 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/doro-wat/ - Skipping failure 80 for unknown template Congo Cookbook
+2025-10-28 15:22:34,422 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/kedjenou/ - Skipping failure 81 for unknown template Congo Cookbook
+2025-10-28 15:22:34,423 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/kuku-paka/ - Skipping failure 82 for unknown template Congo Cookbook
+2025-10-28 15:22:34,423 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/muamba-de-galinha/ - Skipping failure 83 for unknown template Congo Cookbook
+2025-10-28 15:22:34,423 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/muamba-nsusu-congo-chicken-soup/ - Skipping failure 84 for unknown template Congo Cookbook
+2025-10-28 15:22:34,424 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/piri-piri-chicken/ - Skipping failure 85 for unknown template Congo Cookbook
+2025-10-28 15:22:34,424 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-dg-poulet-directeur-general/ - Skipping failure 86 for unknown template Congo Cookbook
+2025-10-28 15:22:34,424 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-moambe-poulet-nyembwe/ - Skipping failure 87 for unknown template Congo Cookbook
+2025-10-28 15:22:34,425 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/poulet-yassa-chicken-yassa/ - Skipping failure 88 for unknown template Congo Cookbook
+2025-10-28 15:22:34,425 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category-chicken-recipes/tagine-of-chicken-preserved-lemon-and-olives/ - Skipping failure 89 for unknown template Congo Cookbook
+2025-10-28 15:22:34,425 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/chicken/ - Skipping failure 90 for unknown template Congo Cookbook
+2025-10-28 15:22:34,425 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/fish-seafood/ - Skipping failure 91 for unknown template Congo Cookbook
+2025-10-28 15:22:34,426 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/meat/ - Skipping failure 92 for unknown template Congo Cookbook
+2025-10-28 15:22:34,426 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/rice/ - Skipping failure 93 for unknown template Congo Cookbook
+2025-10-28 15:22:34,426 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/sauce/ - Skipping failure 94 for unknown template Congo Cookbook
+2025-10-28 15:22:34,427 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/soup-stew/ - Skipping failure 95 for unknown template Congo Cookbook
+2025-10-28 15:22:34,427 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/staple/ - Skipping failure 96 for unknown template Congo Cookbook
+2025-10-28 15:22:34,428 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/category/vegetable-side-dishes/ - Skipping failure 97 for unknown template Congo Cookbook
+2025-10-28 15:22:34,428 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/chicken_recipes/poulet_yassa/ - Skipping failure 98 for unknown template Congo Cookbook
+2025-10-28 15:22:34,428 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/baked-fish-and-eggplant/ - Skipping failure 99 for unknown template Congo Cookbook
+2025-10-28 15:22:34,433 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/capitaine-and-pili-pili-in-palm-oil/ - Skipping failure 100 for unknown template Congo Cookbook
+2025-10-28 15:22:34,434 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/dahomey-fish-stew/ - Skipping failure 101 for unknown template Congo Cookbook
+2025-10-28 15:22:34,435 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/dongo-dongo/ - Skipping failure 102 for unknown template Congo Cookbook
+2025-10-28 15:22:34,435 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-greens/ - Skipping failure 103 for unknown template Congo Cookbook
+2025-10-28 15:22:34,435 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-and-onions-in-tomato-sauce/ - Skipping failure 104 for unknown template Congo Cookbook
+2025-10-28 15:22:34,436 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fish-with-sorrel/ - Skipping failure 105 for unknown template Congo Cookbook
+2025-10-28 15:22:34,436 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/fried-fish-in-peanut-sauce/ - Skipping failure 106 for unknown template Congo Cookbook
+2025-10-28 15:22:34,436 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/grilled-tilapia/ - Skipping failure 107 for unknown template Congo Cookbook
+2025-10-28 15:22:34,439 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/liboke-de-poisson-fish-in-banana-leaf/ - Skipping failure 108 for unknown template Congo Cookbook
+2025-10-28 15:22:34,440 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/lm-prawns/ - Skipping failure 109 for unknown template Congo Cookbook
+2025-10-28 15:22:34,440 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/mchuzi-wa-samaki-fish-curry/ - Skipping failure 110 for unknown template Congo Cookbook
+2025-10-28 15:22:34,440 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/mulet-farci-a-la-saint-louisienne/ - Skipping failure 111 for unknown template Congo Cookbook
+2025-10-28 15:22:34,441 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/ngege-tilapia-with-groundnut-sauce/ - Skipping failure 112 for unknown template Congo Cookbook
+2025-10-28 15:22:34,441 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/oysters-mombasa/ - Skipping failure 113 for unknown template Congo Cookbook
+2025-10-28 15:22:34,441 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/pastels-aux-poisson/ - Skipping failure 114 for unknown template Congo Cookbook
+2025-10-28 15:22:34,441 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/poisson-yassa-fish-yassa/ - Skipping failure 115 for unknown template Congo Cookbook
+2025-10-28 15:22:34,445 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/samaki-wa-kupaka-grilled-fish/ - Skipping failure 116 for unknown template Congo Cookbook
+2025-10-28 15:22:34,445 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/fish-and-seafood-recipes/sardines-and-greens-stew/ - Skipping failure 117 for unknown template Congo Cookbook
+2025-10-28 15:22:34,446 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-and-greens-in-peanut-sauce/ - Skipping failure 118 for unknown template Congo Cookbook
+2025-10-28 15:22:34,446 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-in-cumin-sauce/ - Skipping failure 119 for unknown template Congo Cookbook
+2025-10-28 15:22:34,447 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/beef-in-wild-mango-kernel-sauce/ - Skipping failure 120 for unknown template Congo Cookbook
+2025-10-28 15:22:34,447 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/boko-boko/ - Skipping failure 121 for unknown template Congo Cookbook
+2025-10-28 15:22:34,448 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/brochettes/ - Skipping failure 122 for unknown template Congo Cookbook
+2025-10-28 15:22:34,448 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/coupe-coupe/ - Skipping failure 123 for unknown template Congo Cookbook
+2025-10-28 15:22:34,449 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/domoda/ - Skipping failure 124 for unknown template Congo Cookbook
+2025-10-28 15:22:34,449 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/kitoza/ - Skipping failure 125 for unknown template Congo Cookbook
+2025-10-28 15:22:34,450 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/liboke-de-viande-meat-in-banana-leaf/ - Skipping failure 126 for unknown template Congo Cookbook
+2025-10-28 15:22:34,450 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/mafe/ - Skipping failure 127 for unknown template Congo Cookbook
+2025-10-28 15:22:34,451 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/meat-recipes/matoke/ - Skipping failure 128 for unknown template Congo Cookbook
+2025-10-28 15:22:34,451 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/profile/ - Skipping failure 129 for unknown template Congo Cookbook
+2025-10-28 15:22:34,452 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/rare_recipes/index/ - Skipping failure 130 for unknown template Congo Cookbook
+2025-10-28 15:22:34,452 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/excerpts/ - Skipping failure 131 for unknown template Congo Cookbook
+2025-10-28 15:22:34,452 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/how_to_have_an_african_dinner_party/ - Skipping failure 132 for unknown template Congo Cookbook
+2025-10-28 15:22:34,453 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/recipe_indexes/recipes_by_country_and_region/ - Skipping failure 133 for unknown template Congo Cookbook
+2025-10-28 15:22:34,453 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/rice-recipes/ - Skipping failure 134 for unknown template Congo Cookbook
+2025-10-28 15:22:34,454 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/sitemap/ - Skipping failure 135 for unknown template Congo Cookbook
+2025-10-28 15:22:34,454 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/soup-and-stew-recipes/ - Skipping failure 136 for unknown template Congo Cookbook
+2025-10-28 15:22:34,455 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/bay-leaf/ - Skipping failure 137 for unknown template Congo Cookbook
+2025-10-28 15:22:34,455 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/beef-broth-or-beef-stock/ - Skipping failure 138 for unknown template Congo Cookbook
+2025-10-28 15:22:34,455 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/black-pepper/ - Skipping failure 139 for unknown template Congo Cookbook
+2025-10-28 15:22:34,456 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/boiling/ - Skipping failure 140 for unknown template Congo Cookbook
+2025-10-28 15:22:34,456 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/butter/ - Skipping failure 141 for unknown template Congo Cookbook
+2025-10-28 15:22:34,457 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/canned-tomato/ - Skipping failure 142 for unknown template Congo Cookbook
+2025-10-28 15:22:34,457 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/carrot/ - Skipping failure 143 for unknown template Congo Cookbook
+2025-10-28 15:22:34,458 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cayenne-pepper-or-red-pepper/ - Skipping failure 144 for unknown template Congo Cookbook
+2025-10-28 15:22:34,458 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/central-africa/ - Skipping failure 145 for unknown template Congo Cookbook
+2025-10-28 15:22:34,458 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chicken-broth-or-chicken-stock/ - Skipping failure 146 for unknown template Congo Cookbook
+2025-10-28 15:22:34,459 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chicken/ - Skipping failure 147 for unknown template Congo Cookbook
+2025-10-28 15:22:34,459 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/chile-pepper/ - Skipping failure 148 for unknown template Congo Cookbook
+2025-10-28 15:22:34,460 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cinnamon/ - Skipping failure 149 for unknown template Congo Cookbook
+2025-10-28 15:22:34,460 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/coriander/ - Skipping failure 150 for unknown template Congo Cookbook
+2025-10-28 15:22:34,461 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/cumin/ - Skipping failure 151 for unknown template Congo Cookbook
+2025-10-28 15:22:34,461 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/curry-powder/ - Skipping failure 152 for unknown template Congo Cookbook
+2025-10-28 15:22:34,461 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/dried-prawns-dried-shrimp/ - Skipping failure 153 for unknown template Congo Cookbook
+2025-10-28 15:22:34,462 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/eastern-africa/ - Skipping failure 154 for unknown template Congo Cookbook
+2025-10-28 15:22:34,462 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/eggplant/ - Skipping failure 155 for unknown template Congo Cookbook
+2025-10-28 15:22:34,463 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/fish-dried-or-salted-or-smoked/ - Skipping failure 156 for unknown template Congo Cookbook
+2025-10-28 15:22:34,463 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/fish/ - Skipping failure 157 for unknown template Congo Cookbook
+2025-10-28 15:22:34,463 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/frying/ - Skipping failure 158 for unknown template Congo Cookbook
+2025-10-28 15:22:34,464 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/garlic/ - Skipping failure 159 for unknown template Congo Cookbook
+2025-10-28 15:22:34,464 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/ginger-root/ - Skipping failure 160 for unknown template Congo Cookbook
+2025-10-28 15:22:34,465 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/ginger/ - Skipping failure 161 for unknown template Congo Cookbook
+2025-10-28 15:22:34,465 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/greens/ - Skipping failure 162 for unknown template Congo Cookbook
+2025-10-28 15:22:34,465 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/lemon-juice/ - Skipping failure 163 for unknown template Congo Cookbook
+2025-10-28 15:22:34,466 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/maggi-sauce-or-maggi-cube/ - Skipping failure 164 for unknown template Congo Cookbook
+2025-10-28 15:22:34,466 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/oil/ - Skipping failure 165 for unknown template Congo Cookbook
+2025-10-28 15:22:34,467 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/okra/ - Skipping failure 166 for unknown template Congo Cookbook
+2025-10-28 15:22:34,467 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/onion/ - Skipping failure 167 for unknown template Congo Cookbook
+2025-10-28 15:22:34,468 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/parsley/ - Skipping failure 168 for unknown template Congo Cookbook
+2025-10-28 15:22:34,468 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/peanut-butter/ - Skipping failure 169 for unknown template Congo Cookbook
+2025-10-28 15:22:34,469 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/potato/ - Skipping failure 170 for unknown template Congo Cookbook
+2025-10-28 15:22:34,470 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/red-palm-oil/ - Skipping failure 171 for unknown template Congo Cookbook
+2025-10-28 15:22:34,470 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/roasting/ - Skipping failure 172 for unknown template Congo Cookbook
+2025-10-28 15:22:34,470 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/salt/ - Skipping failure 173 for unknown template Congo Cookbook
+2025-10-28 15:22:34,471 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/simmering-stewing/ - Skipping failure 174 for unknown template Congo Cookbook
+2025-10-28 15:22:34,471 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/southern-africa/ - Skipping failure 175 for unknown template Congo Cookbook
+2025-10-28 15:22:34,472 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/squash/ - Skipping failure 176 for unknown template Congo Cookbook
+2025-10-28 15:22:34,472 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/sweet-green-pepper-bell-pepper/ - Skipping failure 177 for unknown template Congo Cookbook
+2025-10-28 15:22:34,472 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato-paste-or-tomato-sauce/ - Skipping failure 178 for unknown template Congo Cookbook
+2025-10-28 15:22:34,473 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato-paste/ - Skipping failure 179 for unknown template Congo Cookbook
+2025-10-28 15:22:34,473 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/tomato/ - Skipping failure 180 for unknown template Congo Cookbook
+2025-10-28 15:22:34,474 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/tag/western-africa/ - Skipping failure 181 for unknown template Congo Cookbook
+2025-10-28 15:22:34,474 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_africa/african_proverbs/ - Skipping failure 70 for unknown template Congo Cookbook
+2025-10-28 15:22:34,475 [WARNING] scraper.service source=Congo Cookbook recipe=https://www.congocookbook.com/about_african_cooking/index/ - Skipping failure 71 for unknown template Congo Cookbook
+2025-10-28 15:22:34,475 [WARNING] scraper.service source=Boondocking Recipes - Eritrea recipe=https://boondockingrecipes.com/author/bdrecipes/ - Skipping failure 651 for unknown template Boondocking Recipes - Eritrea
+2025-10-28 15:22:34,475 [WARNING] scraper.service source=Boondocking Recipes - Eritrea recipe=https://boondockingrecipes.com/category/roundup/ - Skipping failure 652 for unknown template Boondocking Recipes - Eritrea
+2025-10-28 15:22:34,476 [WARNING] scraper.service source=Boondocking Recipes - Eritrea recipe=https://boondockingrecipes.com/wp-content/uploads/2024/04/BDR-LOGO-400x75-1-150x75.png - Skipping failure 653 for unknown template Boondocking Recipes - Eritrea
+2025-10-28 15:22:34,476 [WARNING] scraper.service source=Boondocking Recipes - Eritrea recipe=https://boondockingrecipes.com/wp-content/uploads/2024/07/Entrea.jpg - Skipping failure 654 for unknown template Boondocking Recipes - Eritrea
+2025-10-28 15:22:34,477 [WARNING] scraper.service source=Boondocking Recipes - Eritrea recipe=https://boondockingrecipes.com/wp-content/uploads/2025/09/World-Travel-Recipes-Logo-400-x-140-px-1.png - Skipping failure 655 for unknown template Boondocking Recipes - Eritrea
+2025-10-28 15:22:34,477 [WARNING] scraper.service source=Boondocking Recipes - Comoros recipe=https://boondockingrecipes.com/#logo - Skipping failure 616 for unknown template Boondocking Recipes - Comoros
+2025-10-28 15:22:34,478 [WARNING] scraper.service source=Boondocking Recipes - Comoros recipe=https://boondockingrecipes.com/wp-content/uploads/2024/04/BDR-LOGO-400x75-1-150x75.png - Skipping failure 625 for unknown template Boondocking Recipes - Comoros
+2025-10-28 15:22:34,478 [WARNING] scraper.service source=Boondocking Recipes - Comoros recipe=https://boondockingrecipes.com/wp-content/uploads/2024/07/Comoros.jpg - Skipping failure 626 for unknown template Boondocking Recipes - Comoros
+2025-10-28 15:22:34,478 [WARNING] scraper.service source=Boondocking Recipes - Comoros recipe=https://boondockingrecipes.com/wp-content/uploads/2025/09/World-Travel-Recipes-Logo-400-x-140-px.png - Skipping failure 627 for unknown template Boondocking Recipes - Comoros
+2025-10-28 15:22:34,479 [WARNING] scraper.service source=Boondocking Recipes - Equatorial Guinea recipe=https://boondockingrecipes.com/#logo - Skipping failure 630 for unknown template Boondocking Recipes - Equatorial Guinea
+2025-10-28 15:22:35,551 [WARNING] scraper.service source=Burkina Recipes (Cookpad) recipe=https://cookpad.com/ - Replay scrape failed again for https://cookpad.com/ (Burkina Recipes (Cookpad)): Missing ingredients and instructions while scraping https://cookpad.com/uk
+2025-10-28 15:22:37,510 [WARNING] scraper.service source=Cambodia Recipes (Cookpad) recipe=https://cookpad.com/ - Replay scrape failed again for https://cookpad.com/ (Cambodia Recipes (Cookpad)): Missing ingredients and instructions while scraping https://cookpad.com/uk
+2025-10-28 15:22:38,315 [WARNING] scraper.service source=Cameroon Recipes (Cookpad) recipe=https://cookpad.com/ - Replay scrape failed again for https://cookpad.com/ (Cameroon Recipes (Cookpad)): Missing ingredients and instructions while scraping https://cookpad.com/uk
+2025-10-28 15:22:39,141 [WARNING] scraper.service source=Canada Recipes (Cookpad) recipe=https://cookpad.com/ - Replay scrape failed again for https://cookpad.com/ (Canada Recipes (Cookpad)): Missing ingredients and instructions while scraping https://cookpad.com/uk
+2025-10-28 15:22:40,890 [WARNING] scraper.service source=Cuban Recipes (Allrecipes) recipe=https://www.allrecipes.com - Replay scrape failed again for https://www.allrecipes.com (Cuban Recipes (Allrecipes)): Missing ingredients and instructions while scraping https://www.allrecipes.com/
+2025-10-28 15:22:42,531 [WARNING] scraper.service source=Cuban Recipes (Allrecipes) recipe=https://www.allrecipes.com/gallery/favorite-traditional-cuban-recipes/ - Replay scrape failed again for https://www.allrecipes.com/gallery/favorite-traditional-cuban-recipes/ (Cuban Recipes (Allrecipes)): Missing ingredients and instructions while scraping https://www.allrecipes.com/gallery/favorite-traditional-cuban-recipes/
+2025-10-28 15:22:44,438 [WARNING] scraper.service source=Cuban Recipes (Allrecipes) recipe=https://www.allrecipes.com/recipes/230/world-cuisine/latin-american/caribbean/ - Replay scrape failed again for https://www.allrecipes.com/recipes/230/world-cuisine/latin-american/caribbean/ (Cuban Recipes (Allrecipes)): Missing ingredients and instructions while scraping https://www.allrecipes.com/recipes/230/world-cuisine/latin-american/caribbean/
+2025-10-28 15:22:46,175 [WARNING] scraper.service source=Cuban Recipes (Allrecipes) recipe=https://www.allrecipes.com/recipes/237/world-cuisine/latin-american/ - Replay scrape failed again for https://www.allrecipes.com/recipes/237/world-cuisine/latin-american/ (Cuban Recipes (Allrecipes)): Missing ingredients and instructions while scraping https://www.allrecipes.com/recipes/237/world-cuisine/latin-american/
+2025-10-28 15:22:48,317 [WARNING] scraper.service source=Cuban Recipes (Allrecipes) recipe=https://www.allrecipes.com/recipes/86/world-cuisine/ - Replay scrape failed again for https://www.allrecipes.com/recipes/86/world-cuisine/ (Cuban Recipes (Allrecipes)): Missing ingredients and instructions while scraping https://www.allrecipes.com/recipes/86/world-cuisine/
+2025-10-28 15:22:49,191 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/about-alicia-maher - Replay scrape failed again for https://deliciouselsalvador.com/about-alicia-maher (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/about-alicia-maher
+2025-10-28 15:22:49,740 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/bienvenidos - Replay scrape failed again for https://deliciouselsalvador.com/bienvenidos (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/bienvenidos
+2025-10-28 15:22:50,356 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/bistec-encebollado - Replay scrape failed again for https://deliciouselsalvador.com/bistec-encebollado (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/bistec-encebollado
+2025-10-28 15:22:51,093 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/contact - Replay scrape failed again for https://deliciouselsalvador.com/contact (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/contact
+2025-10-28 15:22:52,364 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/cookbooks - Replay scrape failed again for https://deliciouselsalvador.com/cookbooks (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/cookbooks
+2025-10-28 15:22:53,127 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/cooking-classes - Replay scrape failed again for https://deliciouselsalvador.com/cooking-classes (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/cooking-classes
+2025-10-28 15:22:54,217 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/curtido-recipe - Replay scrape failed again for https://deliciouselsalvador.com/curtido-recipe (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/curtido-recipe
+2025-10-28 15:22:55,150 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/fresco-de-chan-recipe - Replay scrape failed again for https://deliciouselsalvador.com/fresco-de-chan-recipe (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/fresco-de-chan-recipe
+2025-10-28 15:22:56,284 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/home-1 - Replay scrape failed again for https://deliciouselsalvador.com/home-1 (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/home-1
+2025-10-28 15:22:57,066 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/rellenos-de-guisquil - Replay scrape failed again for https://deliciouselsalvador.com/rellenos-de-guisquil (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/rellenos-de-guisquil
+2025-10-28 15:22:57,866 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/salsa-roja-for-pupusas - Replay scrape failed again for https://deliciouselsalvador.com/salsa-roja-for-pupusas (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/salsa-roja-for-pupusas
+2025-10-28 15:22:58,693 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/salvadoran-albondiga-soup - Replay scrape failed again for https://deliciouselsalvador.com/salvadoran-albondiga-soup (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/salvadoran-albondiga-soup
+2025-10-28 15:22:59,399 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/salvadoran-quesadilla - Replay scrape failed again for https://deliciouselsalvador.com/salvadoran-quesadilla (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/salvadoran-quesadilla
+2025-10-28 15:23:00,006 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/salvadoran-shrimp-soup - Replay scrape failed again for https://deliciouselsalvador.com/salvadoran-shrimp-soup (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/salvadoran-shrimp-soup
+2025-10-28 15:23:00,742 [WARNING] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/torrejas - Replay scrape failed again for https://deliciouselsalvador.com/torrejas (Delicious El Salvador): Missing ingredients and instructions while scraping https://deliciouselsalvador.com/torrejas
+2025-10-28 15:23:01,873 [WARNING] scraper.service source=Dirndl Kitchen recipe=https://dirndlkitchen.com/ - Replay scrape failed again for https://dirndlkitchen.com/ (Dirndl Kitchen): Missing ingredients and instructions while scraping https://dirndlkitchen.com/
+2025-10-28 15:23:02,662 [WARNING] scraper.service source=Dirndl Kitchen recipe=https://dirndlkitchen.com/#organization - Replay scrape failed again for https://dirndlkitchen.com/#organization (Dirndl Kitchen): Missing ingredients and instructions while scraping https://dirndlkitchen.com/#organization
+2025-10-28 15:23:03,184 [WARNING] scraper.service source=Dirndl Kitchen recipe=https://dirndlkitchen.com/#website - Replay scrape failed again for https://dirndlkitchen.com/#website (Dirndl Kitchen): Missing ingredients and instructions while scraping https://dirndlkitchen.com/#website
+2025-10-28 15:23:04,502 [WARNING] scraper.service source=Dominican Cooking recipe=https://www.dominicancooking.com/ - Replay scrape failed again for https://www.dominicancooking.com/ (Dominican Cooking): Missing ingredients and instructions while scraping https://www.dominicancooking.com/
+2025-10-28 15:23:05,404 [WARNING] scraper.service source=Dominican Cooking recipe=https://www.dominicancooking.com/#organization - Replay scrape failed again for https://www.dominicancooking.com/#organization (Dominican Cooking): Missing ingredients and instructions while scraping https://www.dominicancooking.com/#organization
+2025-10-28 15:23:06,501 [WARNING] scraper.service source=Dominican Cooking recipe=https://www.dominicancooking.com/#website - Replay scrape failed again for https://www.dominicancooking.com/#website (Dominican Cooking): Missing ingredients and instructions while scraping https://www.dominicancooking.com/#website
+2025-10-28 15:23:07,853 [WARNING] scraper.service source=Eat Wander Explore - Fiji recipe=https://eatwanderexplore.com - Replay scrape failed again for https://eatwanderexplore.com (Eat Wander Explore - Fiji): Missing ingredients and instructions while scraping https://eatwanderexplore.com/
+2025-10-28 15:23:08,953 [WARNING] scraper.service source=Lee Kum Kee UK Recipes recipe=https://uk.lkk.com/ - Replay scrape failed again for https://uk.lkk.com/ (Lee Kum Kee UK Recipes): Missing ingredients and instructions while scraping https://uk.lkk.com/
+2025-10-28 15:23:23,721 [WARNING] scraper.service source=No Frills Kitchen - Pkhali recipe=https://nofrillskitchen.com/ - Replay scrape failed again for https://nofrillskitchen.com/ (No Frills Kitchen - Pkhali): Missing ingredients and instructions while scraping https://nofrillskitchen.com/
+2025-10-28 15:23:24,796 [WARNING] scraper.service source=No Frills Kitchen - Pkhali recipe=https://nofrillskitchen.com/#organization - Replay scrape failed again for https://nofrillskitchen.com/#organization (No Frills Kitchen - Pkhali): Missing ingredients and instructions while scraping https://nofrillskitchen.com/#organization
+2025-10-28 15:23:25,530 [WARNING] scraper.service source=No Frills Kitchen - Pkhali recipe=https://nofrillskitchen.com/#website - Replay scrape failed again for https://nofrillskitchen.com/#website (No Frills Kitchen - Pkhali): Missing ingredients and instructions while scraping https://nofrillskitchen.com/#website
+2025-10-28 15:23:26,195 [WARNING] scraper.service source=No Frills Kitchen - Pkhali recipe=https://nofrillskitchen.com/about/ - Replay scrape failed again for https://nofrillskitchen.com/about/ (No Frills Kitchen - Pkhali): Missing ingredients and instructions while scraping https://nofrillskitchen.com/about/
+2025-10-28 15:23:28,556 [WARNING] scraper.service source=Tooting Family Kitchen - Ethiopian Meal recipe=https://www.tootingfamilykitchen.com/ - Replay scrape failed again for https://www.tootingfamilykitchen.com/ (Tooting Family Kitchen - Ethiopian Meal): Missing ingredients and instructions while scraping https://www.tootingfamilykitchen.com/
+2025-10-28 15:23:30,231 [WARNING] scraper.service source=Tooting Family Kitchen - Ethiopian Meal recipe=https://www.tootingfamilykitchen.com/#organization - Replay scrape failed again for https://www.tootingfamilykitchen.com/#organization (Tooting Family Kitchen - Ethiopian Meal): Missing ingredients and instructions while scraping https://www.tootingfamilykitchen.com/#organization
+2025-10-28 15:23:32,327 [WARNING] scraper.service source=Tooting Family Kitchen - Ethiopian Meal recipe=https://www.tootingfamilykitchen.com/#website - Replay scrape failed again for https://www.tootingfamilykitchen.com/#website (Tooting Family Kitchen - Ethiopian Meal): Missing ingredients and instructions while scraping https://www.tootingfamilykitchen.com/#website
+2025-10-28 15:23:33,920 [WARNING] scraper.service source=Tooting Family Kitchen - Ethiopian Meal recipe=https://www.tootingfamilykitchen.com/author/tooting-family-kitchen/ - Replay scrape failed again for https://www.tootingfamilykitchen.com/author/tooting-family-kitchen/ (Tooting Family Kitchen - Ethiopian Meal): Missing ingredients and instructions while scraping https://www.tootingfamilykitchen.com/author/tooting-family-kitchen/
+2025-10-28 15:23:44,397 [WARNING] scraper.service source=Pick n Pay Eswatini (Swaziland) recipe=https://picknpayeswatini.com/ - Replay scrape failed again for https://picknpayeswatini.com/ (Pick n Pay Eswatini (Swaziland)): Missing ingredients and instructions while scraping https://picknpayeswatini.com/
+2025-10-28 15:23:46,033 [WARNING] scraper.service source=Pick n Pay Eswatini (Swaziland) recipe=https://picknpayeswatini.com/#organization - Replay scrape failed again for https://picknpayeswatini.com/#organization (Pick n Pay Eswatini (Swaziland)): Missing ingredients and instructions while scraping https://picknpayeswatini.com/#organization
+2025-10-28 15:23:47,434 [WARNING] scraper.service source=Pick n Pay Eswatini (Swaziland) recipe=https://picknpayeswatini.com/#website - Replay scrape failed again for https://picknpayeswatini.com/#website (Pick n Pay Eswatini (Swaziland)): Missing ingredients and instructions while scraping https://picknpayeswatini.com/#website
+2025-10-28 15:23:49,394 [WARNING] scraper.service source=Come Chop Africa (Swaziland) recipe=https://www.comechop.africa - Replay scrape failed again for https://www.comechop.africa (Come Chop Africa (Swaziland)): Missing ingredients and instructions while scraping https://www.comechop.africa/
+2025-10-28 15:23:49,773 [WARNING] scraper.service source=Come Chop Africa (Swaziland) recipe=https://www.comechop.africa/ - Replay scrape failed again for https://www.comechop.africa/ (Come Chop Africa (Swaziland)): Missing ingredients and instructions while scraping https://www.comechop.africa/
+2025-10-28 15:23:50,978 [WARNING] scraper.service source=Hot Thai Kitchen - Beginner Recipes (Thailand) recipe=https://hot-thai-kitchen.com/ - Replay scrape failed again for https://hot-thai-kitchen.com/ (Hot Thai Kitchen - Beginner Recipes (Thailand)): Missing ingredients and instructions while scraping https://hot-thai-kitchen.com/
+2025-10-28 15:23:51,999 [WARNING] scraper.service source=Hot Thai Kitchen - Beginner Recipes (Thailand) recipe=https://hot-thai-kitchen.com/#organization - Replay scrape failed again for https://hot-thai-kitchen.com/#organization (Hot Thai Kitchen - Beginner Recipes (Thailand)): Missing ingredients and instructions while scraping https://hot-thai-kitchen.com/#organization
+2025-10-28 15:23:52,672 [WARNING] scraper.service source=Hot Thai Kitchen - Beginner Recipes (Thailand) recipe=https://hot-thai-kitchen.com/#website - Replay scrape failed again for https://hot-thai-kitchen.com/#website (Hot Thai Kitchen - Beginner Recipes (Thailand)): Missing ingredients and instructions while scraping https://hot-thai-kitchen.com/#website
+2025-10-28 15:23:53,608 [WARNING] scraper.service source=Hot Thai Kitchen - Beginner Recipes (Thailand) recipe=https://hot-thai-kitchen.com/author/theoneandonlymoo/ - Replay scrape failed again for https://hot-thai-kitchen.com/author/theoneandonlymoo/ (Hot Thai Kitchen - Beginner Recipes (Thailand)): Missing ingredients and instructions while scraping https://hot-thai-kitchen.com/author/theoneandonlymoo/
+2025-10-28 15:23:54,659 [WARNING] scraper.service source=Kitchen Stories - Tonga (Tonga) recipe=https://www.kitchenstories.com/en - Replay scrape failed again for https://www.kitchenstories.com/en (Kitchen Stories - Tonga (Tonga)): Missing ingredients and instructions while scraping https://www.kitchenstories.com/en
+2025-10-28 15:23:58,825 [WARNING] scraper.service source=Viva Uganda - Taste of Uganda (Uganda) recipe=https://viva.ug/ - Replay scrape failed again for https://viva.ug/ (Viva Uganda - Taste of Uganda (Uganda)): Missing ingredients and instructions while scraping https://viva.ug/
+2025-10-28 15:24:03,699 [WARNING] scraper.service source=Viva Uganda - Taste of Uganda (Uganda) recipe=https://viva.ug/#organization - Replay scrape failed again for https://viva.ug/#organization (Viva Uganda - Taste of Uganda (Uganda)): Missing ingredients and instructions while scraping https://viva.ug/#organization
+2025-10-28 15:24:06,525 [WARNING] scraper.service source=Viva Uganda - Taste of Uganda (Uganda) recipe=https://viva.ug/#website - Replay scrape failed again for https://viva.ug/#website (Viva Uganda - Taste of Uganda (Uganda)): Missing ingredients and instructions while scraping https://viva.ug/#website
+2025-10-28 15:24:09,325 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org - Replay scrape failed again for https://nationalfoods.org (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/
+2025-10-28 15:24:10,890 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/ - Replay scrape failed again for https://nationalfoods.org/ (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/
+2025-10-28 15:24:12,361 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/#all-recipes - Replay scrape failed again for https://nationalfoods.org/#all-recipes (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/#all-recipes
+2025-10-28 15:24:13,691 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/#blog - Replay scrape failed again for https://nationalfoods.org/#blog (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/#blog
+2025-10-28 15:24:14,846 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/#home - Replay scrape failed again for https://nationalfoods.org/#home (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/#home
+2025-10-28 15:24:16,009 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/#submit-a-recipe - Replay scrape failed again for https://nationalfoods.org/#submit-a-recipe (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/#submit-a-recipe
+2025-10-28 15:24:16,979 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/blog/ - Replay scrape failed again for https://nationalfoods.org/blog/ (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/blog/
+2025-10-28 15:24:18,762 [WARNING] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/submit-a-recipe/ - Replay scrape failed again for https://nationalfoods.org/submit-a-recipe/ (National Foods (Angola)): Missing ingredients and instructions while scraping https://nationalfoods.org/submit-a-recipe/
+2025-10-28 15:24:20,274 [WARNING] scraper.service source=Everyday Delicious - Austrian Cuisine recipe=https://www.everyday-delicious.com/ - Replay scrape failed again for https://www.everyday-delicious.com/ (Everyday Delicious - Austrian Cuisine): Missing ingredients and instructions while scraping https://www.everyday-delicious.com/
+2025-10-28 15:24:22,036 [WARNING] scraper.service source=Everyday Delicious - Austrian Cuisine recipe=https://www.everyday-delicious.com/#organization - Replay scrape failed again for https://www.everyday-delicious.com/#organization (Everyday Delicious - Austrian Cuisine): Missing ingredients and instructions while scraping https://www.everyday-delicious.com/#organization
+2025-10-28 15:24:23,540 [WARNING] scraper.service source=Everyday Delicious - Austrian Cuisine recipe=https://www.everyday-delicious.com/#website - Replay scrape failed again for https://www.everyday-delicious.com/#website (Everyday Delicious - Austrian Cuisine): Missing ingredients and instructions while scraping https://www.everyday-delicious.com/#website
+2025-10-28 15:24:25,562 [WARNING] scraper.service source=Flavors of Baku (Azerbaijan) recipe=https://flavorsofbaku.com/ - Replay scrape failed again for https://flavorsofbaku.com/ (Flavors of Baku (Azerbaijan)): Missing ingredients and instructions while scraping https://flavorsofbaku.com/
+2025-10-28 15:24:26,384 [WARNING] scraper.service source=Flavors of Baku (Azerbaijan) recipe=https://flavorsofbaku.com/#website - Replay scrape failed again for https://flavorsofbaku.com/#website (Flavors of Baku (Azerbaijan)): Missing ingredients and instructions while scraping https://flavorsofbaku.com/#website
+2025-10-28 15:24:29,566 [WARNING] scraper.service source=Kitchen of Debjani - Bangladeshi Recipes recipe=https://kitchenofdebjani.com/ - Replay scrape failed again for https://kitchenofdebjani.com/ (Kitchen of Debjani - Bangladeshi Recipes): Missing ingredients and instructions while scraping https://kitchenofdebjani.com/
+2025-10-28 15:26:52,612 [ERROR] scraper.service source=National Foods (Angola) recipe=https://nationalfoods.org/recipes/ - Failed to discover listings for National Foods (Angola): No article URLs discovered for National Foods (Angola) (https://nationalfoods.org/recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for National Foods (Angola) (https://nationalfoods.org/recipes/). Verify the listing link selector configuration.
+2025-10-28 15:26:53,334 [ERROR] scraper.service source=Food Network UK - Argentinian Recipes recipe=https://foodnetwork.co.uk/collections/argentinian-recipes#all-recipes - Failed to discover listings for Food Network UK - Argentinian Recipes: No article URLs discovered for Food Network UK - Argentinian Recipes (https://foodnetwork.co.uk/collections/argentinian-recipes#all-recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Food Network UK - Argentinian Recipes (https://foodnetwork.co.uk/collections/argentinian-recipes#all-recipes). Verify the listing link selector configuration.
+2025-10-28 15:26:56,092 [ERROR] scraper.service source=Australian Made - Recipes recipe=https://australianmade.com.au/products/recipes/ - Failed to discover listings for Australian Made - Recipes: No article URLs discovered for Australian Made - Recipes (https://australianmade.com.au/products/recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Australian Made - Recipes (https://australianmade.com.au/products/recipes/). Verify the listing link selector configuration.
+2025-10-28 15:26:57,129 [ERROR] scraper.service source=Everyday Delicious - Austrian Cuisine recipe=https://www.everyday-delicious.com/category/cuisine/austrian/ - Failed to discover listings for Everyday Delicious - Austrian Cuisine: No article URLs discovered for Everyday Delicious - Austrian Cuisine (https://www.everyday-delicious.com/category/cuisine/austrian/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Everyday Delicious - Austrian Cuisine (https://www.everyday-delicious.com/category/cuisine/austrian/). Verify the listing link selector configuration.
+2025-10-28 15:26:58,537 [ERROR] scraper.service source=Flavors of Baku (Azerbaijan) recipe=https://flavorsofbaku.com/recipes/ - Failed to discover listings for Flavors of Baku (Azerbaijan): No article URLs discovered for Flavors of Baku (Azerbaijan) (https://flavorsofbaku.com/recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Flavors of Baku (Azerbaijan) (https://flavorsofbaku.com/recipes/). Verify the listing link selector configuration.
+2025-10-28 15:27:01,811 [ERROR] scraper.service source=Bahamas Government - Native Dishes recipe=https://www.bahamas.gov.bs/native-dishes - Failed to discover listings for Bahamas Government - Native Dishes: No article URLs discovered for Bahamas Government - Native Dishes (https://www.bahamas.gov.bs/native-dishes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Bahamas Government - Native Dishes (https://www.bahamas.gov.bs/native-dishes). Verify the listing link selector configuration.
+2025-10-28 15:27:04,566 [ERROR] scraper.service source=Bahama Breeze - Recipes recipe=https://www.bahamabreeze.com/recipes - Failed to discover listings for Bahama Breeze - Recipes: No article URLs discovered for Bahama Breeze - Recipes (https://www.bahamabreeze.com/recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Bahama Breeze - Recipes (https://www.bahamabreeze.com/recipes). Verify the listing link selector configuration.
+2025-10-28 15:27:06,544 [ERROR] scraper.service source=Kitchen of Debjani - Bangladeshi Recipes recipe=https://kitchenofdebjani.com/recipes/international-recipes/bangladeshi-recipes/ - Failed to discover listings for Kitchen of Debjani - Bangladeshi Recipes: No article URLs discovered for Kitchen of Debjani - Bangladeshi Recipes (https://kitchenofdebjani.com/recipes/international-recipes/bangladeshi-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Kitchen of Debjani - Bangladeshi Recipes (https://kitchenofdebjani.com/recipes/international-recipes/bangladeshi-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:27:07,738 [ERROR] scraper.service source=Totally Barbados - Recipes recipe=https://www.totallybarbados.com/articles/barbados-recipes/ - Failed to discover listings for Totally Barbados - Recipes: No article URLs discovered for Totally Barbados - Recipes (https://www.totallybarbados.com/articles/barbados-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Totally Barbados - Recipes (https://www.totallybarbados.com/articles/barbados-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:27:10,224 [ERROR] scraper.service source=Belarus.by - Belarusian Recipes recipe=https://www.belarus.by/en/about-belarus/cuisine/belarusian-recipes - Failed to discover listings for Belarus.by - Belarusian Recipes: No article URLs discovered for Belarus.by - Belarusian Recipes (https://www.belarus.by/en/about-belarus/cuisine/belarusian-recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Belarus.by - Belarusian Recipes (https://www.belarus.by/en/about-belarus/cuisine/belarusian-recipes). Verify the listing link selector configuration.
+2025-10-28 15:27:16,386 [ERROR] scraper.service source=Epicurious - Belgian Cuisine recipe=https://www.epicurious.com/cuisine/belgian - Failed to discover listings for Epicurious - Belgian Cuisine: No article URLs discovered for Epicurious - Belgian Cuisine (https://www.epicurious.com/cuisine/belgian). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Epicurious - Belgian Cuisine (https://www.epicurious.com/cuisine/belgian). Verify the listing link selector configuration.
+2025-10-28 15:27:17,663 [ERROR] scraper.service source=Surprising Recipes - Belgian recipe=https://www.surprising.recipes/category/belgian/ - Failed to discover listings for Surprising Recipes - Belgian: No article URLs discovered for Surprising Recipes - Belgian (https://www.surprising.recipes/category/belgian/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Surprising Recipes - Belgian (https://www.surprising.recipes/category/belgian/). Verify the listing link selector configuration.
+2025-10-28 15:27:18,729 [ERROR] scraper.service source=Taste Belize - Belizean Recipes recipe=https://tastebelize.com/category/belizean-recipes/ - Failed to discover listings for Taste Belize - Belizean Recipes: No article URLs discovered for Taste Belize - Belizean Recipes (https://tastebelize.com/category/belizean-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Taste Belize - Belizean Recipes (https://tastebelize.com/category/belizean-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:27:19,675 [ERROR] scraper.service source=The Modern Nonna - Bulgarian Recipes recipe=https://themodernnonna.com/easy-bulgarian-recipes/ - Failed to discover listings for The Modern Nonna - Bulgarian Recipes: No article URLs discovered for The Modern Nonna - Bulgarian Recipes (https://themodernnonna.com/easy-bulgarian-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for The Modern Nonna - Bulgarian Recipes (https://themodernnonna.com/easy-bulgarian-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:27:22,615 [ERROR] scraper.service source=Sheba Yemeni Food recipe=https://www.shebayemenifood.com/ - Failed to discover listings for Sheba Yemeni Food: No article URLs discovered for Sheba Yemeni Food (https://www.shebayemenifood.com/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Sheba Yemeni Food (https://www.shebayemenifood.com/). Verify the listing link selector configuration.
+2025-10-28 15:28:44,714 [ERROR] scraper.service source=Naturally Zimbabwean - Recipes recipe=https://naturallyzimbabwean.com/usavi-powder-mixes/ - Failed to scrape https://naturallyzimbabwean.com/usavi-powder-mixes/: Missing ingredients and instructions while scraping https://naturallyzimbabwean.com/usavi-powder-mixes/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 134, in _scrape_template
+    recipes = self._article_scraper.scrape(template, url)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 1200, in scrape
+    self._validate_recipe(recipe, recipe.source_url)
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 1521, in _validate_recipe
+    raise ArticleExtractionError(
+scraper.extractors.ArticleExtractionError: Missing ingredients and instructions while scraping https://naturallyzimbabwean.com/usavi-powder-mixes/
+2025-10-28 15:28:56,163 [ERROR] scraper.service source=Access Gambia Recipes recipe=https://www.accessgambia.com/information/food-recipes.html - Failed to discover listings for Access Gambia Recipes: No article URLs discovered for Access Gambia Recipes (https://www.accessgambia.com/information/food-recipes.html). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Access Gambia Recipes (https://www.accessgambia.com/information/food-recipes.html). Verify the listing link selector configuration.
+2025-10-28 15:28:57,539 [ERROR] scraper.service source=Amira's Pantry - Egyptian Recipes recipe=https://amiraspantry.com/category/egyptian-recipes/ - Failed to discover listings for Amira's Pantry - Egyptian Recipes: No article URLs discovered for Amira's Pantry - Egyptian Recipes (https://amiraspantry.com/category/egyptian-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Amira's Pantry - Egyptian Recipes (https://amiraspantry.com/category/egyptian-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:28:58,388 [ERROR] scraper.service source=Burkina Recipes (Cookpad) recipe=https://cookpad.com/eng/search/burkina - Failed to discover listings for Burkina Recipes (Cookpad): No article URLs discovered for Burkina Recipes (Cookpad) (https://cookpad.com/eng/search/burkina). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Burkina Recipes (Cookpad) (https://cookpad.com/eng/search/burkina). Verify the listing link selector configuration.
+2025-10-28 15:28:59,739 [ERROR] scraper.service source=Cambodia Recipes (Cookpad) recipe=https://cookpad.com/eng/search/Cambodia - Failed to discover listings for Cambodia Recipes (Cookpad): No article URLs discovered for Cambodia Recipes (Cookpad) (https://cookpad.com/eng/search/Cambodia). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Cambodia Recipes (Cookpad) (https://cookpad.com/eng/search/Cambodia). Verify the listing link selector configuration.
+2025-10-28 15:29:08,694 [ERROR] scraper.service source=Cameroon Recipes (Cookpad) recipe=https://cookpad.com/eng/search/Cameroon - Failed to discover listings for Cameroon Recipes (Cookpad): No article URLs discovered for Cameroon Recipes (Cookpad) (https://cookpad.com/eng/search/Cameroon). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Cameroon Recipes (Cookpad) (https://cookpad.com/eng/search/Cameroon). Verify the listing link selector configuration.
+2025-10-28 15:29:09,997 [ERROR] scraper.service source=Canada Recipes (Cookpad) recipe=https://cookpad.com/eng/search/Canada - Failed to discover listings for Canada Recipes (Cookpad): No article URLs discovered for Canada Recipes (Cookpad) (https://cookpad.com/eng/search/Canada). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Canada Recipes (Cookpad) (https://cookpad.com/eng/search/Canada). Verify the listing link selector configuration.
+2025-10-28 15:29:11,209 [ERROR] scraper.service source=Central African Republic Recipes (The Afrikan Store) recipe=https://theafrikanstore.com/blogs/recipes/tagged/central-africa - Failed to discover listings for Central African Republic Recipes (The Afrikan Store): No article URLs discovered for Central African Republic Recipes (The Afrikan Store) (https://theafrikanstore.com/blogs/recipes/tagged/central-africa). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Central African Republic Recipes (The Afrikan Store) (https://theafrikanstore.com/blogs/recipes/tagged/central-africa). Verify the listing link selector configuration.
+2025-10-28 15:29:12,439 [WARNING] scraper.extractors source=Chilean Food and Garden recipe=https://www.chileanfoodandgarden.com/chilean-recipes/ - Listing discovery failed for Chilean Food and Garden (https://www.chileanfoodandgarden.com/chilean-recipes/): 403 Client Error: Forbidden for url: https://www.chileanfoodandgarden.com/chilean-recipes/
+2025-10-28 15:29:12,439 [ERROR] scraper.service source=Chilean Food and Garden recipe=https://www.chileanfoodandgarden.com/chilean-recipes/ - Failed to discover listings for Chilean Food and Garden: Failed to discover listings for Chilean Food and Garden: 403 Client Error: Forbidden for url: https://www.chileanfoodandgarden.com/chilean-recipes/
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 912, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: Failed to discover listings for Chilean Food and Garden: 403 Client Error: Forbidden for url: https://www.chileanfoodandgarden.com/chilean-recipes/
+2025-10-28 15:29:15,060 [ERROR] scraper.service source=Country Reports - Gabon recipe=https://www.countryreports.org/country/Gabon/recipes.htm - Failed to discover listings for Country Reports - Gabon: No article URLs discovered for Country Reports - Gabon (https://www.countryreports.org/country/Gabon/recipes.htm). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Country Reports - Gabon (https://www.countryreports.org/country/Gabon/recipes.htm). Verify the listing link selector configuration.
+2025-10-28 15:29:17,784 [ERROR] scraper.service source=Cuban Recipes (Allrecipes) recipe=https://www.allrecipes.com/recipes/709/world-cuisine/latin-american/caribbean/cuban/ - Failed to discover listings for Cuban Recipes (Allrecipes): No article URLs discovered for Cuban Recipes (Allrecipes) (https://www.allrecipes.com/recipes/709/world-cuisine/latin-american/caribbean/cuban/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Cuban Recipes (Allrecipes) (https://www.allrecipes.com/recipes/709/world-cuisine/latin-american/caribbean/cuban/). Verify the listing link selector configuration.
+2025-10-28 15:29:18,375 [ERROR] scraper.service source=Delicious El Salvador recipe=https://deliciouselsalvador.com/ - Failed to discover listings for Delicious El Salvador: No article URLs discovered for Delicious El Salvador (https://deliciouselsalvador.com/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Delicious El Salvador (https://deliciouselsalvador.com/). Verify the listing link selector configuration.
+2025-10-28 15:29:19,075 [ERROR] scraper.service source=Dirndl Kitchen recipe=https://dirndlkitchen.com/recipe-index/ - Failed to discover listings for Dirndl Kitchen: No article URLs discovered for Dirndl Kitchen (https://dirndlkitchen.com/recipe-index/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Dirndl Kitchen (https://dirndlkitchen.com/recipe-index/). Verify the listing link selector configuration.
+2025-10-28 15:29:19,647 [ERROR] scraper.service source=Dominican Cooking recipe=https://www.dominicancooking.com/recipe-index - Failed to discover listings for Dominican Cooking: No article URLs discovered for Dominican Cooking (https://www.dominicancooking.com/recipe-index). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Dominican Cooking (https://www.dominicancooking.com/recipe-index). Verify the listing link selector configuration.
+2025-10-28 15:29:20,386 [ERROR] scraper.service source=Eat Wander Explore - Fiji recipe=https://eatwanderexplore.com/blog/authentic-fiji-food-recipes - Failed to discover listings for Eat Wander Explore - Fiji: No article URLs discovered for Eat Wander Explore - Fiji (https://eatwanderexplore.com/blog/authentic-fiji-food-recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Eat Wander Explore - Fiji (https://eatwanderexplore.com/blog/authentic-fiji-food-recipes). Verify the listing link selector configuration.
+2025-10-28 15:29:21,888 [ERROR] scraper.service source=Lee Kum Kee UK Recipes recipe=https://uk.lkk.com/recipes - Failed to discover listings for Lee Kum Kee UK Recipes: No article URLs discovered for Lee Kum Kee UK Recipes (https://uk.lkk.com/recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Lee Kum Kee UK Recipes (https://uk.lkk.com/recipes). Verify the listing link selector configuration.
+2025-10-28 15:29:23,575 [ERROR] scraper.service source=Little Bit of Czech recipe=https://www.littlebitofczech.com/?page_id=249 - Failed to discover listings for Little Bit of Czech: No article URLs discovered for Little Bit of Czech (https://www.littlebitofczech.com/?page_id=249). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Little Bit of Czech (https://www.littlebitofczech.com/?page_id=249). Verify the listing link selector configuration.
+2025-10-28 15:29:24,680 [ERROR] scraper.service source=No Frills Kitchen - Pkhali recipe=https://nofrillskitchen.com/pkhali-recipe/ - Failed to discover listings for No Frills Kitchen - Pkhali: No article URLs discovered for No Frills Kitchen - Pkhali (https://nofrillskitchen.com/pkhali-recipe/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for No Frills Kitchen - Pkhali (https://nofrillskitchen.com/pkhali-recipe/). Verify the listing link selector configuration.
+2025-10-28 15:29:25,763 [ERROR] scraper.service source=Recipes from Costa Rica recipe=https://www.recipesfromcostarica.com/home.html - Failed to discover listings for Recipes from Costa Rica: No article URLs discovered for Recipes from Costa Rica (https://www.recipesfromcostarica.com/home.html). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Recipes from Costa Rica (https://www.recipesfromcostarica.com/home.html). Verify the listing link selector configuration.
+2025-10-28 15:29:28,079 [ERROR] scraper.service source=Rotas Gastronomicas - East Timor recipe=https://en.rotasgastronomicas.com/culinary_recipes_and_gastronomy_from_east_timor.html - Failed to discover listings for Rotas Gastronomicas - East Timor: No article URLs discovered for Rotas Gastronomicas - East Timor (https://en.rotasgastronomicas.com/culinary_recipes_and_gastronomy_from_east_timor.html). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Rotas Gastronomicas - East Timor (https://en.rotasgastronomicas.com/culinary_recipes_and_gastronomy_from_east_timor.html). Verify the listing link selector configuration.
+2025-10-28 15:29:55,576 [ERROR] scraper.service source=Tooting Family Kitchen - Ethiopian Meal recipe=https://www.tootingfamilykitchen.com/13-ethiopia-cooking-an-ethiopian-family-meal/ - Failed to discover listings for Tooting Family Kitchen - Ethiopian Meal: No article URLs discovered for Tooting Family Kitchen - Ethiopian Meal (https://www.tootingfamilykitchen.com/13-ethiopia-cooking-an-ethiopian-family-meal/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Tooting Family Kitchen - Ethiopian Meal (https://www.tootingfamilykitchen.com/13-ethiopia-cooking-an-ethiopian-family-meal/). Verify the listing link selector configuration.
+2025-10-28 15:29:56,735 [ERROR] scraper.service source=Yiayia's Recipes recipe=https://www.yiayiasrecipes.co.uk/recipe-blog - Failed to discover listings for Yiayia's Recipes: No article URLs discovered for Yiayia's Recipes (https://www.yiayiasrecipes.co.uk/recipe-blog). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Yiayia's Recipes (https://www.yiayiasrecipes.co.uk/recipe-blog). Verify the listing link selector configuration.
+2025-10-28 15:30:10,834 [ERROR] scraper.service source=Pick n Pay Eswatini (Swaziland) recipe=https://picknpayeswatini.com/our-recipes/ - Failed to discover listings for Pick n Pay Eswatini (Swaziland): No article URLs discovered for Pick n Pay Eswatini (Swaziland) (https://picknpayeswatini.com/our-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Pick n Pay Eswatini (Swaziland) (https://picknpayeswatini.com/our-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:30:15,190 [ERROR] scraper.service source=Come Chop Africa (Swaziland) recipe=https://www.comechop.africa/recipes - Failed to discover listings for Come Chop Africa (Swaziland): No article URLs discovered for Come Chop Africa (Swaziland) (https://www.comechop.africa/recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Come Chop Africa (Swaziland) (https://www.comechop.africa/recipes). Verify the listing link selector configuration.
+2025-10-28 15:30:18,166 [ERROR] scraper.service source=Eat Little Bird - Swiss Recipes (Switzerland) recipe=https://eatlittlebird.com/category/cuisine/swiss-recipes/ - Failed to discover listings for Eat Little Bird - Swiss Recipes (Switzerland): No article URLs discovered for Eat Little Bird - Swiss Recipes (Switzerland) (https://eatlittlebird.com/category/cuisine/swiss-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Eat Little Bird - Swiss Recipes (Switzerland) (https://eatlittlebird.com/category/cuisine/swiss-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:30:27,579 [ERROR] scraper.service source=Syrian Cooking (Syria) recipe=https://www.syriancooking.com/category/recipes/ - Failed to discover listings for Syrian Cooking (Syria): No article URLs discovered for Syrian Cooking (Syria) (https://www.syriancooking.com/category/recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Syrian Cooking (Syria) (https://www.syriancooking.com/category/recipes/). Verify the listing link selector configuration.
+2025-10-28 15:30:29,310 [ERROR] scraper.service source=I Heart Umami - Taiwanese Recipes (Taiwan) recipe=https://iheartumami.com/category/cuisines/taiwanese/ - Failed to discover listings for I Heart Umami - Taiwanese Recipes (Taiwan): No article URLs discovered for I Heart Umami - Taiwanese Recipes (Taiwan) (https://iheartumami.com/category/cuisines/taiwanese/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for I Heart Umami - Taiwanese Recipes (Taiwan) (https://iheartumami.com/category/cuisines/taiwanese/). Verify the listing link selector configuration.
+2025-10-28 15:30:30,789 [ERROR] scraper.service source=Hot Thai Kitchen - Beginner Recipes (Thailand) recipe=https://hot-thai-kitchen.com/thai-recipes-for-beginners/ - Failed to discover listings for Hot Thai Kitchen - Beginner Recipes (Thailand): No article URLs discovered for Hot Thai Kitchen - Beginner Recipes (Thailand) (https://hot-thai-kitchen.com/thai-recipes-for-beginners/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Hot Thai Kitchen - Beginner Recipes (Thailand) (https://hot-thai-kitchen.com/thai-recipes-for-beginners/). Verify the listing link selector configuration.
+2025-10-28 15:30:31,691 [ERROR] scraper.service source=Kitchen Stories - Tonga (Tonga) recipe=https://www.kitchenstories.com/en/recipes - Failed to discover listings for Kitchen Stories - Tonga (Tonga): No article URLs discovered for Kitchen Stories - Tonga (Tonga) (https://www.kitchenstories.com/en/recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Kitchen Stories - Tonga (Tonga) (https://www.kitchenstories.com/en/recipes). Verify the listing link selector configuration.
+2025-10-28 15:30:35,669 [ERROR] scraper.service source=Pacific Island Food Revolution (Tonga) recipe=https://www.pacificislandfoodrevolution.com/recipes/ - Failed to discover listings for Pacific Island Food Revolution (Tonga): No article URLs discovered for Pacific Island Food Revolution (Tonga) (https://www.pacificislandfoodrevolution.com/recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Pacific Island Food Revolution (Tonga) (https://www.pacificislandfoodrevolution.com/recipes/). Verify the listing link selector configuration.
+2025-10-28 15:30:36,707 [ERROR] scraper.service source=The Makeshift Chef - Trinidadian Recipes (Trinidad & Tobago) recipe=https://themakeshiftchef.wordpress.com/category/authentic-trinidadian-recipes/ - Failed to discover listings for The Makeshift Chef - Trinidadian Recipes (Trinidad & Tobago): No article URLs discovered for The Makeshift Chef - Trinidadian Recipes (Trinidad & Tobago) (https://themakeshiftchef.wordpress.com/category/authentic-trinidadian-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for The Makeshift Chef - Trinidadian Recipes (Trinidad & Tobago) (https://themakeshiftchef.wordpress.com/category/authentic-trinidadian-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:30:39,165 [ERROR] scraper.service source=Epicurious - Tunisian Recipes (Tunisia) recipe=https://www.epicurious.com/cuisine/tunisian - Failed to discover listings for Epicurious - Tunisian Recipes (Tunisia): No article URLs discovered for Epicurious - Tunisian Recipes (Tunisia) (https://www.epicurious.com/cuisine/tunisian). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Epicurious - Tunisian Recipes (Tunisia) (https://www.epicurious.com/cuisine/tunisian). Verify the listing link selector configuration.
+2025-10-28 15:30:40,119 [ERROR] scraper.service source=Ozlem's Turkish Table (Turkey) recipe=https://ozlemsturkishtable.com/recipes/ - Failed to discover listings for Ozlem's Turkish Table (Turkey): No article URLs discovered for Ozlem's Turkish Table (Turkey) (https://ozlemsturkishtable.com/recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Ozlem's Turkish Table (Turkey) (https://ozlemsturkishtable.com/recipes/). Verify the listing link selector configuration.
+2025-10-28 15:30:43,268 [ERROR] scraper.service source=Viva Uganda - Taste of Uganda (Uganda) recipe=https://viva.ug/eat-well/taste-of-uganda-simply-delicious-plant-based-recipes/ - Failed to discover listings for Viva Uganda - Taste of Uganda (Uganda): No article URLs discovered for Viva Uganda - Taste of Uganda (Uganda) (https://viva.ug/eat-well/taste-of-uganda-simply-delicious-plant-based-recipes/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Viva Uganda - Taste of Uganda (Uganda) (https://viva.ug/eat-well/taste-of-uganda-simply-delicious-plant-based-recipes/). Verify the listing link selector configuration.
+2025-10-28 15:30:45,402 [ERROR] scraper.service source=Healthy Life - Ugandan Recipes (Uganda) recipe=https://healthy-life.narod.ru/wor_ek220.htm - Failed to discover listings for Healthy Life - Ugandan Recipes (Uganda): No article URLs discovered for Healthy Life - Ugandan Recipes (Uganda) (https://healthy-life.narod.ru/wor_ek220.htm). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Healthy Life - Ugandan Recipes (Uganda) (https://healthy-life.narod.ru/wor_ek220.htm). Verify the listing link selector configuration.
+2025-10-28 15:30:47,026 [ERROR] scraper.service source=Excited Food - Ugandan Recipes (Uganda) recipe=https://excitedfood.com/categories/ugandan-recipes - Failed to discover listings for Excited Food - Ugandan Recipes (Uganda): No article URLs discovered for Excited Food - Ugandan Recipes (Uganda) (https://excitedfood.com/categories/ugandan-recipes). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Excited Food - Ugandan Recipes (Uganda) (https://excitedfood.com/categories/ugandan-recipes). Verify the listing link selector configuration.
+2025-10-28 15:30:49,411 [ERROR] scraper.service source=Klopotenko - Ukrainian Cuisine (Ukraine) recipe=https://klopotenko.com/en/cuisine/ukrainian/ - Failed to discover listings for Klopotenko - Ukrainian Cuisine (Ukraine): No article URLs discovered for Klopotenko - Ukrainian Cuisine (Ukraine) (https://klopotenko.com/en/cuisine/ukrainian/). Verify the listing link selector configuration.
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 916, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: No article URLs discovered for Klopotenko - Ukrainian Cuisine (Ukraine) (https://klopotenko.com/en/cuisine/ukrainian/). Verify the listing link selector configuration.
+2025-10-28 15:30:50,167 [WARNING] scraper.extractors source=ExpatWoman Food - UAE (United Arab Emirates) recipe=https://www.expatwoman.com/ewfood/recipes - Listing discovery failed for ExpatWoman Food - UAE (United Arab Emirates) (https://www.expatwoman.com/ewfood/recipes): 403 Client Error: Forbidden for url: https://www.expatwoman.com/ewfood/recipes
+2025-10-28 15:30:50,167 [ERROR] scraper.service source=ExpatWoman Food - UAE (United Arab Emirates) recipe=https://www.expatwoman.com/ewfood/recipes - Failed to discover listings for ExpatWoman Food - UAE (United Arab Emirates): Failed to discover listings for ExpatWoman Food - UAE (United Arab Emirates): 403 Client Error: Forbidden for url: https://www.expatwoman.com/ewfood/recipes
+Traceback (most recent call last):
+  File "/home/ollie/development/recipe-repository/scraper/service.py", line 101, in _scrape_template
+    article_urls = self._listing_scraper.discover(template)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ollie/development/recipe-repository/scraper/extractors.py", line 912, in discover
+    raise ListingDiscoveryError(
+scraper.extractors.ListingDiscoveryError: Failed to discover listings for ExpatWoman Food - UAE (United Arab Emirates): 403 Client Error: Forbidden for url: https://www.expatwoman.com/ewfood/recipes

@@ -447,7 +447,7 @@
     "name": "National Foods (Angola)",
     "url": "https://nationalfoods.org/recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -536,9 +536,8 @@
     "name": "Food Network UK - Argentinian Recipes",
     "url": "https://foodnetwork.co.uk/collections/argentinian-recipes#all-recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
-      "use_sitemaps": true,
       "listing": [
         {
           "url": "https://foodnetwork.co.uk/collections/argentinian-recipes#all-recipes",
@@ -715,7 +714,7 @@
     "name": "Australian Made - Recipes",
     "url": "https://australianmade.com.au/products/recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -804,7 +803,7 @@
     "name": "Everyday Delicious - Austrian Cuisine",
     "url": "https://www.everyday-delicious.com/category/cuisine/austrian/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1071,7 +1070,7 @@
     "name": "Flavors of Baku (Azerbaijan)",
     "url": "https://flavorsofbaku.com/recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1160,7 +1159,7 @@
     "name": "Bahamas Government - Native Dishes",
     "url": "https://www.bahamas.gov.bs/native-dishes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1249,7 +1248,7 @@
     "name": "Bahama Breeze - Recipes",
     "url": "https://www.bahamabreeze.com/recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1430,7 +1429,7 @@
     "name": "Kitchen of Debjani - Bangladeshi Recipes",
     "url": "https://kitchenofdebjani.com/recipes/international-recipes/bangladeshi-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1519,7 +1518,7 @@
     "name": "Totally Barbados - Recipes",
     "url": "https://www.totallybarbados.com/articles/barbados-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1611,7 +1610,7 @@
     "name": "Belarus.by - Belarusian Recipes",
     "url": "https://www.belarus.by/en/about-belarus/cuisine/belarusian-recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1700,7 +1699,7 @@
     "name": "Epicurious - Belgian Cuisine",
     "url": "https://www.epicurious.com/cuisine/belgian",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1789,7 +1788,7 @@
     "name": "Surprising Recipes - Belgian",
     "url": "https://www.surprising.recipes/category/belgian/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -1878,7 +1877,7 @@
     "name": "Taste Belize - Belizean Recipes",
     "url": "https://tastebelize.com/category/belizean-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -2323,7 +2322,7 @@
     "name": "The Modern Nonna - Bulgarian Recipes",
     "url": "https://themodernnonna.com/easy-bulgarian-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -2768,7 +2767,7 @@
     "name": "Sheba Yemeni Food",
     "url": "https://www.shebayemenifood.com/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3035,7 +3034,7 @@
     "name": "Access Gambia Recipes",
     "url": "https://www.accessgambia.com/information/food-recipes.html",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3124,7 +3123,7 @@
     "name": "Amira's Pantry - Egyptian Recipes",
     "url": "https://amiraspantry.com/category/egyptian-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3213,7 +3212,7 @@
     "name": "Balkan Lunch Box - Croatian Recipes",
     "url": "https://balkanlunchbox.com/category/country/croatian-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3566,7 +3565,7 @@
     "name": "Burkina Recipes (Cookpad)",
     "url": "https://cookpad.com/eng/search/burkina",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3652,7 +3651,7 @@
     "name": "Cambodia Recipes (Cookpad)",
     "url": "https://cookpad.com/eng/search/Cambodia",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3738,7 +3737,7 @@
     "name": "Cameroon Recipes (Cookpad)",
     "url": "https://cookpad.com/eng/search/Cameroon",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3824,7 +3823,7 @@
     "name": "Canada Recipes (Cookpad)",
     "url": "https://cookpad.com/eng/search/Canada",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3910,7 +3909,7 @@
     "name": "Central African Republic Recipes (The Afrikan Store)",
     "url": "https://theafrikanstore.com/blogs/recipes/tagged/central-africa",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -3996,7 +3995,7 @@
     "name": "Chilean Food and Garden",
     "url": "https://www.chileanfoodandgarden.com/chilean-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4173,7 +4172,7 @@
     "name": "Country Reports - Gabon",
     "url": "https://www.countryreports.org/country/Gabon/recipes.htm",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4259,7 +4258,7 @@
     "name": "Cuban Recipes (Allrecipes)",
     "url": "https://www.allrecipes.com/recipes/709/world-cuisine/latin-american/caribbean/cuban/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4345,7 +4344,7 @@
     "name": "Delicious El Salvador",
     "url": "https://deliciouselsalvador.com/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4431,7 +4430,7 @@
     "name": "Dirndl Kitchen",
     "url": "https://dirndlkitchen.com/recipe-index/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4517,7 +4516,7 @@
     "name": "Dominica Gourmet",
     "url": "https://dominicagourmet.com/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4604,7 +4603,7 @@
     "name": "Dominican Cooking",
     "url": "https://www.dominicancooking.com/recipe-index",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4690,7 +4689,7 @@
     "name": "Eat Wander Explore - Fiji",
     "url": "https://eatwanderexplore.com/blog/authentic-fiji-food-recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4776,7 +4775,7 @@
     "name": "Estonian Cuisine",
     "url": "https://estoniancuisine.com/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4863,7 +4862,7 @@
     "name": "Lee Kum Kee UK Recipes",
     "url": "https://uk.lkk.com/recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -4949,7 +4948,7 @@
     "name": "Little Bit of Czech",
     "url": "https://www.littlebitofczech.com/?page_id=249",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5035,7 +5034,7 @@
     "name": "My Colombian Recipes",
     "url": "https://www.mycolombianrecipes.com/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5122,7 +5121,7 @@
     "name": "No Frills Kitchen - Pkhali",
     "url": "https://nofrillskitchen.com/pkhali-recipe/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5208,7 +5207,7 @@
     "name": "Pardon Your French",
     "url": "https://www.pardonyourfrench.com/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5295,7 +5294,7 @@
     "name": "Recipes from Costa Rica",
     "url": "https://www.recipesfromcostarica.com/home.html",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5381,7 +5380,7 @@
     "name": "Rotas Gastronomicas - East Timor",
     "url": "https://en.rotasgastronomicas.com/culinary_recipes_and_gastronomy_from_east_timor.html",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5467,7 +5466,7 @@
     "name": "Tooting Family Kitchen - Ethiopian Meal",
     "url": "https://www.tootingfamilykitchen.com/13-ethiopia-cooking-an-ethiopian-family-meal/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5553,7 +5552,7 @@
     "name": "Yiayia's Recipes",
     "url": "https://www.yiayiasrecipes.co.uk/recipe-blog",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5639,7 +5638,7 @@
     "name": "Pick n Pay Eswatini (Swaziland)",
     "url": "https://picknpayeswatini.com/our-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5728,7 +5727,7 @@
     "name": "Come Chop Africa (Swaziland)",
     "url": "https://www.comechop.africa/recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5817,7 +5816,7 @@
     "name": "Eat Little Bird - Swiss Recipes (Switzerland)",
     "url": "https://eatlittlebird.com/category/cuisine/swiss-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -5995,7 +5994,7 @@
     "name": "Syrian Cooking (Syria)",
     "url": "https://www.syriancooking.com/category/recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -6173,7 +6172,7 @@
     "name": "I Heart Umami - Taiwanese Recipes (Taiwan)",
     "url": "https://iheartumami.com/category/cuisines/taiwanese/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -6351,7 +6350,7 @@
     "name": "Hot Thai Kitchen - Beginner Recipes (Thailand)",
     "url": "https://hot-thai-kitchen.com/thai-recipes-for-beginners/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -6618,7 +6617,7 @@
     "name": "Kitchen Stories - Tonga (Tonga)",
     "url": "https://www.kitchenstories.com/en/recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -6707,7 +6706,7 @@
     "name": "Pacific Island Food Revolution (Tonga)",
     "url": "https://www.pacificislandfoodrevolution.com/recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -6885,7 +6884,7 @@
     "name": "The Makeshift Chef - Trinidadian Recipes (Trinidad & Tobago)",
     "url": "https://themakeshiftchef.wordpress.com/category/authentic-trinidadian-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -6974,7 +6973,7 @@
     "name": "Epicurious - Tunisian Recipes (Tunisia)",
     "url": "https://www.epicurious.com/cuisine/tunisian",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -7063,7 +7062,7 @@
     "name": "Ozlem's Turkish Table (Turkey)",
     "url": "https://ozlemsturkishtable.com/recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -7241,7 +7240,7 @@
     "name": "Viva Uganda - Taste of Uganda (Uganda)",
     "url": "https://viva.ug/eat-well/taste-of-uganda-simply-delicious-plant-based-recipes/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -7330,7 +7329,7 @@
     "name": "Healthy Life - Ugandan Recipes (Uganda)",
     "url": "https://healthy-life.narod.ru/wor_ek220.htm",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -7419,7 +7418,7 @@
     "name": "Excited Food - Ugandan Recipes (Uganda)",
     "url": "https://excitedfood.com/categories/ugandan-recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -7508,7 +7507,7 @@
     "name": "Klopotenko - Ukrainian Cuisine (Ukraine)",
     "url": "https://klopotenko.com/en/cuisine/ukrainian/",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
@@ -7597,7 +7596,7 @@
     "name": "ExpatWoman Food - UAE (United Arab Emirates)",
     "url": "https://www.expatwoman.com/ewfood/recipes",
     "type": "cooking",
-    "scraped": true,
+    "scraped": false,
     "recipes": {
       "listing": [
         {
