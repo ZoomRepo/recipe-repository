@@ -7769,5 +7769,1073 @@
       "json_ld_selector": "script[type='application/ld+json']",
       "json_ld_path": "$..[?(@['@type']=='Recipe')]"
     }
+  },
+  {
+    "name": "Maggi Ghana Recipes (Ghana)",
+    "url": "https://www.maggi.com.gh/recipe-overview-page",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://www.maggi.com.gh/recipe-overview-page",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+    }
+  },
+  {
+    "name": "Real Greek Recipes (Greece)",
+    "url": "https://realgreekrecipes.com/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://realgreekrecipes.com/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Souvlaki For The Soul (Greece)",
+    "url": "https://souvlakiforthesoul.com/recipe-index/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://souvlakiforthesoul.com/recipe-index/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Spice Island Cooking (Grenada)",
+    "url": "https://spiceislandcooking.com/recipes",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://spiceislandcooking.com/recipes",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Recetas Guatemala (Guatemala)",
+    "url": "https://en.recetas-guatemala.com/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://en.recetas-guatemala.com/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Rotas Gastronomicas Guinea-Bissau (Guinea-Bissau)",
+    "url": "https://en.rotasgastronomicas.com/culinary_recipes_and_gastronomy_from_guineabissau.html",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://en.rotasgastronomicas.com/culinary_recipes_and_gastronomy_from_guineabissau.html",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Cooking With Shamoo (Guyana)",
+    "url": "https://www.cookingwithshamoo.com/recipes",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://www.cookingwithshamoo.com/recipes",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Love For Haitian Food (Haiti)",
+    "url": "https://loveforhaitianfood.com/all-recipes/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://loveforhaitianfood.com/all-recipes/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Recetas Honduras (Honduras)",
+    "url": "https://en.recetashonduras.com/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://en.recetashonduras.com/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type']=='Recipe')]"
+    }
+  },
+  {
+    "name": "Budapest Cooking Class (Hungary)",
+    "url": "https://budapestcookingclass.com/hungarian-recipes/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://budapestcookingclass.com/hungarian-recipes/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Cook In A Curry (India)",
+    "url": "https://maunikagowardhan.co.uk/cook-in-a-curry/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://maunikagowardhan.co.uk/cook-in-a-curry/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
+  },
+  {
+    "name": "Pisang Susu (Indonesia)",
+    "url": "https://pisangsusu.com/en/",
+    "type": "cooking",
+    "scraped": false,
+    "recipes": {
+      "listing": [
+        {
+          "url": "https://pisangsusu.com/en/",
+          "link_selector": "article h2.entry-title a, h2.entry-title a, h3.entry-title a, div.entry-content h2 a, div.post h2 a, div.td-module-title a",
+          "pagination_selector": "nav.pagination a.next, a.next.page-numbers, ul.pagination li.next a, a.pagination-next, a.next, a[rel='next']"
+        }
+      ]
+    },
+    "article": {
+      "title": [
+        "h1.entry-title",
+        "h1.post-title",
+        "h1.page-title",
+        "h1"
+      ],
+      "description": [
+        "meta[name='description']",
+        "meta[property='og:description']",
+        "div.entry-content p",
+        "div.post-content p"
+      ],
+      "ingredients": [
+        "div.wprm-recipe-ingredients ul li",
+        "div.wp-block-wprm-recipe-ingredients ul li",
+        "div.tasty-recipe-ingredients li",
+        "div.recipe-ingredients ul li",
+        "li.ingredient"
+      ],
+      "instructions": [
+        "div.wprm-recipe-instructions div.wprm-recipe-instruction-text",
+        "div.wp-block-wprm-recipe-instructions li",
+        "div.tasty-recipe-instructions li",
+        "div.recipe-instructions li",
+        "ol li"
+      ],
+      "prep_time": [
+        "span.wprm-recipe-prep_time",
+        "div.tasty-recipes-prep-time",
+        "div.recipe-meta-item--prep span.recipe-meta-item-value"
+      ],
+      "cook_time": [
+        "span.wprm-recipe-cook_time",
+        "div.tasty-recipes-cook-time",
+        "div.recipe-meta-item--cook span.recipe-meta-item-value"
+      ],
+      "total_time": [
+        "span.wprm-recipe-total_time",
+        "div.tasty-recipes-total-time",
+        "div.recipe-meta-item--total span.recipe-meta-item-value"
+      ],
+      "servings": [
+        "span.wprm-recipe-servings",
+        "div.tasty-recipes-yield",
+        "div.recipe-servings"
+      ],
+      "image": [
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+        "figure.wp-block-image img",
+        "div.entry-content img"
+      ],
+      "author": [
+        "span.wprm-recipe-author",
+        "span.author.vcard",
+        "a[rel='author']",
+        "span.posted-by a"
+      ],
+      "categories": [
+        "span.cat-links a",
+        "a[rel='category tag']",
+        "div.recipe-categories a"
+      ],
+      "tags": [
+        "span.tags-links a",
+        "a[rel='tag']"
+      ]
+    },
+    "structured_data": {
+      "enabled": true,
+      "json_ld_selector": "script[type='application/ld+json']",
+      "json_ld_path": "$..[?(@['@type]=='Recipe')]"
+    }
   }
 ]
