@@ -7,6 +7,7 @@ from .config import AppConfig
 from .repository import RecipeQueryRepository
 from .service import RecipeService
 from .views import register_routes
+from .payments import BillingService, register_billing_routes
 
 
 def create_app(config: AppConfig | None = None) -> Flask:
@@ -21,6 +22,10 @@ def create_app(config: AppConfig | None = None) -> Flask:
     repository = RecipeQueryRepository.from_config(resolved_config.database)
     service = RecipeService(repository, resolved_config.page_size)
     register_routes(app, service)
+    billing_service = BillingService.from_config(
+        resolved_config.database, resolved_config.stripe
+    )
+    register_billing_routes(app, billing_service)
     app.config["APP_CONFIG"] = resolved_config
     app.config["RECIPE_SERVICE"] = service
     return app

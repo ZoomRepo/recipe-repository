@@ -1,63 +1,33 @@
 import { type NextRequest, NextResponse } from "next/server"
-import Stripe from "stripe"
-import { createClient } from "@/lib/supabase/server"
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: NextRequest) {
   try {
     const { userId, email } = await req.json()
+    const apiBaseUrl = process.env.FLASK_API_BASE_URL
 
-    // Get or create Stripe customer
-    let customerId = null
-
-    const supabase = await createClient()
-    const { data: subscription } = await supabase
-      .from("subscriptions")
-      .select("stripe_customer_id")
-      .eq("user_id", userId)
-      .single()
-
-    if (subscription?.stripe_customer_id && !subscription.stripe_customer_id.startsWith("temp_")) {
-      customerId = subscription.stripe_customer_id
-    } else {
-      const customer = await stripe.customers.create({
-        email,
-        metadata: { userId },
-      })
-      customerId = customer.id
-
-      // Update Supabase with Stripe customer ID
-      await supabase.from("subscriptions").update({ stripe_customer_id: customerId }).eq("user_id", userId)
+    if (!apiBaseUrl) {
+      return NextResponse.json({ error: "Billing service URL not configured" }, { status: 500 })
     }
 
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "gbp",
-            product_data: {
-              name: "findmyflavour Premium",
-              description: "Unlock unlimited recipe discovery and features",
-            },
-            unit_amount: 300, // £3.00
-            recurring: {
-              interval: "month",
-              interval_count: 1,
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "subscription",
-      success_url: `${process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || new URL(req.url).origin}/account?subscription=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || new URL(req.url).origin}/pricing?subscription=cancelled`,
+    const origin = process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || new URL(req.url).origin
+    const response = await fetch(`${apiBaseUrl}/api/v1/billing/checkout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId,
+        email,
+        successUrl: `${origin}/account?subscription=success`,
+        cancelUrl: `${origin}/pricing?subscription=cancelled`,
+      }),
     })
 
-    return NextResponse.json({ url: session.url })
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: "Billing checkout failed" }))
+      return NextResponse.json(error, { status: response.status })
+    }
+
+    const data = await response.json()
+    return NextResponse.json({ url: data.url })
   } catch (error) {
     console.error("Stripe error:", error)
     return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 })
