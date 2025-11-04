@@ -24,24 +24,32 @@ export async function POST(request: NextRequest) {
   }
 
   const { email, password } = parsed.data
-
-  const existingUser = await findUserByEmail(email)
-  if (existingUser) {
-    return NextResponse.json({ error: "An account with this email already exists" }, { status: 409 })
-  }
+  const trimmedEmail = email.trim()
 
   try {
-    const passwordHash = await bcrypt.hash(password, 12)
-    const user = await createUser({ email, passwordHash })
+    const existingUser = await findUserByEmail(trimmedEmail)
+    if (existingUser) {
+      return NextResponse.json({ error: "An account with this email already exists" }, { status: 409 })
+    }
 
-    return NextResponse.json({
-      user: {
-        id: user.id,
-        email: user.email,
-        createdAt: user.createdAt,
+    const passwordHash = await bcrypt.hash(password, 12)
+    const user = await createUser({ email: trimmedEmail, passwordHash })
+
+    return NextResponse.json(
+      {
+        user: {
+          id: user.id,
+          email: user.email,
+          createdAt: user.createdAt,
+        },
       },
-    })
+      { status: 201 },
+    )
   } catch (error) {
+    const mysqlCode = typeof error === "object" && error && "code" in error ? (error as { code?: string }).code : null
+    if (mysqlCode === "ER_DUP_ENTRY") {
+      return NextResponse.json({ error: "An account with this email already exists" }, { status: 409 })
+    }
     console.error("Failed to sign up user", error)
     return NextResponse.json({ error: "Unable to create account" }, { status: 500 })
   }
