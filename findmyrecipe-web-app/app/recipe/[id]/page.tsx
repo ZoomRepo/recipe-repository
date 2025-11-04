@@ -6,8 +6,6 @@ import { useEffect, useMemo, useState } from "react"
 import type { ReactNode } from "react"
 import SubscriptionGate from "@/components/subscription-gate"
 
-const API_BASE_URL = (process.env.NEXT_PUBLIC_FLASK_API_BASE_URL ?? "").replace(/\/$/, "")
-
 interface RecipeDetail {
   id: number
   title: string | null
@@ -44,7 +42,7 @@ export default function RecipePage() {
     }
 
     const controller = new AbortController()
-    const url = `${API_BASE_URL}/api/v1/recipes/${recipeId}`
+    const url = `/api/v1/recipes/${recipeId}`
 
     setIsLoading(true)
     setError(null)

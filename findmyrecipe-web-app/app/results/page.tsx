@@ -8,8 +8,6 @@ import RecipeResultsPage, {
   type RecipesResponse,
 } from "@/components/recipe-results-page"
 
-const API_BASE_URL = (process.env.NEXT_PUBLIC_FLASK_API_BASE_URL ?? "").replace(/\/$/, "")
-
 export default function ResultsPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -60,7 +58,7 @@ export default function ResultsPage() {
     }
 
     const queryString = params.toString()
-    const url = `${API_BASE_URL}/api/v1/recipes${queryString ? `?${queryString}` : ""}`
+    const url = `/api/v1/recipes${queryString ? `?${queryString}` : ""}`
 
     setIsLoading(true)
     setError(null)
