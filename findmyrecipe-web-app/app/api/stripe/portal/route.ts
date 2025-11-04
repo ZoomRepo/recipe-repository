@@ -1,30 +1,31 @@
 import { type NextRequest, NextResponse } from "next/server"
-import Stripe from "stripe"
-import { createClient } from "@/lib/supabase/server"
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: NextRequest) {
   try {
     const { userId } = await req.json()
+    const apiBaseUrl = process.env.FLASK_API_BASE_URL
 
-    const supabase = await createClient()
-    const { data: subscription } = await supabase
-      .from("subscriptions")
-      .select("stripe_customer_id")
-      .eq("user_id", userId)
-      .single()
-
-    if (!subscription?.stripe_customer_id) {
-      return NextResponse.json({ error: "No Stripe customer found" }, { status: 400 })
+    if (!apiBaseUrl) {
+      return NextResponse.json({ error: "Billing service URL not configured" }, { status: 500 })
     }
 
-    const session = await stripe.billingPortal.sessions.create({
-      customer: subscription.stripe_customer_id,
-      return_url: `${process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || new URL(req.url).origin}/account`,
+    const origin = process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || new URL(req.url).origin
+    const response = await fetch(`${apiBaseUrl}/api/v1/billing/portal`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId,
+        returnUrl: `${origin}/account`,
+      }),
     })
 
-    return NextResponse.json({ url: session.url })
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: "Billing portal failed" }))
+      return NextResponse.json(error, { status: response.status })
+    }
+
+    const data = await response.json()
+    return NextResponse.json({ url: data.url })
   } catch (error) {
     console.error("Portal error:", error)
     return NextResponse.json({ error: "Failed to create portal session" }, { status: 500 })

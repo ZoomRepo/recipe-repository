@@ -33,11 +33,43 @@ class DatabaseConfig:
 
 
 @dataclass(frozen=True)
+class StripeConfig:
+    """Configuration for Stripe integration."""
+
+    secret_key: str = ""
+    webhook_secret: str = ""
+    product_name: str = "findmyflavour Premium"
+    product_description: str = "Unlock unlimited recipe discovery and features"
+    currency: str = "gbp"
+    unit_amount: int = 300
+    interval: str = "month"
+    interval_count: int = 1
+
+    @classmethod
+    def from_env(cls, prefix: str = "STRIPE_") -> "StripeConfig":
+        return cls(
+            secret_key=os.getenv(f"{prefix}SECRET_KEY", cls.secret_key),
+            webhook_secret=os.getenv(f"{prefix}WEBHOOK_SECRET", cls.webhook_secret),
+            product_name=os.getenv(f"{prefix}PRODUCT_NAME", cls.product_name),
+            product_description=os.getenv(
+                f"{prefix}PRODUCT_DESCRIPTION", cls.product_description
+            ),
+            currency=os.getenv(f"{prefix}CURRENCY", cls.currency),
+            unit_amount=int(os.getenv(f"{prefix}UNIT_AMOUNT", cls.unit_amount)),
+            interval=os.getenv(f"{prefix}INTERVAL", cls.interval),
+            interval_count=int(
+                os.getenv(f"{prefix}INTERVAL_COUNT", cls.interval_count)
+            ),
+        )
+
+
+@dataclass(frozen=True)
 class AppConfig:
     """Top level application configuration."""
 
     database: DatabaseConfig = DatabaseConfig()
     page_size: int = 20
+    stripe: StripeConfig = StripeConfig()
 
     @classmethod
     def from_env(cls) -> "AppConfig":
@@ -45,4 +77,5 @@ class AppConfig:
 
         database = DatabaseConfig.from_env()
         page_size = int(os.getenv("PAGE_SIZE", cls.page_size))
-        return cls(database=database, page_size=page_size)
+        stripe = StripeConfig.from_env()
+        return cls(database=database, page_size=page_size, stripe=stripe)
