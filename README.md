@@ -19,6 +19,29 @@ changes to refresh the virtual environment):
 make setup
 ```
 
+## Flagging non-food recipe images
+
+The repository bundles a command line helper that downloads each recipe's
+primary photo and flags anything that does not appear to depict food. To use it:
+
+1. Export the recipes you want to analyse as a JSON array of the normalised
+   records produced by the scraper (each entry should include fields such as
+   `title`, `source_url`, and `image_url`).
+2. Install the Python dependencies listed in `requirements.txt` (for example via
+   `make setup` as shown above).
+3. Run the classifier from the repository root, pointing it at your recipes
+   file. Optionally provide an output path to capture the flagged entries.
+
+```bash
+python -m scraper.scripts.find_non_food_images path/to/recipes.json \
+    --output flagged_non_food.json
+```
+
+The script prints any recipes whose images are likely non-food, along with the
+predicted ImageNet label and probability. Use `--limit` to process only the
+first *n* recipes, `--food-threshold` to adjust the sensitivity, or `--log-level
+DEBUG` for verbose tracing while troubleshooting.
+
 ## Running the scraper
 
 The scraper exposes a command line interface:
