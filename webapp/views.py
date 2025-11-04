@@ -1,7 +1,7 @@
 """Flask views for browsing recipes."""
 from __future__ import annotations
 
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 from flask import Blueprint, abort, jsonify, render_template, request
 from werkzeug.datastructures import MultiDict
@@ -16,6 +16,7 @@ from .filter_options import (
     labels_for,
     normalize_selection,
 )
+from .models import RecipeDetail, RecipeSummary
 from .service import RecipeService
 
 
@@ -23,6 +24,7 @@ def register_routes(app: Any, service: RecipeService) -> None:
     """Register the HTTP routes on *app* using the provided service."""
 
     blueprint = Blueprint("recipes", __name__)
+    api_blueprint = Blueprint("recipes_api", __name__, url_prefix="/api/v1")
 
     @blueprint.route("/")
     def index() -> str:
@@ -99,6 +101,42 @@ def register_routes(app: Any, service: RecipeService) -> None:
             }
         )
 
+    @api_blueprint.route("/recipes")
+    def api_recipes_v1() -> Any:
+        raw_query = request.args.get("q", "")
+        normalized_query = _normalize_query(raw_query)
+        page = _parse_page(request.args.get("page", "1"))
+        ingredients = _parse_ingredients(request.args)
+        cuisines = normalize_selection(request.args.getlist("cuisine"), CUISINE_LOOKUP)
+        meals = normalize_selection(request.args.getlist("meal"), MEAL_LOOKUP)
+        diets = normalize_selection(request.args.getlist("diet"), DIET_LOOKUP)
+        results = service.search(raw_query, page, ingredients, cuisines, meals, diets)
+        filters = {
+            "query": normalized_query,
+            "ingredients": ingredients,
+            "cuisines": cuisines,
+            "meals": meals,
+            "diets": diets,
+        }
+        payload = {
+            "items": [_serialize_summary(item) for item in results.items],
+            "pagination": {
+                "page": results.page,
+                "pageSize": results.page_size,
+                "total": results.total,
+                "totalPages": results.total_pages,
+            },
+            "filters": filters,
+        }
+        return jsonify(payload)
+
+    @api_blueprint.route("/recipes/<int:recipe_id>")
+    def api_recipe_detail(recipe_id: int) -> Any:
+        recipe = service.get(recipe_id)
+        if recipe is None:
+            return jsonify({"error": "Recipe not found"}), 404
+        return jsonify(_serialize_detail(recipe))
+
     @blueprint.route("/recipes/<int:recipe_id>")
     def detail(recipe_id: int) -> str:
         recipe = service.get(recipe_id)
@@ -111,6 +149,7 @@ def register_routes(app: Any, service: RecipeService) -> None:
         return render_template("errors/404.html"), 404
 
     app.register_blueprint(blueprint)
+    app.register_blueprint(api_blueprint)
 
 
 def _parse_page(raw_page: str) -> int:
@@ -184,3 +223,34 @@ def _format_heading(
 def _format_subtitle(total: int) -> str:
     suffix = "" if total == 1 else "s"
     return f"{total} recipe{suffix} found"
+
+
+def _serialize_summary(recipe: RecipeSummary) -> Dict[str, Any]:
+    return {
+        "id": recipe.id,
+        "title": recipe.title,
+        "sourceName": recipe.source_name,
+        "sourceUrl": recipe.source_url,
+        "description": recipe.description,
+        "image": recipe.image,
+        "updatedAt": recipe.updated_at.isoformat() if recipe.updated_at else None,
+    }
+
+
+def _serialize_detail(recipe: RecipeDetail) -> Dict[str, Any]:
+    payload = _serialize_summary(recipe)
+    payload.update(
+        {
+            "ingredients": recipe.ingredients,
+            "instructions": recipe.instructions,
+            "prepTime": recipe.prep_time,
+            "cookTime": recipe.cook_time,
+            "totalTime": recipe.total_time,
+            "servings": recipe.servings,
+            "author": recipe.author,
+            "categories": recipe.categories,
+            "tags": recipe.tags,
+            "raw": recipe.raw,
+        }
+    )
+    return payload
