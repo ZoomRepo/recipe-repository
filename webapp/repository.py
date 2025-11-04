@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import json
-from typing import List, Optional
+from typing import Iterable, List, Mapping, Optional
 
 from mysql.connector import pooling
 
@@ -46,6 +46,9 @@ class RecipeQueryRepository:
         cuisines: Optional[List[str]] = None,
         meals: Optional[List[str]] = None,
         diets: Optional[List[str]] = None,
+        cuisine_lookup: Optional[Mapping[str, FilterOption]] = None,
+        meal_lookup: Optional[Mapping[str, FilterOption]] = None,
+        diet_lookup: Optional[Mapping[str, FilterOption]] = None,
     ) -> PaginatedResult:
         """Search recipes matching *query* and *ingredients* with pagination."""
 
@@ -87,9 +90,11 @@ class RecipeQueryRepository:
                 like = f"%{normalized}%"
                 conditions.append("LOWER(ingredients) LIKE %s")
                 params.append(like)
-        self._apply_option_filters(cuisines, CUISINE_LOOKUP, conditions, params)
-        self._apply_option_filters(meals, MEAL_LOOKUP, conditions, params)
-        self._apply_option_filters(diets, DIET_LOOKUP, conditions, params)
+        self._apply_option_filters(
+            cuisines, cuisine_lookup or CUISINE_LOOKUP, conditions, params
+        )
+        self._apply_option_filters(meals, meal_lookup or MEAL_LOOKUP, conditions, params)
+        self._apply_option_filters(diets, diet_lookup or DIET_LOOKUP, conditions, params)
         where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
         listing_sql = f"""
             SELECT
@@ -210,10 +215,46 @@ class RecipeQueryRepository:
             connection.close()
         return int(total)
 
+    def list_cuisine_labels(self) -> List[str]:
+        """Return unique cuisine labels discovered in the recipe metadata."""
+
+        sql = """
+            SELECT categories, tags
+            FROM recipes
+            WHERE (categories IS NOT NULL AND TRIM(categories) <> '')
+               OR (tags IS NOT NULL AND TRIM(tags) <> '')
+        """
+        connection = self._pool.get_connection()
+        cuisines: set[str] = set()
+        try:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                cursor.execute(sql)
+                while True:
+                    rows = cursor.fetchmany(500)
+                    if not rows:
+                        break
+                    for row in rows:
+                        for value in self._iter_string_values(row.get("categories")):
+                            cuisines.add(value)
+                        for value in self._iter_string_values(row.get("tags")):
+                            cuisines.add(value)
+            finally:
+                cursor.close()
+        finally:
+            connection.close()
+        return sorted(cuisines, key=str.casefold)
+
+    def _iter_string_values(self, payload: Optional[str]) -> Iterable[str]:
+        for value in self._parse_json_list(payload):
+            candidate = str(value).strip()
+            if candidate:
+                yield candidate
+
     def _apply_option_filters(
         self,
         selected: Optional[List[str]],
-        lookup: dict[str, FilterOption],
+        lookup: Mapping[str, FilterOption],
         conditions: List[str],
         params: List[object],
     ) -> None:

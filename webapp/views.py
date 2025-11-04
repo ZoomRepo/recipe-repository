@@ -1,14 +1,13 @@
 """Flask views for browsing recipes."""
 from __future__ import annotations
 
-from typing import Any, List, Optional
+from typing import Any, List, Mapping, Optional
 
 from flask import Blueprint, abort, jsonify, render_template, request
 from werkzeug.datastructures import MultiDict
 
 from .filter_options import (
-    CUISINE_LOOKUP,
-    CUISINE_OPTIONS,
+    FilterOption,
     DIET_LOOKUP,
     DIET_OPTIONS,
     MEAL_LOOKUP,
@@ -30,12 +29,13 @@ def register_routes(app: Any, service: RecipeService) -> None:
         normalized_query = _normalize_query(raw_query)
         page = _parse_page(request.args.get("page", "1"))
         ingredients = _parse_ingredients(request.args)
-        cuisines = normalize_selection(request.args.getlist("cuisine"), CUISINE_LOOKUP)
+        cuisine_lookup = service.cuisine_lookup()
+        cuisines = normalize_selection(request.args.getlist("cuisine"), cuisine_lookup)
         meals = normalize_selection(request.args.getlist("meal"), MEAL_LOOKUP)
         diets = normalize_selection(request.args.getlist("diet"), DIET_LOOKUP)
         results = service.search(raw_query, page, ingredients, cuisines, meals, diets)
         heading_text = _format_heading(
-            normalized_query, ingredients, cuisines, meals, diets
+            normalized_query, ingredients, cuisines, meals, diets, cuisine_lookup
         )
         subtitle_text = _format_subtitle(results.total)
         filters = {
@@ -51,7 +51,7 @@ def register_routes(app: Any, service: RecipeService) -> None:
             filters=filters,
             heading=heading_text,
             subtitle=subtitle_text,
-            cuisine_options=CUISINE_OPTIONS,
+            cuisine_options=service.cuisine_options(),
             meal_options=MEAL_OPTIONS,
             diet_options=DIET_OPTIONS,
         )
@@ -62,7 +62,8 @@ def register_routes(app: Any, service: RecipeService) -> None:
         normalized_query = _normalize_query(raw_query)
         page = _parse_page(request.args.get("page", "1"))
         ingredients = _parse_ingredients(request.args)
-        cuisines = normalize_selection(request.args.getlist("cuisine"), CUISINE_LOOKUP)
+        cuisine_lookup = service.cuisine_lookup()
+        cuisines = normalize_selection(request.args.getlist("cuisine"), cuisine_lookup)
         meals = normalize_selection(request.args.getlist("meal"), MEAL_LOOKUP)
         diets = normalize_selection(request.args.getlist("diet"), DIET_LOOKUP)
         results = service.search(raw_query, page, ingredients, cuisines, meals, diets)
@@ -82,7 +83,12 @@ def register_routes(app: Any, service: RecipeService) -> None:
                 ),
                 "meta": {
                     "heading": _format_heading(
-                        normalized_query, ingredients, cuisines, meals, diets
+                        normalized_query,
+                        ingredients,
+                        cuisines,
+                        meals,
+                        diets,
+                        cuisine_lookup,
                     ),
                     "subtitle": _format_subtitle(results.total),
                     "total": results.total,
@@ -154,6 +160,7 @@ def _format_heading(
     cuisines: List[str],
     meals: List[str],
     diets: List[str],
+    cuisine_lookup: Mapping[str, FilterOption],
 ) -> str:
     if query and ingredients:
         plural = "s" if len(ingredients) != 1 else ""
@@ -166,7 +173,7 @@ def _format_heading(
         heading = "Latest recipes"
 
     descriptors: List[str] = []
-    cuisine_labels = labels_for(cuisines, CUISINE_LOOKUP)
+    cuisine_labels = labels_for(cuisines, cuisine_lookup)
     if cuisine_labels:
         descriptors.append("Cuisine: " + ", ".join(cuisine_labels))
     meal_labels = labels_for(meals, MEAL_LOOKUP)
