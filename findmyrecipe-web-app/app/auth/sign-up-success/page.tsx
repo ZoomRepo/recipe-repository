@@ -19,12 +19,11 @@ export default function SignUpSuccessPage() {
               <CheckCircle className="w-12 h-12 text-green-500" />
             </div>
             <CardTitle>Account Created!</CardTitle>
-            <CardDescription>Check your email to confirm your account</CardDescription>
+            <CardDescription>Your account has been created successfully</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground text-center">
-              We've sent you a confirmation email. Please click the link in the email to verify your account and start
-              exploring recipes.
+              You can now sign in and start exploring personalized recipe recommendations.
             </p>
             <Link href="/auth/login" className="block">
               <Button className="w-full">Back to Login</Button>
