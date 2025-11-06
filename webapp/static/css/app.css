@@ -295,21 +295,50 @@ main.container {
   pointer-events: none;
   transition: opacity 0.2s ease;
   display: flex;
-  align-items: stretch;
-  justify-content: center;
-  padding: 1.25rem;
+  flex-direction: column;
   z-index: 2;
 }
 
-.recipe-card:hover .recipe-card-overlay,
-.recipe-card:focus-within .recipe-card-overlay {
+.recipe-card--overlay-open {
+  box-shadow: 0 12px 28px rgba(33, 37, 41, 0.16);
+}
+
+.recipe-card--overlay-open .recipe-card-overlay {
   opacity: 1;
   pointer-events: auto;
 }
 
+.recipe-card-overlay__header {
+  flex: 0 0 auto;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.recipe-card-overlay__close {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.recipe-card-overlay__close:hover,
+.recipe-card-overlay__close:focus {
+  color: #f87171;
+}
+
 .recipe-card-overlay__content {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  max-height: 100%;
   overflow-y: auto;
 }
 
@@ -356,6 +385,24 @@ main.container {
   display: grid;
   gap: 0.25rem;
   font-size: 0.9rem;
+}
+
+.recipe-card-overlay-toggle {
+  margin-top: 1rem;
+  align-self: flex-start;
+  border: none;
+  background: #0f172a;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.recipe-card-overlay-toggle:hover,
+.recipe-card-overlay-toggle:focus {
+  background: #1e293b;
 }
 
 .recipe-overlay-empty {

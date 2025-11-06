@@ -46,6 +46,8 @@ def test_overlay_renders_nutrients_and_ingredients() -> None:
     html = render_results(recipe)
 
     assert "recipe-card-overlay" in html
+    assert "role=\"dialog\"" in html
+    assert "View nutrition &amp; ingredients" in html
     assert "Nutrition" in html
     assert "100.46" in html
     assert "2 cups milk" in html
@@ -69,3 +71,4 @@ def test_overlay_shows_fallback_messages() -> None:
 
     assert "Nutrition information unavailable." in html
     assert "Ingredients unavailable." in html
+    assert "data-role=\"overlay-close\"" in html

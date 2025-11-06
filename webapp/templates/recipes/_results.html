@@ -11,7 +11,22 @@
       } %}
       {% set nutrient_order = ['calories', 'protein', 'carbohydrates', 'fat', 'fiber', 'sugar'] %}
       <li class="recipe-card{% if recipe.image %} recipe-card--with-image{% endif %}" tabindex="0">
-        <div class="recipe-card-overlay">
+        <div
+          class="recipe-card-overlay"
+          role="dialog"
+          aria-hidden="true"
+          aria-label="Nutrition and ingredients for {{ recipe.title or 'this recipe' }}"
+        >
+          <div class="recipe-card-overlay__header">
+            <button
+              type="button"
+              class="recipe-card-overlay__close"
+              data-role="overlay-close"
+              aria-label="Close nutrition and ingredient details"
+            >
+              &times;
+            </button>
+          </div>
           <div class="recipe-card-overlay__content">
             <div class="recipe-card-overlay__sections">
               <section class="recipe-overlay-section">
@@ -65,6 +80,14 @@
           {% if recipe.updated_at %}
             <p class="recipe-meta">Updated {{ recipe.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
           {% endif %}
+          <button
+            type="button"
+            class="recipe-card-overlay-toggle"
+            data-role="overlay-open"
+            aria-haspopup="dialog"
+          >
+            View nutrition &amp; ingredients
+          </button>
         </div>
       </li>
     {% endfor %}
