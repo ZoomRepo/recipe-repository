@@ -10,7 +10,8 @@ type RouteContext = {
 
 export async function GET(_: NextRequest, context: RouteContext) {
   try {
-    const id = normalizeRecipeId(context.params.id)
+    const params = await(context.params)
+    const id = normalizeRecipeId(params.id)
     if (id === null) {
       return NextResponse.json({ error: "Invalid recipe identifier" }, { status: 400 })
     }
