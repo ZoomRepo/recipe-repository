@@ -5,6 +5,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 import type { ReactNode } from "react"
 import SubscriptionGate from "@/components/subscription-gate"
+import { normalizeRecipeId } from "@/lib/recipe-id"
 
 interface RecipeDetail {
   id: number
@@ -28,15 +29,14 @@ interface RecipeDetail {
 }
 
 export default function RecipePage() {
-  const params = useParams()
-  const rawId = Array.isArray(params?.id) ? params?.id[0] : params?.id
-  const recipeId = rawId ? Number.parseInt(rawId, 10) : Number.NaN
+  const params = useParams<{ id?: string | string[] }>()
+  const recipeId = useMemo(() => normalizeRecipeId(params?.id), [params?.id])
   const [recipe, setRecipe] = useState<RecipeDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!Number.isFinite(recipeId) || recipeId <= 0) {
+    if (recipeId === null) {
       setError("Invalid recipe identifier.")
       setIsLoading(false)
       return
