@@ -198,10 +198,21 @@ class NutritionService:
             stripped = value.strip().lower()
             if not stripped:
                 return None
-            # Remove common unit suffixes such as "g", "mg", "kcal"
-            cleaned = re.sub(r"(g|mg|kcal)$", "", stripped).strip()
+            # Remove common unit suffixes (e.g. "g", "mg", "kcal") and trailing annotations
+            cleaned = re.sub(
+                r"\b(?:kcal|calories?|cal|kj|kilojoules?|g|mg|mcg|µg|grams?|milligrams?|micrograms?)\b",
+                "",
+                stripped,
+            )
+            cleaned = cleaned.replace(",", " ")
+            # Pick the first numeric token that looks like a decimal or integer
+            match = re.search(r"-?\d+(?:\.\d+)?", cleaned)
+            if not match:
+                match = re.search(r"-?\d+(?:\.\d+)?", stripped)
+            if not match:
+                return None
             try:
-                return float(cleaned)
+                return float(match.group())
             except ValueError:
                 return None
         return None

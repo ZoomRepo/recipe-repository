@@ -36,6 +36,20 @@ def test_uses_raw_nutrition_when_available(service: NutritionService) -> None:
     assert service.get_nutrition_for_recipe(recipe) == {"calories": 305.0, "fiber": 2.0}
 
 
+def test_parses_numbers_embedded_in_strings(service: NutritionService) -> None:
+    recipe = DummyRecipe(
+        ingredients=["oats"],
+        raw={
+            "nutrition": {
+                "Calories": "Approx. 420 calories per serving",
+                "Protein": "about 17 grams",
+            }
+        },
+    )
+
+    assert service.get_nutrition_for_recipe(recipe) == {"calories": 420.0, "protein": 17.0}
+
+
 def test_aggregates_from_raw_ingredient_objects(service: NutritionService) -> None:
     recipe = DummyRecipe(
         ingredients=[],
