@@ -36,6 +36,30 @@ def test_uses_raw_nutrition_when_available(service: NutritionService) -> None:
     assert service.get_nutrition_for_recipe(recipe) == {"calories": 305.0, "fiber": 2.0}
 
 
+def test_aggregates_from_raw_ingredient_objects(service: NutritionService) -> None:
+    recipe = DummyRecipe(
+        ingredients=[],
+        raw={
+            "ingredients": [
+                {"original": "1 egg", "nutrition": {"Calories": 72, "Protein": "6g"}},
+                {
+                    "original": "1 tbsp olive oil",
+                    "nutrients": [
+                        {"name": "Calories", "amount": 119, "unit": "kcal"},
+                        {"name": "Fat", "value": 13.5, "unit": "g"},
+                    ],
+                },
+            ]
+        },
+    )
+
+    assert service.get_nutrition_for_recipe(recipe) == {
+        "calories": 191.0,
+        "protein": 6.0,
+        "fat": 13.5,
+    }
+
+
 def test_aggregates_from_data_source() -> None:
     source = InMemoryNutritionSource(
         {
@@ -58,3 +82,22 @@ def test_aggregates_from_data_source() -> None:
 def test_returns_none_when_no_data_available(service: NutritionService) -> None:
     recipe = DummyRecipe(ingredients=["unknown ingredient"])
     assert service.get_nutrition_for_recipe(recipe) is None
+
+
+def test_handles_nested_nutrient_collections(service: NutritionService) -> None:
+    recipe = DummyRecipe(
+        ingredients=["spinach"],
+        raw={
+            "nutrition": {
+                "nutrients": [
+                    {"label": "Calories", "quantity": 25, "unit": "kcal"},
+                    {"label": "Sugars", "amount": "1.5 g"},
+                ]
+            }
+        },
+    )
+
+    assert service.get_nutrition_for_recipe(recipe) == {
+        "calories": 25.0,
+        "sugar": 1.5,
+    }

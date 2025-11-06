@@ -24,6 +24,7 @@ interface RecipeDetail {
   categories: string[]
   tags: string[]
   raw: Record<string, unknown> | null
+  nutrients: Record<string, number> | null
 }
 
 export default function RecipePage() {
