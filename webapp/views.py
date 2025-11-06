@@ -234,6 +234,8 @@ def _serialize_summary(recipe: RecipeSummary) -> Dict[str, Any]:
         "description": recipe.description,
         "image": recipe.image,
         "updatedAt": recipe.updated_at.isoformat() if recipe.updated_at else None,
+        "ingredients": list(recipe.ingredients),
+        "nutrients": recipe.nutrients,
     }
 
 
@@ -251,6 +253,7 @@ def _serialize_detail(recipe: RecipeDetail) -> Dict[str, Any]:
             "categories": recipe.categories,
             "tags": recipe.tags,
             "raw": recipe.raw,
+            "nutrients": recipe.nutrients,
         }
     )
     return payload

@@ -99,7 +99,9 @@ class RecipeQueryRepository:
                 source_url,
                 description,
                 image,
-                updated_at
+                updated_at,
+                ingredients,
+                raw
             FROM recipes
             {where_clause}
             ORDER BY updated_at DESC, id DESC
@@ -153,6 +155,8 @@ class RecipeQueryRepository:
             connection.close()
         if not row:
             return None
+        raw_data = self._parse_json_object(row.get("raw"))
+        nutrients = raw_data.get("nutrition") if isinstance(raw_data, dict) else None
         return RecipeDetail(
             id=row["id"],
             title=row.get("title"),
@@ -170,7 +174,8 @@ class RecipeQueryRepository:
             author=row.get("author"),
             categories=self._parse_json_list(row.get("categories")),
             tags=self._parse_json_list(row.get("tags")),
-            raw=self._parse_json_object(row.get("raw")),
+            raw=raw_data,
+            nutrients=nutrients if isinstance(nutrients, dict) else None,
         )
 
     def _fetch_summaries(self, sql: str, params: tuple) -> List[RecipeSummary]:
@@ -184,18 +189,25 @@ class RecipeQueryRepository:
                 cursor.close()
         finally:
             connection.close()
-        return [
-            RecipeSummary(
-                id=row["id"],
-                title=row.get("title"),
-                source_name=row["source_name"],
-                source_url=row["source_url"],
-                description=row.get("description"),
-                image=row.get("image"),
-                updated_at=row.get("updated_at"),
+        summaries: List[RecipeSummary] = []
+        for row in rows:
+            raw_data = self._parse_json_object(row.get("raw"))
+            nutrients = raw_data.get("nutrition") if isinstance(raw_data, dict) else None
+            summaries.append(
+                RecipeSummary(
+                    id=row["id"],
+                    title=row.get("title"),
+                    source_name=row["source_name"],
+                    source_url=row["source_url"],
+                    description=row.get("description"),
+                    image=row.get("image"),
+                    updated_at=row.get("updated_at"),
+                    ingredients=self._parse_json_list(row.get("ingredients")),
+                    raw=raw_data,
+                    nutrients=nutrients if isinstance(nutrients, dict) else None,
+                )
             )
-            for row in rows
-        ]
+        return summaries
 
     def _fetch_total(self, sql: str, params: List[object]) -> int:
         connection = self._pool.get_connection()
