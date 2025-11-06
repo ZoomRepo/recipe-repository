@@ -7,6 +7,7 @@ from typing import List, Optional
 from mysql.connector import pooling
 
 from .config import DatabaseConfig
+from .db import create_connection_pool
 from .filter_options import (
     CUISINE_LOOKUP,
     DIET_LOOKUP,
@@ -24,17 +25,13 @@ class RecipeQueryRepository:
 
     @classmethod
     def from_config(cls, config: DatabaseConfig) -> "RecipeQueryRepository":
-        pool = pooling.MySQLConnectionPool(
-            pool_name=config.pool_name,
-            pool_size=config.pool_size,
-            host=config.host,
-            port=config.port,
-            user=config.user,
-            password=config.password,
-            database=config.database,
-            charset="utf8mb4",
-            use_unicode=True,
-        )
+        pool = create_connection_pool(config)
+        return cls(pool)
+
+    @classmethod
+    def from_pool(cls, pool: pooling.MySQLConnectionPool) -> "RecipeQueryRepository":
+        """Create the repository using an existing connection *pool*."""
+
         return cls(pool)
 
     def search(

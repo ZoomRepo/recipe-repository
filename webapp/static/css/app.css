@@ -500,3 +500,187 @@ main.container {
     padding: 1.25rem;
   }
 }
+
+/* Access gate styles */
+body.access-page {
+  min-height: 100vh;
+  background: linear-gradient(rgba(18, 22, 25, 0.75), rgba(18, 22, 25, 0.85)),
+    url("../images/repository%20library%20with%20mascot.png") center/cover fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+body.access-page .site-header,
+body.access-page .site-footer {
+  background-color: transparent;
+  border: none;
+  color: #f1f3f5;
+}
+
+body.access-page .site-header .container {
+  justify-content: center;
+}
+
+body.access-page .site-footer .container {
+  text-align: center;
+  color: #dee2e6;
+}
+
+body.access-page main.container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 3rem 1.5rem;
+}
+
+.access-hero {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.access-card {
+  max-width: 520px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 24px;
+  padding: 2.25rem 2.5rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.access-logo {
+  align-self: center;
+  max-width: 160px;
+  height: auto;
+}
+
+.access-card h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #212529;
+}
+
+.access-card h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #343a40;
+}
+
+.access-lede {
+  margin: 0;
+  font-size: 1rem;
+  color: #4a4f55;
+}
+
+.access-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.access-inline {
+  align-items: flex-end;
+}
+
+.access-label {
+  font-weight: 600;
+  color: #343a40;
+}
+
+.access-input-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.access-input-row input[type="email"],
+.access-input-row input[type="text"] {
+  flex: 1;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 1rem;
+}
+
+.access-button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.access-button.primary {
+  background: linear-gradient(135deg, #ff7a18, #af002d 70%);
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(175, 0, 45, 0.3);
+}
+
+.access-button.primary:hover,
+.access-button.primary:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 34px rgba(175, 0, 45, 0.35);
+}
+
+.access-button.link {
+  background: transparent;
+  color: #af002d;
+  padding: 0;
+}
+
+.access-button.link:hover,
+.access-button.link:focus {
+  text-decoration: underline;
+}
+
+.access-divider {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.access-subtle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: rgba(8, 155, 99, 0.1);
+  color: #0f5132;
+}
+
+.alert-error {
+  background-color: rgba(220, 53, 69, 0.12);
+  color: #842029;
+}
+
+@media (max-width: 640px) {
+  body.access-page main.container {
+    padding: 2.5rem 1rem;
+  }
+
+  .access-card {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .access-input-row {
+    flex-direction: column;
+  }
+
+  .access-inline {
+    align-items: flex-start;
+  }
+}

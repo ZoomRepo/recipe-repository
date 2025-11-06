@@ -158,3 +158,49 @@ Waitress will honour the `PORT` environment variable (defaulting to `8000`)
 while loading the configuration from the same environment variables listed
 above. This avoids Flask's development server warning and provides a WSGI
 server suitable for running behind a reverse proxy.
+
+### Configuring the invite-only access gate
+
+The welcome screen keeps the site closed while it is in private testing. It
+offers two flows:
+
+* Collecting prospective users' email addresses and storing them in the
+  `subscribers` table.
+* Allowing invited testers to request a 6-digit code that unlocks the app on
+  their device.
+
+Only email addresses that already exist in the `invited_users` table are allowed
+to request a verification message. When an address that is not listed attempts
+to request a code the UI will display `Sorry but you're email is not on the
+invite list.` and no message is sent.
+
+Populate the table with the email addresses of the people you want to invite.
+The service normalises emails to lower-case before the lookup so you can insert
+records with any casing and they will still match.
+
+```sql
+INSERT INTO invited_users (email) VALUES
+  ('qa.tester@example.com'),
+  ('chef.beta@example.com');
+```
+
+Once a tester successfully enters the emailed code their device identifier is
+stored in the same table. Subsequent visits from that device bypass the welcome
+screen entirely.
+
+Email delivery uses SMTP credentials when the following environment variables
+are present. When they are omitted the application falls back to logging the
+message contents instead of sending them.
+
+```bash
+export EMAIL_HOST=smtp.yourprovider.com
+export EMAIL_PORT=587
+export EMAIL_USERNAME=apikey_or_username
+export EMAIL_PASSWORD=secret_password
+export EMAIL_FROM_ADDRESS=Recipe Library <no-reply@yourdomain.com>
+export EMAIL_USE_TLS=true
+```
+
+The welcome page requires Flask's session support to track the pending email
+address while the user enters their verification code. Set `SECRET_KEY` in the
+environment to a strong random value before deploying the app.

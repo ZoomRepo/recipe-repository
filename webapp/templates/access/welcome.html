@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Welcome · Recipe Library{% endblock %}
+{% block body_class %}access-page{% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+  <div class="access-hero">
+    <div class="access-card">
+      <img
+        src="{{ url_for('static', filename='images/Recipe Library Logo.png') }}"
+        alt="Recipe Library logo"
+        class="access-logo"
+        width="160"
+        height="86"
+      >
+      <h1>Welcome to the Recipe Library</h1>
+      <p class="access-lede">
+        We are currently in Alpha/Beta development stages, but we'd love to keep you in the loop.
+      </p>
+      {% if subscribe_status %}
+        <div class="alert alert-{{ subscribe_status.category }}">{{ subscribe_status.message }}</div>
+      {% endif %}
+      <form method="post" class="access-form">
+        <input type="hidden" name="action" value="subscribe">
+        <label class="access-label" for="email">Stay updated with launch news</label>
+        <div class="access-input-row">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+            autocomplete="email"
+          >
+          <button type="submit" class="access-button primary">Notify Me</button>
+        </div>
+      </form>
+      <hr class="access-divider">
+      <h2>Have you been invited to test the Recipe Library?</h2>
+      {% if invite_status %}
+        <div class="alert alert-{{ invite_status.category }}">{{ invite_status.message }}</div>
+      {% endif %}
+      {% if code_requested %}
+        <p class="access-subtle">
+          Enter the 6 digit code we sent to {{ pending_email or 'your email address' }}.
+        </p>
+        <form method="post" class="access-form">
+          <input type="hidden" name="action" value="verify_code">
+          <input type="hidden" name="invite_email" value="{{ pending_email }}">
+          <label class="access-label" for="code">6 digit access code</label>
+          <div class="access-input-row">
+            <input
+              type="text"
+              id="code"
+              name="code"
+              inputmode="numeric"
+              pattern="\\d{6}"
+              maxlength="6"
+              minlength="6"
+              placeholder="123456"
+              required
+              autocomplete="one-time-code"
+            >
+            <button type="submit" class="access-button primary">Unlock</button>
+          </div>
+        </form>
+        <form method="post" class="access-form access-inline">
+          <input type="hidden" name="action" value="request_code">
+          <input type="hidden" name="invite_email" value="{{ pending_email }}">
+          <button type="submit" class="access-button link">Resend code</button>
+        </form>
+      {% else %}
+        <p class="access-subtle">Enter your email below to receive a verification code.</p>
+        <form method="post" class="access-form">
+          <input type="hidden" name="action" value="request_code">
+          <label class="access-label" for="invite_email">Email address</label>
+          <div class="access-input-row">
+            <input
+              type="email"
+              id="invite_email"
+              name="invite_email"
+              placeholder="tester@example.com"
+              required
+              autocomplete="email"
+            >
+            <button type="submit" class="access-button primary">Send Code</button>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
