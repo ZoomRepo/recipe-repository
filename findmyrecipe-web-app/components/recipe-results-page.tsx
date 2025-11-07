@@ -1,8 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { useMemo } from "react"
+import { useMemo, useState, useRef, useEffect } from "react"
+import type React from "react"
 import FavoriteButton from "./favorite-button"
+import { Input } from "@/components/ui/input"
 
 export type FiltersState = {
   cuisine: string
@@ -50,6 +52,9 @@ interface RecipeResultsPageProps {
   searchQuery: string
   filters: FiltersState
   onFilterChange: (filters: FiltersState) => void
+  ingredients: string[]
+  onAddIngredient: (value: string) => void
+  onRemoveIngredient: (value: string) => void
   data: RecipesResponse | null
   isLoading: boolean
   error: string | null
@@ -110,6 +115,9 @@ export default function RecipeResultsPage({
   searchQuery,
   filters,
   onFilterChange,
+  ingredients,
+  onAddIngredient,
+  onRemoveIngredient,
   data,
   isLoading,
   error,
@@ -142,6 +150,11 @@ export default function RecipeResultsPage({
         </div>
 
         <div className="mb-8 flex flex-wrap gap-4">
+          <IngredientFilter
+            ingredients={ingredients}
+            onAddIngredient={onAddIngredient}
+            onRemoveIngredient={onRemoveIngredient}
+          />
           <FilterSelect
             label="Cuisine"
             value={filters.cuisine}
@@ -286,6 +299,97 @@ export default function RecipeResultsPage({
           <div className="py-12 text-center">
             <p className="text-lg text-muted-foreground">No recipes found. Try adjusting your filters.</p>
           </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+interface IngredientFilterProps {
+  ingredients: string[]
+  onAddIngredient: (value: string) => void
+  onRemoveIngredient: (value: string) => void
+}
+
+function IngredientFilter({ ingredients, onAddIngredient, onRemoveIngredient }: IngredientFilterProps) {
+  const [isAdding, setIsAdding] = useState(false)
+  const [value, setValue] = useState("")
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (isAdding) {
+      inputRef.current?.focus()
+    }
+  }, [isAdding])
+
+  const handleSubmit = () => {
+    const trimmed = value.trim()
+    if (!trimmed) {
+      setIsAdding(false)
+      setValue("")
+      return
+    }
+    onAddIngredient(trimmed)
+    setValue("")
+    setIsAdding(false)
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault()
+      handleSubmit()
+    } else if (event.key === "Escape") {
+      event.preventDefault()
+      setIsAdding(false)
+      setValue("")
+    }
+  }
+
+  const handleBlur = () => {
+    setIsAdding(false)
+    setValue("")
+  }
+
+  return (
+    <div className="flex min-w-[240px] flex-col gap-2">
+      <span className="text-sm font-medium text-foreground">Ingredients</span>
+      <div className="flex flex-wrap items-center gap-2">
+        {ingredients.map((ingredient) => (
+          <span
+            key={ingredient}
+            className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-sm text-foreground"
+          >
+            {ingredient}
+            <button
+              type="button"
+              onClick={() => onRemoveIngredient(ingredient)}
+              className="ml-1 text-muted-foreground transition hover:text-foreground"
+              aria-label={`Remove ${ingredient}`}
+            >
+              <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l8 8M14 6l-8 8" />
+              </svg>
+            </button>
+          </span>
+        ))}
+        {isAdding ? (
+          <Input
+            ref={inputRef}
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
+            placeholder="Add ingredient"
+            className="h-9 w-48"
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsAdding(true)}
+            className="text-sm font-medium text-primary transition hover:underline"
+          >
+            + Add ingredient
+          </button>
         )}
       </div>
     </div>
