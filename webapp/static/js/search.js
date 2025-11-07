@@ -1,4 +1,78 @@
 (function () {
+  function initRecipeCardOverlay(card) {
+    if (!card || card.dataset.overlayBound === 'true') {
+      return;
+    }
+
+    const overlay = card.querySelector('.recipe-card-overlay');
+    const openButton = card.querySelector('[data-role="overlay-open"]');
+    const closeButton = card.querySelector('[data-role="overlay-close"]');
+
+    if (!overlay || !openButton || !closeButton) {
+      card.dataset.overlayBound = 'true';
+      return;
+    }
+
+    let lastFocusedElement = null;
+
+    function openOverlay() {
+      if (card.classList.contains('recipe-card--overlay-open')) {
+        return;
+      }
+      lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : openButton;
+      card.classList.add('recipe-card--overlay-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      closeButton.focus();
+    }
+
+    function closeOverlay() {
+      if (!card.classList.contains('recipe-card--overlay-open')) {
+        return;
+      }
+      card.classList.remove('recipe-card--overlay-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
+    }
+
+    openButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (card.classList.contains('recipe-card--overlay-open')) {
+        closeOverlay();
+      } else {
+        openOverlay();
+      }
+    });
+
+    closeButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      closeOverlay();
+    });
+
+    overlay.addEventListener('click', (event) => {
+      if (event.target === overlay) {
+        closeOverlay();
+      }
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeOverlay();
+      }
+    });
+
+    card.dataset.overlayBound = 'true';
+  }
+
+  function initRecipeCardOverlays(context) {
+    const scope = context instanceof Element ? context : document;
+    scope.querySelectorAll('.recipe-card').forEach((card) => initRecipeCardOverlay(card));
+  }
+
+  initRecipeCardOverlays(document);
+
   const form = document.querySelector('#filter-form');
   if (!form) {
     return;
@@ -95,6 +169,7 @@
         }
         if (payload.html) {
           resultsContainer.innerHTML = payload.html;
+          initRecipeCardOverlays(resultsContainer);
         }
         if (payload.meta) {
           const { heading, subtitle, page: currentPage } = payload.meta;

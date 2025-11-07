@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterable, List, Optional
+from typing import Dict, Iterable, List, Optional
 
 
 @dataclass(frozen=True)
@@ -17,13 +17,15 @@ class RecipeSummary:
     description: Optional[str]
     image: Optional[str]
     updated_at: Optional[datetime]
+    ingredients: List[str]
+    raw: Optional[dict]
+    nutrients: Optional[Dict[str, float]]
 
 
 @dataclass(frozen=True)
 class RecipeDetail(RecipeSummary):
     """Complete recipe representation."""
 
-    ingredients: List[str]
     instructions: List[str]
     prep_time: Optional[str]
     cook_time: Optional[str]

@@ -279,10 +279,136 @@ main.container {
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.2s ease;
+  position: relative;
 }
 
 .recipe-card:hover {
   box-shadow: 0 12px 28px rgba(33, 37, 41, 0.08);
+}
+
+.recipe-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.92);
+  color: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.recipe-card--overlay-open {
+  box-shadow: 0 12px 28px rgba(33, 37, 41, 0.16);
+}
+
+.recipe-card--overlay-open .recipe-card-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.recipe-card-overlay__header {
+  flex: 0 0 auto;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.recipe-card-overlay__close {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.recipe-card-overlay__close:hover,
+.recipe-card-overlay__close:focus {
+  color: #f87171;
+}
+
+.recipe-card-overlay__content {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.recipe-card-overlay__sections {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.recipe-overlay-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recipe-overlay-heading {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.recipe-nutrient-list {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+
+.recipe-nutrient {
+  display: contents;
+}
+
+.recipe-nutrient-label {
+  font-weight: 500;
+}
+
+.recipe-nutrient-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.recipe-ingredient-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.recipe-card-overlay-toggle {
+  margin-top: 1rem;
+  align-self: flex-start;
+  border: none;
+  background: #0f172a;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.recipe-card-overlay-toggle:hover,
+.recipe-card-overlay-toggle:focus {
+  background: #1e293b;
+}
+
+.recipe-overlay-empty {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .recipe-card--with-image {

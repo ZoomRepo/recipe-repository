@@ -1,6 +1,7 @@
 """Application services for the recipe web interface."""
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import Iterable, Optional, Sequence
 
 from .models import PaginatedResult, RecipeDetail
@@ -11,14 +12,21 @@ from .filter_options import (
     normalize_selection,
 )
 from .repository import RecipeQueryRepository
+from .services import NutritionService
 
 
 class RecipeService:
     """Coordinates read-only recipe use cases."""
 
-    def __init__(self, repository: RecipeQueryRepository, page_size: int) -> None:
+    def __init__(
+        self,
+        repository: RecipeQueryRepository,
+        page_size: int,
+        nutrition_service: Optional[NutritionService] = None,
+    ) -> None:
         self._repository = repository
         self._page_size = page_size
+        self._nutrition_service = nutrition_service
 
     def search(
         self,
@@ -50,7 +58,7 @@ class RecipeService:
         normalized_meals = normalize_selection(meals or [], MEAL_LOOKUP)
         normalized_diets = normalize_selection(diets or [], DIET_LOOKUP)
 
-        return self._repository.search(
+        results = self._repository.search(
             normalized_query,
             normalized_ingredients,
             page,
@@ -60,5 +68,34 @@ class RecipeService:
             normalized_diets,
         )
 
+        return self._with_nutrition(results)
+
     def get(self, recipe_id: int) -> Optional[RecipeDetail]:
-        return self._repository.get(recipe_id)
+        recipe = self._repository.get(recipe_id)
+        if recipe is None:
+            return None
+        if not self._nutrition_service:
+            return recipe
+        nutrients = self._nutrition_service.get_nutrition_for_recipe(recipe)
+        if nutrients is None:
+            return recipe
+        return replace(recipe, nutrients=nutrients)
+
+    def _with_nutrition(self, results: PaginatedResult) -> PaginatedResult:
+        if not self._nutrition_service:
+            return results
+
+        enriched_items = []
+        for item in results.items:
+            nutrients = self._nutrition_service.get_nutrition_for_recipe(item)
+            if nutrients is None:
+                enriched_items.append(item)
+            else:
+                enriched_items.append(replace(item, nutrients=nutrients))
+        return PaginatedResult(
+            items=enriched_items,
+            total=results.total,
+            page=results.page,
+            page_size=results.page_size,
+            query=results.query,
+        )

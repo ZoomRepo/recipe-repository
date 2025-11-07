@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from "next/server"
 import { fetchRecipeDetail } from "@/lib/recipes-repository"
+import { normalizeRecipeId } from "@/lib/recipe-id"
 
 export const dynamic = "force-dynamic"
 
 type RouteContext = {
-  params: { id: string }
+  params: { id: string | string[] }
 }
 
 export async function GET(_: NextRequest, context: RouteContext) {
   try {
-    const id = Number.parseInt(context.params.id, 10)
-    if (!Number.isFinite(id) || id <= 0) {
+    const params = await(context.params)
+    const id = normalizeRecipeId(params.id)
+    if (id === null) {
       return NextResponse.json({ error: "Invalid recipe identifier" }, { status: 400 })
     }
     const recipe = await fetchRecipeDetail(id)

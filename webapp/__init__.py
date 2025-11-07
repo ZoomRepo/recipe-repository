@@ -6,6 +6,7 @@ from flask import Flask
 from .config import AppConfig
 from .repository import RecipeQueryRepository
 from .service import RecipeService
+from .services import NutritionService
 from .views import register_routes
 
 
@@ -19,7 +20,12 @@ def create_app(config: AppConfig | None = None) -> Flask:
         static_folder="static",
     )
     repository = RecipeQueryRepository.from_config(resolved_config.database)
-    service = RecipeService(repository, resolved_config.page_size)
+    nutrition_service = NutritionService()
+    service = RecipeService(
+        repository,
+        resolved_config.page_size,
+        nutrition_service=nutrition_service,
+    )
     register_routes(app, service)
     app.config["APP_CONFIG"] = resolved_config
     app.config["RECIPE_SERVICE"] = service

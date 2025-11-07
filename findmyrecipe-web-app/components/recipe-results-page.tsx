@@ -23,6 +23,8 @@ export interface RecipeSummary {
   description: string | null
   image: string | null
   updatedAt: string | null
+  ingredients: string[]
+  nutrients: Record<string, number> | null
 }
 
 interface PaginationInfo {
@@ -93,6 +95,17 @@ const DIET_OPTIONS: FilterOption[] = [
 
 const PLACEHOLDER_IMAGE = "/placeholder.svg"
 
+const NUTRIENT_LABELS: Record<string, { label: string; unit: string }> = {
+  calories: { label: "Calories", unit: "kcal" },
+  protein: { label: "Protein", unit: "g" },
+  carbohydrates: { label: "Carbohydrates", unit: "g" },
+  fat: { label: "Fat", unit: "g" },
+  fiber: { label: "Fiber", unit: "g" },
+  sugar: { label: "Sugar", unit: "g" },
+}
+
+const NUTRIENT_ORDER = ["calories", "protein", "carbohydrates", "fat", "fiber", "sugar"] as const
+
 export default function RecipeResultsPage({
   searchQuery,
   filters,
@@ -161,15 +174,71 @@ export default function RecipeResultsPage({
           <>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {items.map((recipe) => {
-                const formattedUpdatedAt = formatUpdatedAt(recipe.updatedAt)
                 const recipeTitle = recipe.title ?? "Untitled recipe"
+                const nutrientEntries = NUTRIENT_ORDER.map((key) => {
+                  const value = recipe.nutrients?.[key] ?? null
+                  return value !== null && value !== undefined ? [key, value] : null
+                }).filter((entry): entry is [string, number] => Array.isArray(entry))
+                const formattedUpdatedAt = formatUpdatedAt(recipe.updatedAt)
+
                 return (
-                  <article key={recipe.id} className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card">
+                  <article
+                    key={recipe.id}
+                    tabIndex={0}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:shadow-lg"
+                  >
+                    <div className="pointer-events-none absolute inset-0 z-20 flex bg-slate-950/90 text-slate-100 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+                      <div className="pointer-events-auto flex w-full flex-col gap-5 overflow-hidden p-5">
+                        <div className="grid gap-5 md:grid-cols-2">
+                          <section>
+                            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">Nutrition</h3>
+                            {nutrientEntries.length > 0 ? (
+                              <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                                {nutrientEntries.map(([key, value]) => (
+                                  <div key={key} className="contents">
+                                    <dt className="text-slate-300">{NUTRIENT_LABELS[key].label}</dt>
+                                    <dd className="text-right font-semibold text-white">
+                                      {value.toFixed(2)} {NUTRIENT_LABELS[key].unit}
+                                    </dd>
+                                  </div>
+                                ))}
+                              </dl>
+                            ) : (
+                              <p className="mt-3 text-sm text-slate-300/80">Nutrition information unavailable.</p>
+                            )}
+                          </section>
+                          <section>
+                            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">Ingredients</h3>
+                            {recipe.ingredients.length > 0 ? (
+                              <ul className="mt-3 space-y-2 text-sm leading-snug text-slate-100/90">
+                                {recipe.ingredients.map((ingredient, index) => (
+                                  <li key={`${ingredient}-${index}`}>{ingredient}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="mt-3 text-sm text-slate-300/80">Ingredients unavailable.</p>
+                            )}
+                          </section>
+                        </div>
+                        <div className="mt-auto flex justify-end">
+                          <Link
+                            href={`/recipe/${recipe.id}`}
+                            className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                          >
+                            View recipe
+                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="relative h-48 bg-muted">
                       <img
                         src={recipe.image || PLACEHOLDER_IMAGE}
                         alt={recipeTitle}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                       <div className="absolute left-3 top-3">
                         <FavoriteButton
@@ -180,15 +249,15 @@ export default function RecipeResultsPage({
                         />
                       </div>
                     </div>
-                    <div className="flex flex-1 flex-col p-4">
-                      <Link
-                        href={`/recipe/${recipe.id}`}
-                        className="mb-2 block text-lg font-semibold text-foreground hover:text-primary"
-                      >
-                        {recipeTitle}
-                      </Link>
+
+                    <div className="flex flex-1 flex-col gap-3 p-4">
+                      <h3 className="text-lg font-semibold text-foreground">
+                        <Link href={`/recipe/${recipe.id}`} className="hover:text-primary">
+                          {recipeTitle}
+                        </Link>
+                      </h3>
                       {recipe.description && (
-                        <p className="mb-4 line-clamp-3 text-sm text-muted-foreground">{recipe.description}</p>
+                        <p className="line-clamp-3 text-sm text-muted-foreground">{recipe.description}</p>
                       )}
                       <div className="mt-auto space-y-1 text-sm text-muted-foreground">
                         <p>
