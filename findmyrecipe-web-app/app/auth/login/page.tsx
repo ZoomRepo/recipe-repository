@@ -1,6 +1,7 @@
+// app/auth/login/page.tsx
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { Suspense, useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 
@@ -19,6 +20,16 @@ const gateEnabled =
 const LOCAL_SESSION_KEY = "findmyrecipe.loginSession"
 
 export default function LoginPage() {
+  // ⬇️ Wrap the component that uses useSearchParams() in Suspense
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
+      <LoginPageInner />
+    </Suspense>
+  )
+}
+
+// Everything below is your original logic, moved into an inner component
+function LoginPageInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState("")
@@ -49,19 +60,15 @@ export default function LoginPage() {
   )
 
   const restoreSessionFromStorage = useCallback(async () => {
-    if (typeof window === "undefined") {
-      return false
-    }
+    if (typeof window === "undefined") return false
 
     const raw = window.localStorage.getItem(LOCAL_SESSION_KEY)
-    if (!raw) {
-      return false
-    }
+    if (!raw) return false
 
     let stored: { email?: string; code?: string } | null = null
     try {
       stored = JSON.parse(raw)
-    } catch (error) {
+    } catch {
       window.localStorage.removeItem(LOCAL_SESSION_KEY)
       return false
     }
@@ -95,7 +102,7 @@ export default function LoginPage() {
       } else if (response.status === 401) {
         window.localStorage.removeItem(LOCAL_SESSION_KEY)
       }
-    } catch (error) {
+    } catch {
       // ignore and continue to login form
     }
 
@@ -114,7 +121,6 @@ export default function LoginPage() {
     }
 
     let cancelled = false
-
     const checkSession = async () => {
       setIsCheckingSession(true)
       try {
@@ -134,33 +140,24 @@ export default function LoginPage() {
 
         if (!cancelled) {
           const restored = await restoreSessionFromStorage()
-          if (restored) {
-            return
-          }
+          if (restored) return
         }
-      } catch (err) {
+      } catch {
         // ignore errors and allow normal flow
       } finally {
-        if (!cancelled) {
-          setIsCheckingSession(false)
-        }
+        if (!cancelled) setIsCheckingSession(false)
       }
     }
 
     checkSession()
-
     return () => {
       cancelled = true
     }
-  }, [gateEnabled, redirectToApp, restoreSessionFromStorage])
+  }, [restoreSessionFromStorage, redirectToApp])
 
   const handleRequestCode = async (event: React.FormEvent) => {
     event.preventDefault()
-
-    if (isCheckingSession) {
-      return
-    }
-
+    if (isCheckingSession) return
     if (!gateEnabled) {
       setError("Temporary login is currently disabled.")
       return
@@ -208,16 +205,11 @@ export default function LoginPage() {
 
   const handleVerifyCode = async (event: React.FormEvent) => {
     event.preventDefault()
-
-    if (isCheckingSession) {
-      return
-    }
-
+    if (isCheckingSession) return
     if (!gateEnabled) {
       setError("Temporary login is currently disabled.")
       return
     }
-
     if (code.length !== 6) {
       setError("Please enter the full 6-digit code")
       return
@@ -272,8 +264,7 @@ export default function LoginPage() {
             <CardDescription>
               {step === "email"
                 ? "Enter an approved email address to receive a login code."
-                : "Check your inbox for the 6-digit code we just sent."
-              }
+                : "Check your inbox for the 6-digit code we just sent."}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -338,7 +329,7 @@ export default function LoginPage() {
               </form>
             )}
             <div className="mt-4 text-center text-sm text-muted-foreground">
-              Need to manage access? {" "}
+              Need to manage access?{" "}
               <Link href="/whitelist" className="text-primary hover:underline">
                 View whitelist
               </Link>

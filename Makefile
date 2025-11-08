@@ -1,6 +1,6 @@
-.PHONY: setup run_app run_app_production run_scraper migrate rerun_failures
+.PHONY: env run_app run_app_production run_scraper migrate rerun_failures
 
-setup:
+env:
 	@if [ ! -d "venv" ]; then \
 		echo "⚙️ Creating virtual environment..."; \
 		python3 -m venv venv; \
@@ -9,8 +9,18 @@ setup:
 	fi
 	@. venv/bin/activate && \
 		echo "Installing requirements..." && \
-		pip install -r requirements.txt && \
-		echo "Development environment has been successfully setup!"
+		pip install -r requirements.txt 
+	export FLASK_ENV=development FLASK_DEBUG=1
+	export TEMP_LOGIN_ENABLED=true
+	export NEXT_PUBLIC_TEMP_LOGIN_ENABLED=true
+	export LOGIN_EMAIL_SENDER=no.reply@findmyflavour.com
+	export LOGIN_SESSION_SECRET=f!ndmyZ@m61@nCh3f
+	export SMTP_HOST=smtp.zoho.eu 
+	export SMTP_PORT=465 
+	export SMTP_USERNAME=no.reply@findmyflavour.com 
+	export SMTP_PASSWORD=xul98qVUK%$uluJu 
+	export SMTP_SECURE=true 
+	echo "Development environment has been successfully setup!"
 
 run_app:
 	@if [ ! -d "venv" ]; then \
@@ -58,3 +68,11 @@ rerun_failures:
 
 compile_scraping_failures:
 	python3 scraper/scripts/compile_scraping_failures.py
+
+run_production:
+	@if [ ! -d "venv" ]; then \
+		echo "❌ venv not found. Run 'make setup' first."; \
+		exit 1; \
+	fi
+	cd findmyrecipe-web-app && npm run build && \
+	npm run start -- -p 3232

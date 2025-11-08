@@ -44,7 +44,7 @@ class LoginWhitelistRepository:
     def list_entries(self) -> List[WhitelistEntry]:
         sql = """
             SELECT email, created_at
-            FROM login_email_whitelist
+            FROM login_whitelist
             ORDER BY email ASC
         """
         connection = self._pool.get_connection()
@@ -70,7 +70,7 @@ class LoginWhitelistRepository:
     def add_email(self, email: str) -> bool:
         normalized = email.lower()
         sql = """
-            INSERT INTO login_email_whitelist (email)
+            INSERT INTO login_whitelist (email)
             VALUES (%s)
         """
         connection = self._pool.get_connection()
@@ -90,7 +90,7 @@ class LoginWhitelistRepository:
 
     def remove_email(self, email: str) -> bool:
         normalized = email.lower()
-        sql = "DELETE FROM login_email_whitelist WHERE email = %s"
+        sql = "DELETE FROM login_whitelist WHERE email = %s"
         connection = self._pool.get_connection()
         try:
             cursor = connection.cursor()
@@ -105,7 +105,7 @@ class LoginWhitelistRepository:
 
     def is_allowed(self, email: str) -> bool:
         normalized = email.lower()
-        sql = "SELECT 1 FROM login_email_whitelist WHERE email = %s LIMIT 1"
+        sql = "SELECT 1 FROM login_whitelist WHERE email = %s LIMIT 1"
         connection = self._pool.get_connection()
         try:
             cursor = connection.cursor()
