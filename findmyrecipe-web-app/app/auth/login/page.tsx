@@ -25,14 +25,70 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isCheckingSession, setIsCheckingSession] = useState(gateEnabled)
+
+  const redirectParam = searchParams?.get("redirect") || "/"
+  const redirectPath = redirectParam.startsWith("/") ? redirectParam : "/"
 
   useEffect(() => {
     setError(null)
     setMessage(null)
   }, [step])
 
+  useEffect(() => {
+    if (!gateEnabled) {
+      setIsCheckingSession(false)
+      return
+    }
+
+    let cancelled = false
+
+    const checkSession = async () => {
+      try {
+        const response = await fetch("/api/auth/session", {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store",
+        })
+
+        if (!cancelled && response.ok) {
+          const data: { authenticated?: boolean } = await response.json()
+          if (data?.authenticated) {
+            setError(null)
+            setMessage("You're already signed in. Redirecting...")
+
+            setTimeout(() => {
+              if (typeof window !== "undefined") {
+                window.location.replace(redirectPath)
+              } else {
+                router.replace(redirectPath)
+              }
+            }, 300)
+            return
+          }
+        }
+      } catch (err) {
+        // ignore errors and allow normal flow
+      } finally {
+        if (!cancelled) {
+          setIsCheckingSession(false)
+        }
+      }
+    }
+
+    checkSession()
+
+    return () => {
+      cancelled = true
+    }
+  }, [redirectPath, router])
+
   const handleRequestCode = async (event: React.FormEvent) => {
     event.preventDefault()
+
+    if (isCheckingSession) {
+      return
+    }
 
     if (!gateEnabled) {
       setError("Temporary login is currently disabled.")
@@ -47,6 +103,7 @@ export default function LoginPage() {
       const response = await fetch("/api/auth/send-login-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email }),
       })
 
@@ -67,6 +124,10 @@ export default function LoginPage() {
   const handleVerifyCode = async (event: React.FormEvent) => {
     event.preventDefault()
 
+    if (isCheckingSession) {
+      return
+    }
+
     if (!gateEnabled) {
       setError("Temporary login is currently disabled.")
       return
@@ -84,6 +145,7 @@ export default function LoginPage() {
       const response = await fetch("/api/auth/verify-login-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, code }),
       })
 
@@ -93,10 +155,13 @@ export default function LoginPage() {
       }
 
       setMessage("Success! Redirecting you now...")
-      const redirectPath = searchParams?.get("redirect") || "/"
       setTimeout(() => {
-        router.push(redirectPath)
-        router.refresh()
+        if (typeof window !== "undefined") {
+          window.location.replace(redirectPath)
+        } else {
+          router.replace(redirectPath)
+          router.refresh()
+        }
       }, 500)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid or expired code")
@@ -141,7 +206,7 @@ export default function LoginPage() {
                 </div>
                 {error && <p className="text-sm text-destructive">{error}</p>}
                 {message && <p className="text-sm text-muted-foreground">{message}</p>}
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                <Button type="submit" className="w-full" disabled={isSubmitting || isCheckingSession}>
                   {isSubmitting ? "Sending code..." : "Send login code"}
                 </Button>
               </form>
@@ -168,14 +233,14 @@ export default function LoginPage() {
                 {error && <p className="text-sm text-destructive">{error}</p>}
                 {message && <p className="text-sm text-muted-foreground">{message}</p>}
                 <div className="space-y-2">
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  <Button type="submit" className="w-full" disabled={isSubmitting || isCheckingSession}>
                     {isSubmitting ? "Verifying..." : "Verify and continue"}
                   </Button>
                   <Button
                     type="button"
                     variant="ghost"
                     className="w-full"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isCheckingSession}
                     onClick={() => {
                       setStep("email")
                       setCode("")
