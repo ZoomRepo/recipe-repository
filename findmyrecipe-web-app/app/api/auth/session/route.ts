@@ -1,5 +1,4 @@
-import { NextResponse } from "next/server"
-import { cookies } from "next/headers"
+import { NextRequest, NextResponse } from "next/server"
 
 import { z } from "zod"
 
@@ -11,15 +10,14 @@ const postSchema = z.object({
   code: z.string().min(1).max(128),
 })
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const config = resolveLoginGateConfig()
 
   if (!config.enabled) {
     return NextResponse.json({ authenticated: false })
   }
 
-  const cookieStore = cookies()
-  const token = cookieStore.get(LOGIN_GATE_COOKIE_NAME)?.value
+  const token = request.cookies.get(LOGIN_GATE_COOKIE_NAME)?.value
 
   if (!token) {
     return NextResponse.json({ authenticated: false }, { status: 401 })
