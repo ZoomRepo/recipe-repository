@@ -70,9 +70,11 @@ compile_scraping_failures:
 	python3 scraper/scripts/compile_scraping_failures.py
 
 run_production:
-	@if [ ! -d "venv" ]; then \
-		echo "❌ venv not found. Run 'make setup' first."; \
-		exit 1; \
-	fi
-	cd findmyrecipe-web-app && npm run build && \
-	npm run start -- -p 3232
+	@cd findmyrecipe-web-app && \
+	npm run build && \
+	setsid bash -lc ' \
+	  trap "" HUP; \
+	  exec </dev/null >>"$(PWD)/../logs/webapp.log" 2>&1; \
+	  exec npm run start -- -p 3232 \
+	' &
+	@disown || true
