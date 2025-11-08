@@ -23,6 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta name="apple-mobile-web-app-title" content="Find My Flavour" />
       <body className={`font-sans antialiased`}>{children}</body>
     </html>
   )
