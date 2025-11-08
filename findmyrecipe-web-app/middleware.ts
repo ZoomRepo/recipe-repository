@@ -1,6 +1,49 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 
-export function middleware(request: NextRequest) {
+import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
+import { verifyLoginSessionToken } from "@/lib/login-session-token"
+
+const PUBLIC_PATHS = [
+  "/auth/login",
+  "/auth/sign-up",
+  "/auth/sign-up-success",
+  "/api/auth/send-login-code",
+  "/api/auth/verify-login-code",
+]
+
+function isPublicPath(pathname: string) {
+  return PUBLIC_PATHS.some((path) => pathname.startsWith(path))
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  const config = resolveLoginGateConfig()
+
+  if (!config.enabled || isPublicPath(pathname)) {
+    return NextResponse.next()
+  }
+
+  const token = request.cookies.get(LOGIN_GATE_COOKIE_NAME)?.value
+
+  if (!token) {
+    const loginUrl = new URL("/auth/login", request.url)
+    loginUrl.searchParams.set("redirect", pathname)
+    return NextResponse.redirect(loginUrl)
+  }
+
+  let sessionValid = false
+  try {
+    sessionValid = (await verifyLoginSessionToken(token)) !== null
+  } catch (error) {
+    sessionValid = false
+  }
+
+  if (!sessionValid) {
+    const response = NextResponse.redirect(new URL("/auth/login", request.url))
+    response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
+    return response
+  }
+
   return NextResponse.next()
 }
 

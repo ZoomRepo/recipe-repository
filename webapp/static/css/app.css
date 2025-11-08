@@ -16,6 +16,126 @@ body {
   padding: 0 1.5rem;
 }
 
+.flash-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.alert {
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  box-shadow: 0 16px 30px rgba(33, 37, 41, 0.05);
+}
+
+.alert-success {
+  background-color: #e7f5ff;
+  border-color: #a5d8ff;
+  color: #0b7285;
+}
+
+.alert-error {
+  background-color: #fff5f5;
+  border-color: #ffa8a8;
+  color: #c92a2a;
+}
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 40px 80px rgba(33, 37, 41, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-card h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #212529;
+}
+
+.auth-intro {
+  margin: 0;
+  color: #495057;
+  line-height: 1.7;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-form label {
+  font-weight: 600;
+  color: #343a40;
+}
+
+.auth-form input {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.auth-form--verify {
+  border-top: 1px dashed #dee2e6;
+  padding-top: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.auth-hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #868e96;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  color: #ffffff;
+  box-shadow: 0 18px 30px rgba(13, 110, 253, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: #0a58ca;
+}
+
+.btn-secondary {
+  background-color: #f1f3f5;
+  color: #212529;
+}
+
+.btn-secondary:hover {
+  background-color: #e9ecef;
+}
+
 .site-header {
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
@@ -36,6 +156,26 @@ body {
   font-size: 1.25rem;
   color: #0074d9;
   text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: #495057;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background-color: #f1f3f5;
+  color: #212529;
 }
 
 main.container {
@@ -78,6 +218,112 @@ main.container {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.whitelist {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.whitelist-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #ffffff;
+  padding: 1.75rem;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 16px 40px rgba(33, 37, 41, 0.06);
+}
+
+.whitelist-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.whitelist-header p {
+  margin: 0;
+  color: #495057;
+}
+
+.whitelist-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.whitelist-add-form input {
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.whitelist-body {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 12px 30px rgba(33, 37, 41, 0.05);
+}
+
+.whitelist-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.whitelist-table th,
+.whitelist-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.whitelist-table th {
+  font-size: 0.95rem;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.whitelist-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.whitelist-actions {
+  text-align: right;
+}
+
+.whitelist-actions .btn-secondary {
+  padding: 0.5rem 0.75rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #495057;
+}
+
+.empty-state h2 {
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .whitelist-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .whitelist-add-form {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .whitelist-add-form input {
+    width: 280px;
+  }
 }
 
 .filter-apply {

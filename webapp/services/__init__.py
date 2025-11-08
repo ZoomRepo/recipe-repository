@@ -1,4 +1,5 @@
 """Service layer helpers for recipe-related features."""
-from .nutrition_service import NutritionService, NutritionDataSource
+from .email_service import EmailService
+from .nutrition_service import NutritionDataSource, NutritionService
 
-__all__ = ["NutritionService", "NutritionDataSource"]
+__all__ = ["EmailService", "NutritionService", "NutritionDataSource"]
