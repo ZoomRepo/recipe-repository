@@ -62,13 +62,18 @@ export async function createLoginSessionToken(email: string, expiresAt: Date): P
   return `${payload}.${signatureHex}`
 }
 
-export async function verifyLoginSessionToken(token: string): Promise<{ email: string; expiresAt: Date } | null> {
+export async function verifyLoginSessionToken(
+  token: string
+): Promise<{ email: string; expiresAt: Date } | null> {
   const parts = token.split(".")
-  if (parts.length !== 3) {
+  if (parts.length < 3) {
     return null
   }
 
-  const [encodedEmail, expiresRaw, signatureHex] = parts
+  const signatureHex = parts.pop()
+  const expiresRaw = parts.pop()
+  const encodedEmail = parts.join(".")
+
   if (!encodedEmail || !expiresRaw || !signatureHex) {
     return null
   }
