@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 
@@ -16,6 +16,8 @@ const gateEnabled =
       process.env.NEXT_PUBLIC_TEMP_LOGIN_ENABLED === "1"
     : true
 
+const LOCAL_SESSION_KEY = "findmyrecipe.loginSession"
+
 export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -29,6 +31,76 @@ export default function LoginPage() {
 
   const redirectParam = searchParams?.get("redirect") || "/"
   const redirectPath = redirectParam.startsWith("/") ? redirectParam : "/"
+
+  const redirectToApp = useCallback(
+    (statusMessage = "Redirecting you now...") => {
+      setError(null)
+      setMessage(statusMessage)
+      setTimeout(() => {
+        if (typeof window !== "undefined") {
+          window.location.replace(redirectPath)
+        } else {
+          router.replace(redirectPath)
+          router.refresh()
+        }
+      }, 300)
+    },
+    [redirectPath, router]
+  )
+
+  const restoreSessionFromStorage = useCallback(async () => {
+    if (typeof window === "undefined") {
+      return false
+    }
+
+    const raw = window.localStorage.getItem(LOCAL_SESSION_KEY)
+    if (!raw) {
+      return false
+    }
+
+    let stored: { email?: string; code?: string } | null = null
+    try {
+      stored = JSON.parse(raw)
+    } catch (error) {
+      window.localStorage.removeItem(LOCAL_SESSION_KEY)
+      return false
+    }
+
+    if (!stored?.code) {
+      window.localStorage.removeItem(LOCAL_SESSION_KEY)
+      return false
+    }
+
+    try {
+      const response = await fetch("/api/auth/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        cache: "no-store",
+        body: JSON.stringify({ code: stored.code }),
+      })
+
+      if (response.ok) {
+        const data: { authenticated?: boolean; email?: string } = await response.json()
+        if (data?.authenticated) {
+          if (data.email) {
+            window.localStorage.setItem(
+              LOCAL_SESSION_KEY,
+              JSON.stringify({ email: data.email, code: stored.code })
+            )
+          }
+          redirectToApp("Welcome back! Redirecting you now...")
+          return true
+        }
+      } else if (response.status === 401) {
+        window.localStorage.removeItem(LOCAL_SESSION_KEY)
+      }
+    } catch (error) {
+      // ignore and continue to login form
+    }
+
+    return false
+  }, [redirectToApp])
 
   useEffect(() => {
     setError(null)
@@ -44,6 +116,7 @@ export default function LoginPage() {
     let cancelled = false
 
     const checkSession = async () => {
+      setIsCheckingSession(true)
       try {
         const response = await fetch("/api/auth/session", {
           method: "GET",
@@ -54,16 +127,14 @@ export default function LoginPage() {
         if (!cancelled && response.ok) {
           const data: { authenticated?: boolean } = await response.json()
           if (data?.authenticated) {
-            setError(null)
-            setMessage("You're already signed in. Redirecting...")
+            redirectToApp("You're already signed in. Redirecting...")
+            return
+          }
+        }
 
-            setTimeout(() => {
-              if (typeof window !== "undefined") {
-                window.location.replace(redirectPath)
-              } else {
-                router.replace(redirectPath)
-              }
-            }, 300)
+        if (!cancelled) {
+          const restored = await restoreSessionFromStorage()
+          if (restored) {
             return
           }
         }
@@ -81,7 +152,7 @@ export default function LoginPage() {
     return () => {
       cancelled = true
     }
-  }, [redirectPath, router])
+  }, [gateEnabled, redirectToApp, restoreSessionFromStorage])
 
   const handleRequestCode = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -110,6 +181,20 @@ export default function LoginPage() {
       if (!response.ok) {
         const data = await response.json().catch(() => null)
         throw new Error(data?.error || "Unable to send login code")
+      }
+
+      const data = await response.json().catch(() => null)
+      if (data?.alreadyVerified) {
+        setMessage("You're already verified on this device. Restoring your access...")
+        setIsCheckingSession(true)
+        const restored = await restoreSessionFromStorage()
+        if (!restored) {
+          setIsCheckingSession(false)
+          setMessage(
+            "We couldn't restore your access automatically. Please try again or contact support."
+          )
+        }
+        return
       }
 
       setMessage("We've sent a 6-digit code to your email. Enter it below to continue.")
@@ -154,15 +239,16 @@ export default function LoginPage() {
         throw new Error(data?.error || "Invalid or expired code")
       }
 
-      setMessage("Success! Redirecting you now...")
-      setTimeout(() => {
-        if (typeof window !== "undefined") {
-          window.location.replace(redirectPath)
-        } else {
-          router.replace(redirectPath)
-          router.refresh()
-        }
-      }, 500)
+      const data: { sessionCode?: string; expiresAt?: string } = await response.json().catch(() => ({}))
+
+      if (typeof window !== "undefined" && data?.sessionCode) {
+        window.localStorage.setItem(
+          LOCAL_SESSION_KEY,
+          JSON.stringify({ email, code: data.sessionCode })
+        )
+      }
+
+      redirectToApp("Success! Redirecting you now...")
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid or expired code")
     } finally {

@@ -191,8 +191,11 @@ in. Seed at least one administrator email before enabling the feature so someone
 can request the initial code.
 
 The temporary login flow also persists pending codes in the `login_codes` table
-so each request can be validated once. Create the supporting schema if it does
-not exist:
+so each request can be validated once. Successful verifications mint a
+longer-lived session code that is stored in the browser's `localStorage` and in
+the `login_sessions` table. When the same device revisits the site the login
+page exchanges that stored session code for a fresh signed cookie without
+sending another email. Create the supporting schema if it does not exist:
 
 ```sql
 CREATE TABLE login_whitelist (
@@ -209,9 +212,19 @@ CREATE TABLE login_codes (
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY idx_login_codes_expires_at (expires_at)
 );
+
+CREATE TABLE login_sessions (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(320) NOT NULL UNIQUE,
+  session_code_hash CHAR(64) NOT NULL UNIQUE,
+  expires_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  KEY idx_login_sessions_expires_at (expires_at)
+);
 ```
 
-Both tables normalise emails to lowercase before storage, ensuring consistent
+All tables normalise emails to lowercase before storage, ensuring consistent
 comparisons for future requests.
 
 For a production-style deployment, use the `run_app_production` make target

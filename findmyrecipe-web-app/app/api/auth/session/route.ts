@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
+import { z } from "zod"
+
 import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
-import { verifyLoginSessionToken } from "@/lib/login-session-token"
+import { getLoginSessionByCode } from "@/lib/login-gate-repository"
+import { createLoginSessionToken, verifyLoginSessionToken } from "@/lib/login-session-token"
+
+const postSchema = z.object({
+  code: z.string().min(1).max(128),
+})
 
 export async function GET() {
   const config = resolveLoginGateConfig()
@@ -36,4 +43,50 @@ export async function GET() {
     response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
     return response
   }
+}
+
+export async function POST(request: Request) {
+  const config = resolveLoginGateConfig()
+
+  if (!config.enabled) {
+    return NextResponse.json({ authenticated: false }, { status: 404 })
+  }
+
+  const body = await request.json().catch(() => null)
+  if (!body) {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 })
+  }
+
+  const parsed = postSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid session code" }, { status: 400 })
+  }
+
+  const { code } = parsed.data
+  const session = await getLoginSessionByCode(code)
+
+  if (!session) {
+    return NextResponse.json({ authenticated: false }, { status: 401 })
+  }
+
+  const { email, expiresAt } = session
+  const token = await createLoginSessionToken(email, expiresAt)
+  const response = NextResponse.json({
+    authenticated: true,
+    email,
+    expiresAt: expiresAt.toISOString(),
+    restored: true,
+  })
+
+  response.cookies.set({
+    name: LOGIN_GATE_COOKIE_NAME,
+    value: token,
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    expires: expiresAt,
+    path: "/",
+  })
+
+  return response
 }

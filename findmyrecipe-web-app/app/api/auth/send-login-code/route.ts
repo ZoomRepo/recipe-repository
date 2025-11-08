@@ -2,7 +2,12 @@ import { NextResponse } from "next/server"
 import { z } from "zod"
 
 import { resolveLoginGateConfig } from "@/lib/login-gate-config"
-import { generateLoginCode, isEmailWhitelisted, storeLoginCode } from "@/lib/login-gate-repository"
+import {
+  generateLoginCode,
+  hasActiveLoginSession,
+  isEmailWhitelisted,
+  storeLoginCode,
+} from "@/lib/login-gate-repository"
 import { sendLoginCodeEmail } from "@/lib/email-service"
 
 const requestSchema = z.object({
@@ -32,6 +37,11 @@ export async function POST(request: Request) {
   const whitelisted = await isEmailWhitelisted(email)
   if (!whitelisted) {
     return NextResponse.json({ error: "This email is not authorized for temporary access" }, { status: 403 })
+  }
+
+  const alreadyVerified = await hasActiveLoginSession(email)
+  if (alreadyVerified) {
+    return NextResponse.json({ success: true, alreadyVerified: true })
   }
 
   const code = generateLoginCode()
