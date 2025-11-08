@@ -12,9 +12,21 @@
     <header class="site-header">
       <div class="container">
         <a href="{{ url_for('recipes.index') }}"><img height="75px" width="140px" src="{{ url_for('static', filename='images/Recipe Library Logo.png') }}" class="brand"/></a>
+        <nav class="site-nav">
+          <a class="nav-link" href="{{ url_for('whitelist.index') }}">Access whitelist</a>
+        </nav>
       </div>
     </header>
     <main class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages" role="status" aria-live="polite">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
       {% block content %}{% endblock %}
     </main>
     <footer class="site-footer">

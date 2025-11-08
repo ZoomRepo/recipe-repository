@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Access whitelist{% endblock %}
+
+{% block content %}
+  <section class="whitelist">
+    <header class="whitelist-header">
+      <div>
+        <h1>Access whitelist</h1>
+        <p>Manage who can receive temporary login codes while the gate is enabled.</p>
+      </div>
+      <form method="post" class="whitelist-add-form">
+        <label for="whitelist-email" class="sr-only">Email address</label>
+        <input
+          id="whitelist-email"
+          name="email"
+          type="email"
+          placeholder="name@example.com"
+          required
+        >
+        <button type="submit" class="btn-primary">Add email</button>
+      </form>
+    </header>
+
+    <div class="whitelist-body">
+      {% if entries %}
+        <table class="whitelist-table">
+          <thead>
+            <tr>
+              <th scope="col">Email</th>
+              <th scope="col">Added</th>
+              <th scope="col" class="sr-only">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for entry in entries %}
+              <tr>
+                <td data-label="Email">{{ entry.email }}</td>
+                <td data-label="Added">
+                  {% if entry.added_at %}
+                    {{ entry.added_at.strftime('%b %d, %Y %I:%M %p') }}
+                  {% else %}
+                    —
+                  {% endif %}
+                </td>
+                <td class="whitelist-actions">
+                  <form method="post" action="{{ url_for('whitelist.remove') }}">
+                    <input type="hidden" name="email" value="{{ entry.email }}">
+                    <button type="submit" class="btn-secondary">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="empty-state">
+          <h2>No whitelisted emails yet</h2>
+          <p>Add an address above to allow someone to sign in.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

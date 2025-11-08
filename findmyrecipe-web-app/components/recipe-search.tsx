@@ -35,6 +35,11 @@ export default function RecipeSearch({ searchQuery, setSearchQuery, onSearch }: 
           </Link>
 
           <div className="flex items-center gap-4">
+            <Link href="/whitelist" className="hidden sm:inline-flex">
+              <Button variant="ghost" size="sm" className="rounded-full">
+                Whitelist
+              </Button>
+            </Link>
             {user ? (
               <>
                 <div className="relative">
@@ -93,6 +98,11 @@ export default function RecipeSearch({ searchQuery, setSearchQuery, onSearch }: 
               </>
             ) : (
               <div className="flex items-center gap-2">
+                <Link href="/whitelist" className="sm:hidden">
+                  <Button variant="ghost" size="sm">
+                    Whitelist
+                  </Button>
+                </Link>
                 <Link href="/auth/login">
                   <Button variant="outline" size="sm">
                     Login
