@@ -18,6 +18,14 @@ const gateEnabled =
     : true
 
 const LOCAL_SESSION_KEY = "findmyrecipe.loginSession"
+const FINALIZE_SESSION_FALLBACK_ERROR =
+  "We couldn't start your session automatically. Please request a new code."
+
+function clearStoredSession() {
+  if (typeof window !== "undefined") {
+    window.localStorage.removeItem(LOCAL_SESSION_KEY)
+  }
+}
 
 export default function LoginPage() {
   // ⬇️ Wrap the component that uses useSearchParams() in Suspense
@@ -64,60 +72,72 @@ function LoginPageInner() {
     [redirectPath, router]
   )
 
-  const finalizeWithRedirect = useCallback(
-    ({ code: sessionCode, message }: { code: string; message: string }) => {
-      if (!sessionCode || typeof window === "undefined") {
-        return false
+  const finalizeSessionCode = useCallback(async (sessionCode: string) => {
+    if (!sessionCode) {
+      clearStoredSession()
+      return { ok: false as const, error: FINALIZE_SESSION_FALLBACK_ERROR }
+    }
+
+    try {
+      const response = await fetch("/api/auth/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ code: sessionCode }),
+      })
+
+      const data = await response.json().catch(() => null)
+
+      if (response.ok && data?.authenticated) {
+        clearStoredSession()
+        return { ok: true as const }
       }
 
-      try {
-        const finalizeUrl = new URL("/auth/session/finalize", window.location.origin)
-        finalizeUrl.searchParams.set("code", sessionCode)
-        finalizeUrl.searchParams.set("redirect", redirectPath)
+      clearStoredSession()
+      const apiError =
+        typeof data?.error === "string" ? data.error : FINALIZE_SESSION_FALLBACK_ERROR
 
-        setError(null)
-        setMessage(message)
-
-        // Navigate through the server-side finalizer so cookies are issued on the redirect response.
-        window.location.replace(finalizeUrl.toString())
-        return true
-      } catch {
-        return false
+      return { ok: false as const, error: apiError }
+    } catch {
+      clearStoredSession()
+      return {
+        ok: false as const,
+        error: "We couldn't start your session automatically. Please try again.",
       }
-    },
-    [redirectPath]
-  )
+    }
+  }, [])
 
   const restoreSessionFromStorage = useCallback(async () => {
-    if (typeof window === "undefined") return false
+    if (typeof window === "undefined") return { restored: false as const }
 
     const raw = window.localStorage.getItem(LOCAL_SESSION_KEY)
-    if (!raw) return false
+    if (!raw) return { restored: false as const }
 
     let stored: { email?: string; code?: string } | null = null
     try {
       stored = JSON.parse(raw)
     } catch {
-      window.localStorage.removeItem(LOCAL_SESSION_KEY)
-      return false
+      clearStoredSession()
+      return { restored: false as const }
     }
 
     if (!stored?.code) {
-      window.localStorage.removeItem(LOCAL_SESSION_KEY)
-      return false
+      clearStoredSession()
+      return { restored: false as const }
     }
 
-    const restored = finalizeWithRedirect({
-      code: stored.code,
-      message: "Welcome back! Redirecting you now...",
-    })
-
-    if (!restored) {
-      window.localStorage.removeItem(LOCAL_SESSION_KEY)
+    const result = await finalizeSessionCode(stored.code)
+    if (result.ok) {
+      return { restored: true as const }
     }
 
-    return restored
-  }, [finalizeWithRedirect])
+    return {
+      restored: false as const,
+      error:
+        result.error ||
+        "We couldn't restore your access automatically. Please request a new code.",
+    }
+  }, [finalizeSessionCode])
 
   useEffect(() => {
     setError(null)
@@ -155,7 +175,14 @@ function LoginPageInner() {
 
         if (!cancelled) {
           const restored = await restoreSessionFromStorage()
-          if (restored) return
+          if (restored.restored) {
+            redirectToApp("Welcome back! Redirecting you now...")
+            return
+          }
+          if (restored.error) {
+            setError(restored.error)
+          }
+          setMessage(null)
         }
       } catch {
         // ignore errors and allow normal flow
@@ -201,12 +228,18 @@ function LoginPageInner() {
         setMessage("You're already verified on this device. Restoring your access...")
         setIsCheckingSession(true)
         const restored = await restoreSessionFromStorage()
-        if (!restored) {
+        if (restored.restored) {
           setIsCheckingSession(false)
-          setMessage(
-            "We couldn't restore your access automatically. Please try again or contact support."
-          )
+          redirectToApp("Welcome back! Redirecting you now...")
+          return
         }
+
+        setIsCheckingSession(false)
+        setMessage(null)
+        setError(
+          restored.error ||
+            "We couldn't restore your access automatically. Please try again or contact support."
+        )
         return
       }
 
@@ -257,19 +290,21 @@ function LoginPageInner() {
       }
 
       if (data?.sessionCode) {
-        const finalized = finalizeWithRedirect({
-          code: data.sessionCode,
-          message: "Success! Redirecting you now...",
-        })
+        setIsCheckingSession(true)
+        const result = await finalizeSessionCode(data.sessionCode)
+        setIsCheckingSession(false)
 
-        if (!finalized) {
-          setMessage(null)
-          setError("We couldn't start your session automatically. Please request a new code.")
+        if (result.ok) {
+          redirectToApp("Success! Redirecting you now...")
+          return
         }
+
+        setMessage(null)
+        setError(result.error || FINALIZE_SESSION_FALLBACK_ERROR)
         return
       }
 
-      setError("We couldn't start your session automatically. Please request a new code.")
+      setError(FINALIZE_SESSION_FALLBACK_ERROR)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid or expired code")
     } finally {

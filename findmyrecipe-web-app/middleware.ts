@@ -11,7 +11,6 @@ const PUBLIC_PATHS = [
   "/api/auth/send-login-code",
   "/api/auth/verify-login-code",
   "/api/auth/session",
-  "/auth/session/finalize",
   "/app/manifest.json",
   "/manifest.json",
 ]
