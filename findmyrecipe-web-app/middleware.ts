@@ -11,6 +11,7 @@ const PUBLIC_PATHS = [
   "/api/auth/verify-login-code",
   "/api/auth/session",
   "/app/manifest.json",
+  "/manifest.json",
 ]
 
 function isPublicPath(pathname: string) {

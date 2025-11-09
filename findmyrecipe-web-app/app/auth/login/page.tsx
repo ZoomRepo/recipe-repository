@@ -1,7 +1,7 @@
 // app/auth/login/page.tsx
 "use client"
 
-import { Suspense, useCallback, useEffect, useState } from "react"
+import { Suspense, useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 
@@ -39,6 +39,7 @@ function LoginPageInner() {
   const [message, setMessage] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isCheckingSession, setIsCheckingSession] = useState(gateEnabled)
+  const hasCheckedSessionRef = useRef(false)
 
   const redirectParam = searchParams?.get("redirect") || "/"
   const redirectPath = redirectParam.startsWith("/") ? redirectParam : "/"
@@ -115,6 +116,11 @@ function LoginPageInner() {
   }, [step])
 
   useEffect(() => {
+    if (hasCheckedSessionRef.current) {
+      return
+    }
+
+    hasCheckedSessionRef.current = true
     if (!gateEnabled) {
       setIsCheckingSession(false)
       return
@@ -152,6 +158,7 @@ function LoginPageInner() {
     checkSession()
     return () => {
       cancelled = true
+      hasCheckedSessionRef.current = false
     }
   }, [restoreSessionFromStorage, redirectToApp])
 
