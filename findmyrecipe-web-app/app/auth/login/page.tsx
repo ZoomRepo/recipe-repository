@@ -93,13 +93,34 @@ function LoginPageInner() {
         return { ok: true as const }
       }
 
+      if (response.status === 401) {
+        try {
+          const fallback = await fetch("/api/auth/session", {
+            method: "GET",
+            credentials: "include",
+            cache: "no-store",
+          })
+
+          if (fallback.ok) {
+            const fallbackData: { authenticated?: boolean } = await fallback
+              .json()
+              .catch(() => ({}))
+            if (fallbackData?.authenticated) {
+              clearStoredSession()
+              return { ok: true as const }
+            }
+          }
+        } catch {
+          // ignore and allow normal error handling below
+        }
+      }
+
       clearStoredSession()
       const apiError =
         typeof data?.error === "string" ? data.error : FINALIZE_SESSION_FALLBACK_ERROR
 
       return { ok: false as const, error: apiError }
     } catch {
-      clearStoredSession()
       return {
         ok: false as const,
         error: "We couldn't start your session automatically. Please try again.",
