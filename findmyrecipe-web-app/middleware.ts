@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server"
 
 import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
 import { verifyLoginSessionToken } from "@/lib/login-session-token"
+import { getRequestOrigin } from "@/lib/request-origin"
 
 const PUBLIC_PATHS = [
   "/auth/login",
@@ -30,7 +31,8 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get(LOGIN_GATE_COOKIE_NAME)?.value
 
   if (!token) {
-    const loginUrl = new URL("/auth/login", request.url)
+    const origin = getRequestOrigin(request)
+    const loginUrl = new URL("/auth/login", origin)
     loginUrl.searchParams.set("redirect", pathname)
     return NextResponse.redirect(loginUrl)
   }
@@ -43,7 +45,8 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!sessionValid) {
-    const response = NextResponse.redirect(new URL("/auth/login", request.url))
+    const origin = getRequestOrigin(request)
+    const response = NextResponse.redirect(new URL("/auth/login", origin))
     response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
     return response
   }

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
 import { getLoginSessionByCode } from "@/lib/login-gate-repository"
 import { createLoginSessionToken } from "@/lib/login-session-token"
+import { getRequestOrigin } from "@/lib/request-origin"
 
 function sanitizeRedirect(target: string | null): string {
   if (!target) return "/"
@@ -12,7 +13,8 @@ function sanitizeRedirect(target: string | null): string {
 }
 
 function buildLoginRedirect(request: NextRequest, redirectPath: string) {
-  const loginUrl = new URL("/auth/login", request.url)
+  const origin = getRequestOrigin(request)
+  const loginUrl = new URL("/auth/login", origin)
   if (redirectPath && redirectPath !== "/") {
     loginUrl.searchParams.set("redirect", redirectPath)
   }
@@ -44,7 +46,8 @@ export async function GET(request: NextRequest) {
 
   const token = await createLoginSessionToken(session.email, expiresAt)
 
-  const destination = new URL(redirectPath, request.url)
+  const origin = getRequestOrigin(request)
+  const destination = new URL(redirectPath, origin)
   const response = NextResponse.redirect(destination)
   response.cookies.set({
     name: LOGIN_GATE_COOKIE_NAME,
