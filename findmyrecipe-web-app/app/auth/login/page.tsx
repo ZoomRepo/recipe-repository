@@ -60,6 +60,52 @@ function LoginPageInner() {
     [redirectPath, router]
   )
 
+  const finalizeSession = useCallback(
+    async ({
+      code: sessionCode,
+      email: fallbackEmail,
+      message,
+    }: {
+      code: string
+      email?: string
+      message: string
+    }) => {
+      if (!sessionCode) return false
+      try {
+        const response = await fetch("/api/auth/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          cache: "no-store",
+          body: JSON.stringify({ code: sessionCode }),
+        })
+
+        if (response.ok) {
+          const data: { authenticated?: boolean; email?: string } = await response.json().catch(() => ({}))
+          if (data?.authenticated) {
+            if (typeof window !== "undefined") {
+              const emailToPersist = data.email || fallbackEmail
+              if (emailToPersist) {
+                window.localStorage.setItem(
+                  LOCAL_SESSION_KEY,
+                  JSON.stringify({ email: emailToPersist, code: sessionCode })
+                )
+              }
+            }
+            redirectToApp(message)
+            return true
+          }
+        } else if (response.status === 401 && typeof window !== "undefined") {
+          window.localStorage.removeItem(LOCAL_SESSION_KEY)
+        }
+      } catch {
+        // ignore and allow caller to handle failure
+      }
+      return false
+    },
+    [redirectToApp]
+  )
+
   const restoreSessionFromStorage = useCallback(async () => {
     if (typeof window === "undefined") return false
 
@@ -79,36 +125,12 @@ function LoginPageInner() {
       return false
     }
 
-    try {
-      const response = await fetch("/api/auth/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        cache: "no-store",
-        body: JSON.stringify({ code: stored.code }),
-      })
-
-      if (response.ok) {
-        const data: { authenticated?: boolean; email?: string } = await response.json()
-        if (data?.authenticated) {
-          if (data.email) {
-            window.localStorage.setItem(
-              LOCAL_SESSION_KEY,
-              JSON.stringify({ email: data.email, code: stored.code })
-            )
-          }
-          redirectToApp("Welcome back! Redirecting you now...")
-          return true
-        }
-      } else if (response.status === 401) {
-        window.localStorage.removeItem(LOCAL_SESSION_KEY)
-      }
-    } catch {
-      // ignore and continue to login form
-    }
-
-    return false
-  }, [redirectToApp])
+    return finalizeSession({
+      code: stored.code,
+      email: stored.email,
+      message: "Welcome back! Redirecting you now...",
+    })
+  }, [finalizeSession])
 
   useEffect(() => {
     setError(null)
@@ -247,7 +269,19 @@ function LoginPageInner() {
         )
       }
 
-      redirectToApp("Success! Redirecting you now...")
+      const finalized = data?.sessionCode
+        ? await finalizeSession({
+            code: data.sessionCode,
+            email,
+            message: "Success! Redirecting you now...",
+          })
+        : false
+
+      if (!finalized) {
+        setMessage(null)
+        setError("We couldn't start your session automatically. Please request a new code.")
+        return
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid or expired code")
     } finally {
