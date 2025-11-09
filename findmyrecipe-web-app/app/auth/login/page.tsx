@@ -1,7 +1,7 @@
 // app/auth/login/page.tsx
 "use client"
 
-import { Suspense, useCallback, useEffect, useRef, useState } from "react"
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 
@@ -42,7 +42,11 @@ function LoginPageInner() {
   const hasCheckedSessionRef = useRef(false)
 
   const redirectParam = searchParams?.get("redirect") || "/"
-  const redirectPath = redirectParam.startsWith("/") ? redirectParam : "/"
+  const redirectPath = useMemo(() => {
+    const candidate = redirectParam.startsWith("/") ? redirectParam : "/"
+    return candidate.startsWith("/auth/session") ? "/" : candidate
+  }, [redirectParam])
+  const redirectError = searchParams?.get("error")
 
   const redirectToApp = useCallback(
     (statusMessage = "Redirecting you now...") => {
@@ -60,50 +64,28 @@ function LoginPageInner() {
     [redirectPath, router]
   )
 
-  const finalizeSession = useCallback(
-    async ({
-      code: sessionCode,
-      email: fallbackEmail,
-      message,
-    }: {
-      code: string
-      email?: string
-      message: string
-    }) => {
-      if (!sessionCode) return false
-      try {
-        const response = await fetch("/api/auth/session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          cache: "no-store",
-          body: JSON.stringify({ code: sessionCode }),
-        })
-
-        if (response.ok) {
-          const data: { authenticated?: boolean; email?: string } = await response.json().catch(() => ({}))
-          if (data?.authenticated) {
-            if (typeof window !== "undefined") {
-              const emailToPersist = data.email || fallbackEmail
-              if (emailToPersist) {
-                window.localStorage.setItem(
-                  LOCAL_SESSION_KEY,
-                  JSON.stringify({ email: emailToPersist, code: sessionCode })
-                )
-              }
-            }
-            redirectToApp(message)
-            return true
-          }
-        } else if (response.status === 401 && typeof window !== "undefined") {
-          window.localStorage.removeItem(LOCAL_SESSION_KEY)
-        }
-      } catch {
-        // ignore and allow caller to handle failure
+  const finalizeWithRedirect = useCallback(
+    ({ code: sessionCode, message }: { code: string; message: string }) => {
+      if (!sessionCode || typeof window === "undefined") {
+        return false
       }
-      return false
+
+      try {
+        const finalizeUrl = new URL("/auth/session/finalize", window.location.origin)
+        finalizeUrl.searchParams.set("code", sessionCode)
+        finalizeUrl.searchParams.set("redirect", redirectPath)
+
+        setError(null)
+        setMessage(message)
+
+        // Navigate through the server-side finalizer so cookies are issued on the redirect response.
+        window.location.replace(finalizeUrl.toString())
+        return true
+      } catch {
+        return false
+      }
     },
-    [redirectToApp]
+    [redirectPath]
   )
 
   const restoreSessionFromStorage = useCallback(async () => {
@@ -125,12 +107,17 @@ function LoginPageInner() {
       return false
     }
 
-    return finalizeSession({
+    const restored = finalizeWithRedirect({
       code: stored.code,
-      email: stored.email,
       message: "Welcome back! Redirecting you now...",
     })
-  }, [finalizeSession])
+
+    if (!restored) {
+      window.localStorage.removeItem(LOCAL_SESSION_KEY)
+    }
+
+    return restored
+  }, [finalizeWithRedirect])
 
   useEffect(() => {
     setError(null)
@@ -269,25 +256,42 @@ function LoginPageInner() {
         )
       }
 
-      const finalized = data?.sessionCode
-        ? await finalizeSession({
-            code: data.sessionCode,
-            email,
-            message: "Success! Redirecting you now...",
-          })
-        : false
+      if (data?.sessionCode) {
+        const finalized = finalizeWithRedirect({
+          code: data.sessionCode,
+          message: "Success! Redirecting you now...",
+        })
 
-      if (!finalized) {
-        setMessage(null)
-        setError("We couldn't start your session automatically. Please request a new code.")
+        if (!finalized) {
+          setMessage(null)
+          setError("We couldn't start your session automatically. Please request a new code.")
+        }
         return
       }
+
+      setError("We couldn't start your session automatically. Please request a new code.")
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid or expired code")
     } finally {
       setIsSubmitting(false)
     }
   }
+
+  useEffect(() => {
+    if (!redirectError) {
+      return
+    }
+
+    setError(
+      redirectError === "session"
+        ? "We couldn't restore your access automatically. Please request a new code."
+        : "We couldn't restore your access. Please try again."
+    )
+
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(LOCAL_SESSION_KEY)
+    }
+  }, [redirectError])
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
