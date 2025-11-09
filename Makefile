@@ -22,6 +22,10 @@ env:
 	export SMTP_SECURE=true 
 	echo "Development environment has been successfully setup!"
 
+dev:
+	cd findmyrecipe-web-app && \
+	npm run dev
+
 run_app:
 	@if [ ! -d "venv" ]; then \
 		echo "❌ venv not found. Run 'make setup' first."; \

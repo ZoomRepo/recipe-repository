@@ -10,6 +10,7 @@ const PUBLIC_PATHS = [
   "/api/auth/send-login-code",
   "/api/auth/verify-login-code",
   "/api/auth/session",
+  "/app/manifest.json",
 ]
 
 function isPublicPath(pathname: string) {
