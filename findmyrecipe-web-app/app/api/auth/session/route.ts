@@ -43,11 +43,31 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const config = resolveLoginGateConfig()
 
   if (!config.enabled) {
     return NextResponse.json({ authenticated: false }, { status: 404 })
+  }
+
+  const existingToken = request.cookies.get(LOGIN_GATE_COOKIE_NAME)?.value ?? null
+  let shouldClearCookie = false
+
+  if (existingToken) {
+    try {
+      const session = await verifyLoginSessionToken(existingToken)
+      if (session) {
+        return NextResponse.json({
+          authenticated: true,
+          email: session.email,
+          expiresAt: session.expiresAt.toISOString(),
+          restored: false,
+        })
+      }
+      shouldClearCookie = true
+    } catch (error) {
+      shouldClearCookie = true
+    }
   }
 
   const body = await request.json().catch(() => null)
@@ -64,7 +84,11 @@ export async function POST(request: Request) {
   const session = await getLoginSessionByCode(code)
 
   if (!session) {
-    return NextResponse.json({ authenticated: false }, { status: 401 })
+    const response = NextResponse.json({ authenticated: false }, { status: 401 })
+    if (shouldClearCookie) {
+      response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
+    }
+    return response
   }
 
   const { email, expiresAt } = session
