@@ -1,20 +1,20 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
-import { resolveLoginGateConfig } from "@/lib/login-gate-config"
+import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
 import {
   generateLoginCode,
-  hasActiveLoginSession,
   isEmailWhitelisted,
   storeLoginCode,
 } from "@/lib/login-gate-repository"
 import { sendLoginCodeEmail } from "@/lib/email-service"
+import { verifyLoginSessionToken } from "@/lib/login-session-token"
 
 const requestSchema = z.object({
   email: z.string().email(),
 })
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const config = resolveLoginGateConfig()
 
   if (!config.enabled) {
@@ -33,15 +33,24 @@ export async function POST(request: Request) {
   }
 
   const { email } = parsed.data
+  const normalizedEmail = email.trim().toLowerCase()
+
+  const existingToken = request.cookies.get(LOGIN_GATE_COOKIE_NAME)?.value ?? null
+  if (existingToken) {
+    try {
+      const session = await verifyLoginSessionToken(existingToken)
+      const sessionEmail = session?.email?.trim().toLowerCase()
+      if (sessionEmail && sessionEmail === normalizedEmail) {
+        return NextResponse.json({ success: true, alreadyVerified: true })
+      }
+    } catch (error) {
+      // Ignore token verification failures and proceed with sending a new code.
+    }
+  }
 
   const whitelisted = await isEmailWhitelisted(email)
   if (!whitelisted) {
     return NextResponse.json({ error: "This email is not authorized for temporary access" }, { status: 403 })
-  }
-
-  const alreadyVerified = await hasActiveLoginSession(email)
-  if (alreadyVerified) {
-    return NextResponse.json({ success: true, alreadyVerified: true })
   }
 
   const code = generateLoginCode()
