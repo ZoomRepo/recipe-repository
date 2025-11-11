@@ -187,62 +187,6 @@ export async function storeLoginCode(email: string, code: string, expiresAt: Dat
   )
 }
 
-export function generateLoginSessionCode(): string {
-  return generateRandomHex(24)
-}
-
-export async function storeLoginSessionCode(
-  email: string,
-  sessionCode: string,
-  expiresAt: Date
-): Promise<void> {
-  const pool = await ensureLoginGateTables()
-  const normalizedEmail = normalizeEmail(email)
-  const sessionHash = hashLoginCode(sessionCode)
-
-  await pool.execute<ResultSetHeader>(
-    `
-      INSERT INTO login_sessions (email, session_code_hash, session_token_hash, expires_at, created_at, updated_at)
-      VALUES (?, ?, NULL, ?, NOW(), NOW())
-      ON DUPLICATE KEY UPDATE
-        session_code_hash = VALUES(session_code_hash),
-        session_token_hash = NULL,
-        expires_at = VALUES(expires_at),
-        updated_at = NOW()
-    `,
-    [normalizedEmail, sessionHash, expiresAt]
-  )
-}
-
-export async function getLoginSessionByCode(
-  sessionCode: string
-): Promise<{ email: string; expiresAt: Date; sessionHash: string } | null> {
-  const pool = await ensureLoginGateTables()
-  const sessionHash = hashLoginCode(sessionCode)
-
-  const [rows] = await pool.query<LoginSessionRow[]>(
-    "SELECT email, session_code_hash, expires_at FROM login_sessions WHERE session_code_hash = ? LIMIT 1",
-    [sessionHash]
-  )
-
-  if (rows.length === 0) {
-    return null
-  }
-
-  const row = rows[0]
-  const now = new Date()
-
-  if (row.expires_at <= now) {
-    await pool.execute<ResultSetHeader>(
-      "DELETE FROM login_sessions WHERE session_code_hash = ?",
-      [sessionHash]
-    )
-    return null
-  }
-
-  return { email: row.email, expiresAt: row.expires_at, sessionHash }
-}
-
 export async function hasActiveLoginSession(email: string): Promise<boolean> {
   const pool = await ensureLoginGateTables()
   const normalizedEmail = normalizeEmail(email)
@@ -265,26 +209,6 @@ export async function hasActiveLoginSession(email: string): Promise<boolean> {
   }
 
   return typeof row.session_token_hash === "string" && row.session_token_hash.length > 0
-}
-
-export async function storeLoginSessionToken(
-  sessionHash: string,
-  token: string,
-  expiresAt: Date
-): Promise<boolean> {
-  const pool = await ensureLoginGateTables()
-  const tokenHash = hashLoginCode(token)
-
-  const [result] = await pool.execute<ResultSetHeader>(
-    `
-      UPDATE login_sessions
-      SET session_token_hash = ?, session_code_hash = NULL, expires_at = ?, updated_at = NOW()
-      WHERE session_code_hash = ?
-    `,
-    [tokenHash, expiresAt, sessionHash]
-  )
-
-  return result.affectedRows > 0
 }
 
 export async function getLoginSessionByToken(
@@ -314,6 +238,33 @@ export async function getLoginSessionByToken(
   }
 
   return { email: row.email, expiresAt: row.expires_at }
+}
+
+export function generateLoginSessionToken(): string {
+  return generateRandomHex(48)
+}
+
+export async function saveLoginSessionToken(
+  email: string,
+  token: string,
+  expiresAt: Date
+): Promise<void> {
+  const pool = await ensureLoginGateTables()
+  const normalizedEmail = normalizeEmail(email)
+  const tokenHash = hashLoginCode(token)
+
+  await pool.execute<ResultSetHeader>(
+    `
+      INSERT INTO login_sessions (email, session_token_hash, session_code_hash, expires_at, created_at, updated_at)
+      VALUES (?, ?, NULL, ?, NOW(), NOW())
+      ON DUPLICATE KEY UPDATE
+        session_token_hash = VALUES(session_token_hash),
+        session_code_hash = NULL,
+        expires_at = VALUES(expires_at),
+        updated_at = NOW()
+    `,
+    [normalizedEmail, tokenHash, expiresAt]
+  )
 }
 
 export async function consumeLoginCode(email: string, code: string): Promise<boolean> {

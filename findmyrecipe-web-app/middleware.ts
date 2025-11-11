@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from "next/server"
 
 import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
 import { verifyLoginSessionToken } from "@/lib/login-session-token"
-import { getLoginSessionByToken } from "@/lib/login-gate-repository"
 import { getRequestOrigin } from "@/lib/request-origin"
 
 const PUBLIC_PATHS = [
@@ -39,9 +38,7 @@ export async function middleware(request: NextRequest) {
 
   try {
     const decoded = await verifyLoginSessionToken(token)
-    const session = decoded ? await getLoginSessionByToken(token) : null
-
-    if (decoded && session && session.email.trim().toLowerCase() === decoded.email.trim().toLowerCase()) {
+    if (decoded) {
       return NextResponse.next()
     }
   } catch (error) {

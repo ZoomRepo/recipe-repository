@@ -192,33 +192,15 @@ function LoginPageInner() {
         body: JSON.stringify({ email, code }),
       })
 
-      const data: { sessionCode?: string | null; error?: string } | null = await response
+      const data: { authenticated?: boolean; error?: string } | null = await response
         .json()
         .catch(() => null)
 
-      if (!response.ok) {
+      if (!response.ok || !data?.authenticated) {
         throw new Error(data?.error || "Invalid or expired code")
       }
 
-      setMessage("Code accepted. Signing you in...")
-
-      if (!data?.sessionCode) {
-        throw new Error("We couldn't finish signing you in. Please request a new code.")
-      }
-
-      const finalizeResponse = await fetch("/api/auth/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ code: data.sessionCode }),
-      })
-
-      const finalizeData: { authenticated?: boolean; error?: string } | null =
-        await finalizeResponse.json().catch(() => null)
-
-      if (!finalizeResponse.ok || !finalizeData?.authenticated) {
-        throw new Error(finalizeData?.error || "We couldn't finish signing you in")
-      }
+      setMessage("Code accepted. Finishing sign-in...")
 
       const sessionResponse = await fetch("/api/auth/session", {
         method: "GET",

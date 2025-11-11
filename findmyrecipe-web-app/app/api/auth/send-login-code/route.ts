@@ -11,6 +11,8 @@ import {
 import { sendLoginCodeEmail } from "@/lib/email-service"
 import { verifyLoginSessionToken } from "@/lib/login-session-token"
 
+export const runtime = "nodejs"
+
 const requestSchema = z.object({
   email: z.string().email(),
 })
@@ -39,8 +41,8 @@ export async function POST(request: NextRequest) {
   const existingToken = request.cookies.get(LOGIN_GATE_COOKIE_NAME)?.value ?? null
   if (existingToken) {
     try {
-      const session = await verifyLoginSessionToken(existingToken)
-      if (session) {
+      const decoded = await verifyLoginSessionToken(existingToken)
+      if (decoded) {
         const dbSession = await getLoginSessionByToken(existingToken)
         const sessionEmail = dbSession?.email?.trim().toLowerCase()
         if (sessionEmail && sessionEmail === normalizedEmail) {
