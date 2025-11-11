@@ -4,6 +4,7 @@ import { z } from "zod"
 import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
 import {
   generateLoginCode,
+  getLoginSessionByToken,
   isEmailWhitelisted,
   storeLoginCode,
 } from "@/lib/login-gate-repository"
@@ -39,9 +40,12 @@ export async function POST(request: NextRequest) {
   if (existingToken) {
     try {
       const session = await verifyLoginSessionToken(existingToken)
-      const sessionEmail = session?.email?.trim().toLowerCase()
-      if (sessionEmail && sessionEmail === normalizedEmail) {
-        return NextResponse.json({ success: true, alreadyVerified: true })
+      if (session) {
+        const dbSession = await getLoginSessionByToken(existingToken)
+        const sessionEmail = dbSession?.email?.trim().toLowerCase()
+        if (sessionEmail && sessionEmail === normalizedEmail) {
+          return NextResponse.json({ success: true, alreadyVerified: true })
+        }
       }
     } catch (error) {
       // Ignore token verification failures and proceed with sending a new code.

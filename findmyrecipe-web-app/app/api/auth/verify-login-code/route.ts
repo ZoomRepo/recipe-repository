@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
-import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
+import { resolveLoginGateConfig } from "@/lib/login-gate-config"
 import {
   consumeLoginCode,
   generateLoginSessionCode,
   isEmailWhitelisted,
   storeLoginSessionCode,
 } from "@/lib/login-gate-repository"
-import { createLoginSessionToken } from "@/lib/login-session-token"
 
 const requestSchema = z.object({
   email: z.string().email(),
@@ -45,25 +44,12 @@ export async function POST(request: Request) {
   }
 
   const expiresAt = new Date(Date.now() + config.sessionDurationDays * 24 * 60 * 60 * 1000)
-  const token = await createLoginSessionToken(email, expiresAt)
   const sessionCode = generateLoginSessionCode()
   await storeLoginSessionCode(email, sessionCode, expiresAt)
 
-  const response = NextResponse.json({
+  return NextResponse.json({
     success: true,
     sessionCode,
     expiresAt: expiresAt.toISOString(),
   })
-
-  response.cookies.set({
-    name: LOGIN_GATE_COOKIE_NAME,
-    value: token,
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    expires: expiresAt,
-    path: "/",
-  })
-
-  return response
 }

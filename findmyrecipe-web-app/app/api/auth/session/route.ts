@@ -3,7 +3,11 @@ import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
 import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
-import { getLoginSessionByCode } from "@/lib/login-gate-repository"
+import {
+  getLoginSessionByCode,
+  getLoginSessionByToken,
+  storeLoginSessionToken,
+} from "@/lib/login-gate-repository"
 import { createLoginSessionToken, verifyLoginSessionToken } from "@/lib/login-session-token"
 
 const postSchema = z.object({
@@ -31,10 +35,17 @@ export async function GET(request: NextRequest) {
       return response
     }
 
+    const dbSession = await getLoginSessionByToken(token)
+    if (!dbSession || dbSession.email.trim().toLowerCase() !== session.email.trim().toLowerCase()) {
+      const response = NextResponse.json({ authenticated: false }, { status: 401 })
+      response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
+      return response
+    }
+
     return NextResponse.json({
       authenticated: true,
-      email: session.email,
-      expiresAt: session.expiresAt.toISOString(),
+      email: dbSession.email,
+      expiresAt: dbSession.expiresAt.toISOString(),
     })
   } catch (error) {
     const response = NextResponse.json({ authenticated: false }, { status: 401 })
@@ -48,26 +59,6 @@ export async function POST(request: NextRequest) {
 
   if (!config.enabled) {
     return NextResponse.json({ authenticated: false }, { status: 404 })
-  }
-
-  const existingToken = request.cookies.get(LOGIN_GATE_COOKIE_NAME)?.value ?? null
-  let shouldClearCookie = false
-
-  if (existingToken) {
-    try {
-      const session = await verifyLoginSessionToken(existingToken)
-      if (session) {
-        return NextResponse.json({
-          authenticated: true,
-          email: session.email,
-          expiresAt: session.expiresAt.toISOString(),
-          restored: false,
-        })
-      }
-      shouldClearCookie = true
-    } catch (error) {
-      shouldClearCookie = true
-    }
   }
 
   const body = await request.json().catch(() => null)
@@ -85,14 +76,20 @@ export async function POST(request: NextRequest) {
 
   if (!session) {
     const response = NextResponse.json({ authenticated: false }, { status: 401 })
-    if (shouldClearCookie) {
-      response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
-    }
+    response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
     return response
   }
 
-  const { email, expiresAt } = session
+  const { email, expiresAt, sessionHash } = session
   const token = await createLoginSessionToken(email, expiresAt)
+  const stored = await storeLoginSessionToken(sessionHash, token, expiresAt)
+
+  if (!stored) {
+    const response = NextResponse.json({ authenticated: false }, { status: 401 })
+    response.cookies.delete(LOGIN_GATE_COOKIE_NAME, { path: "/" })
+    return response
+  }
+
   const response = NextResponse.json({
     authenticated: true,
     email,

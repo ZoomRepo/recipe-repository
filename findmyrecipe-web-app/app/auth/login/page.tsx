@@ -202,45 +202,39 @@ function LoginPageInner() {
 
       setMessage("Code accepted. Signing you in...")
 
-      let authenticated = false
-
-      if (data?.sessionCode) {
-        const finalizeResponse = await fetch("/api/auth/session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ code: data.sessionCode }),
-        })
-
-        const finalizeData: { authenticated?: boolean; error?: string } | null =
-          await finalizeResponse.json().catch(() => null)
-
-        if (!finalizeResponse.ok || !finalizeData?.authenticated) {
-          throw new Error(finalizeData?.error || "We couldn't finish signing you in")
-        }
-
-        authenticated = true
-      } else {
-        const sessionResponse = await fetch("/api/auth/session", {
-          method: "GET",
-          credentials: "include",
-          cache: "no-store",
-        })
-
-        const sessionData: { authenticated?: boolean } | null = await sessionResponse
-          .json()
-          .catch(() => null)
-
-        if (!sessionResponse.ok || !sessionData?.authenticated) {
-          throw new Error("We couldn't confirm your session. Please try again.")
-        }
-
-        authenticated = true
+      if (!data?.sessionCode) {
+        throw new Error("We couldn't finish signing you in. Please request a new code.")
       }
 
-      if (authenticated) {
-        redirectToApp("Success! Redirecting you now...")
+      const finalizeResponse = await fetch("/api/auth/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ code: data.sessionCode }),
+      })
+
+      const finalizeData: { authenticated?: boolean; error?: string } | null =
+        await finalizeResponse.json().catch(() => null)
+
+      if (!finalizeResponse.ok || !finalizeData?.authenticated) {
+        throw new Error(finalizeData?.error || "We couldn't finish signing you in")
       }
+
+      const sessionResponse = await fetch("/api/auth/session", {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+      })
+
+      const sessionData: { authenticated?: boolean } | null = await sessionResponse
+        .json()
+        .catch(() => null)
+
+      if (!sessionResponse.ok || !sessionData?.authenticated) {
+        throw new Error("We couldn't confirm your session. Please try again.")
+      }
+
+      redirectToApp("Success! Redirecting you now...")
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid or expired code")
     } finally {
