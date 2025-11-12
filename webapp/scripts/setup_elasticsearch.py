@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Iterable
 
 from elasticsearch import Elasticsearch
-from elasticsearch.exceptions import TransportError
+from elasticsearch.exceptions import ApiError, TransportError
 
 from webapp.config import AppConfig
 
@@ -78,7 +78,7 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     try:
         exists = client.indices.exists(index=index_name)
-    except TransportError as exc:
+    except (TransportError, ApiError) as exc:
         print(f"Failed to inspect index '{index_name}': {exc}", file=sys.stderr)
         return 2
 
@@ -87,7 +87,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             try:
                 client.indices.delete(index=index_name)
                 print(f"Deleted existing index '{index_name}'.")
-            except TransportError as exc:
+            except (TransportError, ApiError) as exc:
                 print(f"Failed to delete index '{index_name}': {exc}", file=sys.stderr)
                 return 2
         else:
@@ -101,7 +101,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             mappings=mappings,
             aliases=aliases,
         )
-    except TransportError as exc:
+    except (TransportError, ApiError) as exc:
         print(f"Failed to create index '{index_name}': {exc}", file=sys.stderr)
         return 2
 
