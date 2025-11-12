@@ -48,5 +48,6 @@ def create_app(config: AppConfig | None = None) -> Flask:
     )
     register_whitelist_routes(app, whitelist_repository)
     app.config["APP_CONFIG"] = resolved_config
+    app.config["ELASTICSEARCH_CONFIG"] = resolved_config.elasticsearch
     app.config["RECIPE_SERVICE"] = service
     return app
