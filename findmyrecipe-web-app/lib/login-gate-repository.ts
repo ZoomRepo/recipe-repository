@@ -46,19 +46,52 @@ async function ensureLoginGateTables() {
     CREATE TABLE IF NOT EXISTS login_sessions (
       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
       email VARCHAR(320) NOT NULL,
-      session_code_hash CHAR(64) NOT NULL,
+      session_code_hash CHAR(64) DEFAULT NULL,
+      session_token_hash CHAR(64) DEFAULT NULL,
       expires_at DATETIME NOT NULL,
       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (id),
       UNIQUE KEY uniq_login_sessions_email (email),
       UNIQUE KEY uniq_login_sessions_code_hash (session_code_hash),
+      UNIQUE KEY uniq_login_sessions_token_hash (session_token_hash),
       KEY idx_login_sessions_expires_at (expires_at)
     )
     ENGINE=InnoDB
     DEFAULT CHARSET = utf8mb4
     COLLATE = utf8mb4_unicode_ci
   `)
+
+  // Ensure legacy tables receive the token hash column and nullable code hash if they
+  // were created before the structure change above. Individual ALTER statements are
+  // wrapped in try/catch blocks so repeated deployments do not fail once the schema
+  // is up to date.
+  try {
+    await pool.query(`
+      ALTER TABLE login_sessions
+      MODIFY COLUMN session_code_hash CHAR(64) DEFAULT NULL
+    `)
+  } catch (error) {
+    // Column already nullable – ignore.
+  }
+
+  try {
+    await pool.query(`
+      ALTER TABLE login_sessions
+      ADD COLUMN session_token_hash CHAR(64) DEFAULT NULL AFTER session_code_hash
+    `)
+  } catch (error) {
+    // Column already exists – ignore.
+  }
+
+  try {
+    await pool.query(`
+      ALTER TABLE login_sessions
+      ADD UNIQUE KEY uniq_login_sessions_token_hash (session_token_hash)
+    `)
+  } catch (error) {
+    // Index already exists – ignore.
+  }
 
   hasEnsuredTables = true
   return pool
@@ -81,7 +114,8 @@ type LoginCodeRow = RowDataPacket & {
 
 type LoginSessionRow = RowDataPacket & {
   email: string
-  session_code_hash: string
+  session_code_hash: string | null
+  session_token_hash: string | null
   expires_at: Date
 }
 
@@ -153,67 +187,12 @@ export async function storeLoginCode(email: string, code: string, expiresAt: Dat
   )
 }
 
-export function generateLoginSessionCode(): string {
-  return generateRandomHex(24)
-}
-
-export async function storeLoginSessionCode(
-  email: string,
-  sessionCode: string,
-  expiresAt: Date
-): Promise<void> {
-  const pool = await ensureLoginGateTables()
-  const normalizedEmail = normalizeEmail(email)
-  const sessionHash = hashLoginCode(sessionCode)
-
-  await pool.execute<ResultSetHeader>(
-    `
-      INSERT INTO login_sessions (email, session_code_hash, expires_at, created_at, updated_at)
-      VALUES (?, ?, ?, NOW(), NOW())
-      ON DUPLICATE KEY UPDATE
-        session_code_hash = VALUES(session_code_hash),
-        expires_at = VALUES(expires_at),
-        updated_at = NOW()
-    `,
-    [normalizedEmail, sessionHash, expiresAt]
-  )
-}
-
-export async function getLoginSessionByCode(
-  sessionCode: string
-): Promise<{ email: string; expiresAt: Date } | null> {
-  const pool = await ensureLoginGateTables()
-  const sessionHash = hashLoginCode(sessionCode)
-
-  const [rows] = await pool.query<LoginSessionRow[]>(
-    "SELECT email, session_code_hash, expires_at FROM login_sessions WHERE session_code_hash = ? LIMIT 1",
-    [sessionHash]
-  )
-
-  if (rows.length === 0) {
-    return null
-  }
-
-  const row = rows[0]
-  const now = new Date()
-
-  if (row.expires_at <= now) {
-    await pool.execute<ResultSetHeader>(
-      "DELETE FROM login_sessions WHERE session_code_hash = ?",
-      [sessionHash]
-    )
-    return null
-  }
-
-  return { email: row.email, expiresAt: row.expires_at }
-}
-
 export async function hasActiveLoginSession(email: string): Promise<boolean> {
   const pool = await ensureLoginGateTables()
   const normalizedEmail = normalizeEmail(email)
 
   const [rows] = await pool.query<LoginSessionRow[]>(
-    "SELECT expires_at FROM login_sessions WHERE email = ? LIMIT 1",
+    "SELECT expires_at, session_token_hash FROM login_sessions WHERE email = ? LIMIT 1",
     [normalizedEmail]
   )
 
@@ -229,7 +208,63 @@ export async function hasActiveLoginSession(email: string): Promise<boolean> {
     return false
   }
 
-  return true
+  return typeof row.session_token_hash === "string" && row.session_token_hash.length > 0
+}
+
+export async function getLoginSessionByToken(
+  token: string
+): Promise<{ email: string; expiresAt: Date } | null> {
+  const pool = await ensureLoginGateTables()
+  const tokenHash = hashLoginCode(token)
+
+  const [rows] = await pool.query<LoginSessionRow[]>(
+    "SELECT email, session_token_hash, expires_at FROM login_sessions WHERE session_token_hash = ? LIMIT 1",
+    [tokenHash]
+  )
+
+  if (rows.length === 0) {
+    return null
+  }
+
+  const row = rows[0]
+  const now = new Date()
+
+  if (row.expires_at <= now) {
+    await pool.execute<ResultSetHeader>(
+      "DELETE FROM login_sessions WHERE session_token_hash = ?",
+      [tokenHash]
+    )
+    return null
+  }
+
+  return { email: row.email, expiresAt: row.expires_at }
+}
+
+export function generateLoginSessionToken(): string {
+  return generateRandomHex(48)
+}
+
+export async function saveLoginSessionToken(
+  email: string,
+  token: string,
+  expiresAt: Date
+): Promise<void> {
+  const pool = await ensureLoginGateTables()
+  const normalizedEmail = normalizeEmail(email)
+  const tokenHash = hashLoginCode(token)
+
+  await pool.execute<ResultSetHeader>(
+    `
+      INSERT INTO login_sessions (email, session_token_hash, session_code_hash, expires_at, created_at, updated_at)
+      VALUES (?, ?, NULL, ?, NOW(), NOW())
+      ON DUPLICATE KEY UPDATE
+        session_token_hash = VALUES(session_token_hash),
+        session_code_hash = NULL,
+        expires_at = VALUES(expires_at),
+        updated_at = NOW()
+    `,
+    [normalizedEmail, tokenHash, expiresAt]
+  )
 }
 
 export async function consumeLoginCode(email: string, code: string): Promise<boolean> {

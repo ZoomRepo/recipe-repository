@@ -1,7 +1,7 @@
 // app/auth/login/page.tsx
 "use client"
 
-import { Suspense, useCallback, useEffect, useState } from "react"
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 
@@ -17,10 +17,9 @@ const gateEnabled =
       process.env.NEXT_PUBLIC_TEMP_LOGIN_ENABLED === "1"
     : true
 
-const LOCAL_SESSION_KEY = "findmyrecipe.loginSession"
+const SUCCESS_REDIRECT_DELAY = 300
 
 export default function LoginPage() {
-  // ⬇️ Wrap the component that uses useSearchParams() in Suspense
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
       <LoginPageInner />
@@ -28,7 +27,6 @@ export default function LoginPage() {
   )
 }
 
-// Everything below is your original logic, moved into an inner component
 function LoginPageInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -40,13 +38,26 @@ function LoginPageInner() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isCheckingSession, setIsCheckingSession] = useState(gateEnabled)
 
-  const redirectParam = searchParams?.get("redirect") || "/"
-  const redirectPath = redirectParam.startsWith("/") ? redirectParam : "/"
+  const redirectParam = searchParams?.get("redirect") ?? "/"
+  const redirectPath = useMemo(() => {
+    if (!redirectParam.startsWith("/")) {
+      return "/"
+    }
+
+    if (redirectParam.startsWith("/auth")) {
+      return "/"
+    }
+
+    return redirectParam
+  }, [redirectParam])
+
+  const redirectError = searchParams?.get("error")
 
   const redirectToApp = useCallback(
     (statusMessage = "Redirecting you now...") => {
       setError(null)
       setMessage(statusMessage)
+
       setTimeout(() => {
         if (typeof window !== "undefined") {
           window.location.replace(redirectPath)
@@ -54,65 +65,10 @@ function LoginPageInner() {
           router.replace(redirectPath)
           router.refresh()
         }
-      }, 300)
+      }, SUCCESS_REDIRECT_DELAY)
     },
     [redirectPath, router]
   )
-
-  const restoreSessionFromStorage = useCallback(async () => {
-    if (typeof window === "undefined") return false
-
-    const raw = window.localStorage.getItem(LOCAL_SESSION_KEY)
-    if (!raw) return false
-
-    let stored: { email?: string; code?: string } | null = null
-    try {
-      stored = JSON.parse(raw)
-    } catch {
-      window.localStorage.removeItem(LOCAL_SESSION_KEY)
-      return false
-    }
-
-    if (!stored?.code) {
-      window.localStorage.removeItem(LOCAL_SESSION_KEY)
-      return false
-    }
-
-    try {
-      const response = await fetch("/api/auth/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        cache: "no-store",
-        body: JSON.stringify({ code: stored.code }),
-      })
-
-      if (response.ok) {
-        const data: { authenticated?: boolean; email?: string } = await response.json()
-        if (data?.authenticated) {
-          if (data.email) {
-            window.localStorage.setItem(
-              LOCAL_SESSION_KEY,
-              JSON.stringify({ email: data.email, code: stored.code })
-            )
-          }
-          redirectToApp("Welcome back! Redirecting you now...")
-          return true
-        }
-      } else if (response.status === 401) {
-        window.localStorage.removeItem(LOCAL_SESSION_KEY)
-      }
-    } catch {
-      // ignore and continue to login form
-    }
-
-    return false
-  }, [redirectToApp])
-
-  useEffect(() => {
-    setError(null)
-    setMessage(null)
-  }, [step])
 
   useEffect(() => {
     if (!gateEnabled) {
@@ -121,6 +77,7 @@ function LoginPageInner() {
     }
 
     let cancelled = false
+
     const checkSession = async () => {
       setIsCheckingSession(true)
       try {
@@ -131,33 +88,48 @@ function LoginPageInner() {
         })
 
         if (!cancelled && response.ok) {
-          const data: { authenticated?: boolean } = await response.json()
+          const data: { authenticated?: boolean } = await response.json().catch(() => ({}))
           if (data?.authenticated) {
             redirectToApp("You're already signed in. Redirecting...")
             return
           }
         }
-
-        if (!cancelled) {
-          const restored = await restoreSessionFromStorage()
-          if (restored) return
-        }
       } catch {
-        // ignore errors and allow normal flow
+        // ignore fetch failures and allow normal flow
       } finally {
-        if (!cancelled) setIsCheckingSession(false)
+        if (!cancelled) {
+          setIsCheckingSession(false)
+        }
       }
     }
 
     checkSession()
+
     return () => {
       cancelled = true
     }
-  }, [restoreSessionFromStorage, redirectToApp])
+  }, [redirectToApp])
+
+  useEffect(() => {
+    if (!redirectError) {
+      return
+    }
+
+    setError(
+      redirectError === "session"
+        ? "We couldn't restore your access automatically. Please request a new code."
+        : "We couldn't restore your access. Please try again."
+    )
+  }, [redirectError])
+
+  useEffect(() => {
+    setError(null)
+    setMessage(null)
+  }, [step])
 
   const handleRequestCode = async (event: React.FormEvent) => {
     event.preventDefault()
-    if (isCheckingSession) return
+
     if (!gateEnabled) {
       setError("Temporary login is currently disabled.")
       return
@@ -180,17 +152,10 @@ function LoginPageInner() {
         throw new Error(data?.error || "Unable to send login code")
       }
 
-      const data = await response.json().catch(() => null)
+      const data: { alreadyVerified?: boolean } = await response.json().catch(() => ({}))
+
       if (data?.alreadyVerified) {
-        setMessage("You're already verified on this device. Restoring your access...")
-        setIsCheckingSession(true)
-        const restored = await restoreSessionFromStorage()
-        if (!restored) {
-          setIsCheckingSession(false)
-          setMessage(
-            "We couldn't restore your access automatically. Please try again or contact support."
-          )
-        }
+        redirectToApp("You're already verified. Redirecting...")
         return
       }
 
@@ -205,11 +170,12 @@ function LoginPageInner() {
 
   const handleVerifyCode = async (event: React.FormEvent) => {
     event.preventDefault()
-    if (isCheckingSession) return
+
     if (!gateEnabled) {
       setError("Temporary login is currently disabled.")
       return
     }
+
     if (code.length !== 6) {
       setError("Please enter the full 6-digit code")
       return
@@ -226,18 +192,28 @@ function LoginPageInner() {
         body: JSON.stringify({ email, code }),
       })
 
-      if (!response.ok) {
-        const data = await response.json().catch(() => null)
+      const data: { authenticated?: boolean; error?: string } | null = await response
+        .json()
+        .catch(() => null)
+
+      if (!response.ok || !data?.authenticated) {
         throw new Error(data?.error || "Invalid or expired code")
       }
 
-      const data: { sessionCode?: string; expiresAt?: string } = await response.json().catch(() => ({}))
+      setMessage("Code accepted. Finishing sign-in...")
 
-      if (typeof window !== "undefined" && data?.sessionCode) {
-        window.localStorage.setItem(
-          LOCAL_SESSION_KEY,
-          JSON.stringify({ email, code: data.sessionCode })
-        )
+      const sessionResponse = await fetch("/api/auth/session", {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+      })
+
+      const sessionData: { authenticated?: boolean } | null = await sessionResponse
+        .json()
+        .catch(() => null)
+
+      if (!sessionResponse.ok || !sessionData?.authenticated) {
+        throw new Error("We couldn't confirm your session. Please try again.")
       }
 
       redirectToApp("Success! Redirecting you now...")
@@ -279,6 +255,7 @@ function LoginPageInner() {
                     required
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
+                    disabled={isSubmitting || isCheckingSession}
                   />
                 </div>
                 {error && <p className="text-sm text-destructive">{error}</p>}
@@ -296,6 +273,7 @@ function LoginPageInner() {
                     value={code}
                     onChange={(value) => setCode(value)}
                     containerClassName="justify-between"
+                    disabled={isSubmitting || isCheckingSession}
                   >
                     <InputOTPGroup className="gap-2">
                       {Array.from({ length: 6 }).map((_, index) => (
@@ -321,6 +299,8 @@ function LoginPageInner() {
                     onClick={() => {
                       setStep("email")
                       setCode("")
+                      setMessage(null)
+                      setError(null)
                     }}
                   >
                     Use a different email
