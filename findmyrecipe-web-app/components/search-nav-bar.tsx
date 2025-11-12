@@ -1,31 +1,30 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import type React from "react"
 
 interface SearchNavBarProps {
   searchQuery: string
-  setSearchQuery: (query: string) => void
+  onSearchChange: (query: string) => void
+  onSearchSubmit: (query: string) => void
 }
 
-export default function SearchNavBar({ searchQuery, setSearchQuery }: SearchNavBarProps) {
-  const router = useRouter()
+export default function SearchNavBar({ searchQuery, onSearchChange, onSearchSubmit }: SearchNavBarProps) {
   const user = null
 
   const handleSearchChange = (value: string) => {
-    setSearchQuery(value)
+    onSearchChange(value)
     if (value.trim()) {
-      router.push(`/results?q=${encodeURIComponent(value)}`)
+      onSearchSubmit(value)
+    } else {
+      onSearchSubmit("")
     }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      if (searchQuery.trim()) {
-        router.push(`/results?q=${encodeURIComponent(searchQuery)}`)
-      }
+      onSearchSubmit(searchQuery)
     }
   }
 
