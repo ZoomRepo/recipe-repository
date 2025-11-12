@@ -1,0 +1,209 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1,
+    "analysis": {
+      "filter": {
+        "english_stop": {
+          "type": "stop",
+          "stopwords": "_english_"
+        },
+        "english_stemmer": {
+          "type": "stemmer",
+          "name": "english"
+        },
+        "recipe_shingle": {
+          "type": "shingle",
+          "min_shingle_size": 2,
+          "max_shingle_size": 3,
+          "output_unigrams": true
+        }
+      },
+      "normalizer": {
+        "lowercase_keyword": {
+          "type": "custom",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      },
+      "analyzer": {
+        "recipe_text": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "english_stop",
+            "english_stemmer"
+          ]
+        },
+        "recipe_shingle": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "english_stop",
+            "english_stemmer",
+            "recipe_shingle"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "false",
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "source_name": {
+        "type": "keyword",
+        "normalizer": "lowercase_keyword",
+        "fields": {
+          "text": {
+            "type": "text",
+            "analyzer": "recipe_text"
+          }
+        }
+      },
+      "source_url": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "recipe_text",
+        "fields": {
+          "shingles": {
+            "type": "text",
+            "analyzer": "recipe_shingle"
+          },
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 512
+          }
+        }
+      },
+      "description": {
+        "type": "text",
+        "analyzer": "recipe_text"
+      },
+      "image": {
+        "type": "keyword",
+        "index": false
+      },
+      "instructions": {
+        "type": "text",
+        "analyzer": "recipe_text",
+        "fields": {
+          "shingles": {
+            "type": "text",
+            "analyzer": "recipe_shingle"
+          }
+        }
+      },
+      "ingredients": {
+        "type": "nested",
+        "properties": {
+          "name": {
+            "type": "text",
+            "analyzer": "recipe_text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "normalizer": "lowercase_keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "quantity": {
+            "type": "text",
+            "analyzer": "recipe_text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 64
+              }
+            }
+          },
+          "unit": {
+            "type": "keyword",
+            "normalizer": "lowercase_keyword",
+            "ignore_above": 64
+          },
+          "raw": {
+            "type": "text",
+            "analyzer": "recipe_text"
+          }
+        }
+      },
+      "prep_time": {
+        "type": "keyword",
+        "ignore_above": 128
+      },
+      "cook_time": {
+        "type": "keyword",
+        "ignore_above": 128
+      },
+      "total_time": {
+        "type": "keyword",
+        "ignore_above": 128
+      },
+      "servings": {
+        "type": "keyword",
+        "ignore_above": 128
+      },
+      "author": {
+        "type": "keyword",
+        "normalizer": "lowercase_keyword",
+        "fields": {
+          "text": {
+            "type": "text",
+            "analyzer": "recipe_text"
+          }
+        }
+      },
+      "categories": {
+        "type": "keyword",
+        "normalizer": "lowercase_keyword",
+        "fields": {
+          "text": {
+            "type": "text",
+            "analyzer": "recipe_text"
+          }
+        }
+      },
+      "tags": {
+        "type": "keyword",
+        "normalizer": "lowercase_keyword",
+        "fields": {
+          "text": {
+            "type": "text",
+            "analyzer": "recipe_text"
+          }
+        }
+      },
+      "nutrients": {
+        "type": "object",
+        "dynamic": "true"
+      },
+      "created_at": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_second"
+      },
+      "updated_at": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_second"
+      },
+      "raw": {
+        "type": "object",
+        "enabled": false
+      },
+      "suggest": {
+        "type": "completion",
+        "analyzer": "recipe_text",
+        "preserve_separators": true,
+        "preserve_position_increments": true
+      }
+    }
+  }
+}
