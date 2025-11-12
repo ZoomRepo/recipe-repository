@@ -1,0 +1,13 @@
+# Default Elasticsearch configuration for the recipe repository stack.
+# Sensitive values such as passwords should be injected using environment
+# variables or an external secrets manager.
+
+cluster:
+  url: ${ELASTICSEARCH_URL:-http://elasticsearch:9200}
+  username: ${ELASTICSEARCH_USERNAME:-}
+  password: ${ELASTICSEARCH_PASSWORD:-}
+  timeout: ${ELASTICSEARCH_TIMEOUT:-10}
+
+indices:
+  recipe: ${ELASTICSEARCH_RECIPE_INDEX:-recipes}
+  scraper: ${ELASTICSEARCH_SCRAPER_INDEX:-scraper-events}

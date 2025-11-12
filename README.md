@@ -147,6 +147,52 @@ python -m webapp
 The server listens on `http://127.0.0.1:8000/` by default. Adjust the `PORT`
 environment variable if you need to use a different port.
 
+### Provisioning Elasticsearch
+
+The scraper and Flask app can push documents to Elasticsearch for downstream
+search, analytics, or monitoring. A single-node cluster is defined in
+`docker-compose.elasticsearch.yml` and can be launched locally with Docker:
+
+```bash
+docker compose -f docker-compose.elasticsearch.yml up -d
+```
+
+The compose file provisions a secured node that listens on port `9200` and
+generates the `elastic` superuser. Provide a strong password via the
+`ELASTICSEARCH_PASSWORD` environment variable before starting the container so
+the secret is never written to disk in plain text.
+
+Configure both the scraper and web application with matching credentials.
+Environment variables are the preferred mechanism so secrets remain outside of
+version control. The repository includes a `.env.example` template covering the
+required values:
+
+```bash
+cp .env.example .env
+# edit .env to suit your environment
+```
+
+At minimum you should define the cluster URL and the indices used to store
+recipes and scraper metadata:
+
+```bash
+export ELASTICSEARCH_URL=http://localhost:9200
+export ELASTICSEARCH_USERNAME=elastic
+export ELASTICSEARCH_PASSWORD=super-secret
+export ELASTICSEARCH_RECIPE_INDEX=recipes
+export ELASTICSEARCH_SCRAPER_INDEX=scraper-events
+```
+
+Verify connectivity from the application container or your workstation using the
+health check script:
+
+```bash
+python -m webapp.scripts.es_healthcheck --check-indices
+```
+
+The command pings the cluster, waits for at least the `yellow` health status,
+and optionally ensures the configured indices exist.
+
 ### Temporary email login gate (Next.js app)
 
 The modern `findmyrecipe-web-app` front-end can require visitors to request a

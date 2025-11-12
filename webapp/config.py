@@ -73,6 +73,37 @@ class MailConfig:
 
 
 @dataclass(frozen=True)
+class ElasticsearchConfig:
+    """Connection information for the Elasticsearch cluster."""
+
+    url: str = "http://localhost:9200"
+    username: str | None = None
+    password: str | None = None
+    recipe_index: str = "recipes"
+    scraper_index: str = "scraper-events"
+    timeout: int = 10
+
+    @classmethod
+    def from_env(cls, prefix: str = "ELASTICSEARCH_") -> "ElasticsearchConfig":
+        """Create the configuration from environment variables."""
+
+        url = os.getenv(f"{prefix}URL", cls.url)
+        username = os.getenv(f"{prefix}USERNAME")
+        password = os.getenv(f"{prefix}PASSWORD")
+        recipe_index = os.getenv(f"{prefix}RECIPE_INDEX", cls.recipe_index)
+        scraper_index = os.getenv(f"{prefix}SCRAPER_INDEX", cls.scraper_index)
+        timeout = int(os.getenv(f"{prefix}TIMEOUT", cls.timeout))
+        return cls(
+            url=url,
+            username=username,
+            password=password,
+            recipe_index=recipe_index,
+            scraper_index=scraper_index,
+            timeout=timeout,
+        )
+
+
+@dataclass(frozen=True)
 class LoginGateConfig:
     """Configuration for the temporary email login gate."""
 
@@ -109,6 +140,7 @@ class AppConfig:
     secret_key: str = "dev-secret-key"
     login_gate: LoginGateConfig = LoginGateConfig()
     mail: MailConfig = MailConfig()
+    elasticsearch: ElasticsearchConfig = ElasticsearchConfig()
 
     @classmethod
     def from_env(cls) -> "AppConfig":
@@ -119,10 +151,12 @@ class AppConfig:
         secret_key = os.getenv("SECRET_KEY", cls.secret_key)
         login_gate = LoginGateConfig.from_env()
         mail = MailConfig.from_env()
+        elasticsearch = ElasticsearchConfig.from_env()
         return cls(
             database=database,
             page_size=page_size,
             secret_key=secret_key,
             login_gate=login_gate,
             mail=mail,
+            elasticsearch=elasticsearch,
         )
