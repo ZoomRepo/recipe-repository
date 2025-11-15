@@ -5,6 +5,9 @@ import argparse
 import sys
 from typing import Iterable
 
+from elasticsearch import Elasticsearch
+from elasticsearch.exceptions import ApiError, TransportError
+
 from webapp.config import AppConfig
 from webapp.scripts.es_utils import ES_EXCEPTIONS, build_client, index_exists
 
@@ -51,7 +54,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             wait_for_status=args.expected_status,
             request_timeout=es_config.timeout,
         )
-    except ES_EXCEPTIONS as exc:
+    except (TransportError, ApiError) as exc:
         print(f"Cluster health check failed: {exc}", file=sys.stderr)
         return 2
 
@@ -64,7 +67,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             try:
                 if not index_exists(client, name):
                     missing.append(name)
-            except ES_EXCEPTIONS as exc:
+            except (TransportError, ApiError) as exc:
                 print(f"Failed to inspect index '{name}': {exc}", file=sys.stderr)
                 return 2
         if missing:
