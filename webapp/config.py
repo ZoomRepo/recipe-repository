@@ -79,6 +79,7 @@ class ElasticsearchConfig:
     url: str = "http://localhost:9200"
     username: str | None = None
     password: str | None = None
+    api_key: str | None = None
     recipe_index: str = "recipes"
     scraper_index: str = "scraper-events"
     timeout: int = 10
@@ -90,6 +91,7 @@ class ElasticsearchConfig:
         url = os.getenv(f"{prefix}URL", cls.url)
         username = os.getenv(f"{prefix}USERNAME")
         password = os.getenv(f"{prefix}PASSWORD")
+        api_key = os.getenv(f"{prefix}API_KEY")
         recipe_index = os.getenv(f"{prefix}RECIPE_INDEX", cls.recipe_index)
         scraper_index = os.getenv(f"{prefix}SCRAPER_INDEX", cls.scraper_index)
         timeout = int(os.getenv(f"{prefix}TIMEOUT", cls.timeout))
@@ -97,6 +99,7 @@ class ElasticsearchConfig:
             url=url,
             username=username,
             password=password,
+            api_key=api_key,
             recipe_index=recipe_index,
             scraper_index=scraper_index,
             timeout=timeout,

@@ -179,6 +179,8 @@ recipes and scraper metadata:
 export ELASTICSEARCH_URL=http://localhost:9200
 export ELASTICSEARCH_USERNAME=elastic
 export ELASTICSEARCH_PASSWORD=super-secret
+# alternatively, you can provide a single API key instead of username/password
+# export ELASTICSEARCH_API_KEY=base64encoded:secret
 export ELASTICSEARCH_RECIPE_INDEX=recipes
 export ELASTICSEARCH_SCRAPER_INDEX=scraper-events
 ```
