@@ -192,6 +192,10 @@ health check script:
 python -m webapp.scripts.es_healthcheck --check-indices
 ```
 
+Both the health check and setup scripts automatically load the repository's
+`.env` file (when present), so any credentials stored there are applied even if
+the variables are not exported in your shell session.
+
 The command pings the cluster, waits for at least the `yellow` health status,
 and optionally ensures the configured indices exist.
 

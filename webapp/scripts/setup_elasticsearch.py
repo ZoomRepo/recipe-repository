@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Iterable
 
 from webapp.config import AppConfig
+from webapp.scripts.env_loader import load_dotenv_if_available
 from webapp.scripts.es_utils import ES_EXCEPTIONS, build_client, index_exists
 
 
@@ -68,6 +69,7 @@ def _load_mapping(path: Path) -> dict:
 
 
 def main(argv: Iterable[str] | None = None) -> int:
+    load_dotenv_if_available()
     args = _parse_args(argv or [])
     config = AppConfig.from_env()
     es_config = config.elasticsearch
