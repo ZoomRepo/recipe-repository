@@ -11,6 +11,7 @@ from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import ApiError, TransportError
 
 from webapp.config import AppConfig
+from webapp.scripts.es_utils import ES_EXCEPTIONS, build_client, index_exists
 
 
 DEFAULT_MAPPING_PATH = (
@@ -71,7 +72,7 @@ def main(argv: Iterable[str] | None = None) -> int:
     aliases = mapping.get("aliases")
 
     try:
-        client = _build_client(config)
+        client = build_client(config)
     except Exception as exc:  # pragma: no cover - defensive guard
         print(f"Failed to create Elasticsearch client: {exc}", file=sys.stderr)
         return 2
