@@ -132,3 +132,33 @@ class BuildClientTests(unittest.TestCase):
             request_timeout=config.elasticsearch.timeout,
             api_key="cli-key",
         )
+
+    def test_extracts_credentials_from_url_when_not_configured(self) -> None:
+        config = AppConfig(
+            elasticsearch=ElasticsearchConfig(
+                url="https://embedded:secret@es.example:9243/sub", password=None
+            )
+        )
+
+        es_utils.build_client(config)
+
+        self.mock_es.assert_called_once_with(
+            "https://es.example:9243/sub",
+            request_timeout=config.elasticsearch.timeout,
+            basic_auth=("embedded", "secret"),
+        )
+
+    def test_cli_overrides_embedded_credentials(self) -> None:
+        config = AppConfig(
+            elasticsearch=ElasticsearchConfig(
+                url="https://embedded:secret@es.example:9243/sub"
+            )
+        )
+
+        es_utils.build_client(config, username="cli", password="override")
+
+        self.mock_es.assert_called_once_with(
+            "https://es.example:9243/sub",
+            request_timeout=config.elasticsearch.timeout,
+            basic_auth=("cli", "override"),
+        )

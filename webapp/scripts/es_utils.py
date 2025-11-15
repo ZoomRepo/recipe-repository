@@ -1,6 +1,8 @@
 """Shared helpers for Elasticsearch admin scripts."""
 from __future__ import annotations
 
+from urllib.parse import SplitResult, urlsplit, urlunsplit
+
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import BadRequestError, NotFoundError, TransportError
 
@@ -18,6 +20,36 @@ from webapp.config import AppConfig
 ES_EXCEPTIONS: tuple[type[Exception], ...] = (TransportError, ApiError)
 
 
+def _strip_userinfo(url: str) -> tuple[str, str | None, str | None]:
+    """Return the URL without embedded credentials and any parsed user info."""
+
+    parts = urlsplit(url)
+    username = parts.username
+    password = parts.password
+
+    if username is None and password is None:
+        return url, None, None
+
+    host = parts.hostname or ""
+    if ":" in host and not host.startswith("["):
+        host = f"[{host}]"
+
+    netloc = host
+    if parts.port is not None:
+        netloc = f"{netloc}:{parts.port}"
+
+    sanitized = urlunsplit(
+        SplitResult(
+            scheme=parts.scheme,
+            netloc=netloc,
+            path=parts.path,
+            query=parts.query,
+            fragment=parts.fragment,
+        )
+    )
+    return sanitized, username, password
+
+
 def build_client(
     config: AppConfig,
     *,
@@ -28,18 +60,31 @@ def build_client(
     """Create an Elasticsearch client using the provided app configuration."""
 
     es_config = config.elasticsearch
+    sanitized_url, embedded_username, embedded_password = _strip_userinfo(es_config.url)
     kwargs = {"request_timeout": es_config.timeout}
 
     resolved_api_key = api_key or es_config.api_key
-    resolved_username = username if username is not None else es_config.username
-    resolved_password = password if password is not None else es_config.password
+    resolved_username = (
+        username
+        if username is not None
+        else es_config.username
+        if es_config.username is not None
+        else embedded_username
+    )
+    resolved_password = (
+        password
+        if password is not None
+        else es_config.password
+        if es_config.password is not None
+        else embedded_password
+    )
 
     if resolved_api_key:
         kwargs["api_key"] = resolved_api_key
     elif resolved_username:
         kwargs["basic_auth"] = (resolved_username, resolved_password or "")
 
-    return Elasticsearch(es_config.url, **kwargs)
+    return Elasticsearch(sanitized_url, **kwargs)
 
 
 def index_exists(client: Elasticsearch, index_name: str) -> bool:
