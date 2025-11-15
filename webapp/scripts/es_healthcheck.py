@@ -5,10 +5,8 @@ import argparse
 import sys
 from typing import Iterable
 
-from elasticsearch import Elasticsearch
-from elasticsearch.exceptions import ApiError, TransportError
-
 from webapp.config import AppConfig
+from webapp.scripts.env_loader import load_dotenv_if_available
 from webapp.scripts.es_utils import ES_EXCEPTIONS, build_client, index_exists
 
 
@@ -32,16 +30,40 @@ def _parse_args(argv: Iterable[str]) -> argparse.Namespace:
         action="store_true",
         help="Also verify that the configured indices exist.",
     )
+    parser.add_argument(
+        "--username",
+        help="Override the Elasticsearch username from the environment.",
+    )
+    parser.add_argument(
+        "--password",
+        help=(
+            "Override the Elasticsearch password from the environment. "
+            "Use with --username."
+        ),
+    )
+    parser.add_argument(
+        "--api-key",
+        help=(
+            "Provide a base64 encoded Elasticsearch API key. "
+            "Takes precedence over --username/--password."
+        ),
+    )
     return parser.parse_args(list(argv))
 
 
 def main(argv: Iterable[str] | None = None) -> int:
+    load_dotenv_if_available()
     args = _parse_args(argv or [])
     config = AppConfig.from_env()
     es_config = config.elasticsearch
 
     try:
-        client = build_client(config)
+        client = build_client(
+            config,
+            username=args.username,
+            password=args.password,
+            api_key=args.api_key,
+        )
     except Exception as exc:  # pragma: no cover - defensive guard
         print(f"Failed to create Elasticsearch client: {exc}", file=sys.stderr)
         return 2
@@ -54,7 +76,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             wait_for_status=args.expected_status,
             request_timeout=es_config.timeout,
         )
-    except (TransportError, ApiError) as exc:
+    except ES_EXCEPTIONS as exc:
         print(f"Cluster health check failed: {exc}", file=sys.stderr)
         return 2
 
@@ -67,7 +89,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             try:
                 if not index_exists(client, name):
                     missing.append(name)
-            except (TransportError, ApiError) as exc:
+            except ES_EXCEPTIONS as exc:
                 print(f"Failed to inspect index '{name}': {exc}", file=sys.stderr)
                 return 2
         if missing:

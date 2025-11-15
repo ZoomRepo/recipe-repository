@@ -18,13 +18,27 @@ from webapp.config import AppConfig
 ES_EXCEPTIONS: tuple[type[Exception], ...] = (TransportError, ApiError)
 
 
-def build_client(config: AppConfig) -> Elasticsearch:
+def build_client(
+    config: AppConfig,
+    *,
+    username: str | None = None,
+    password: str | None = None,
+    api_key: str | None = None,
+) -> Elasticsearch:
     """Create an Elasticsearch client using the provided app configuration."""
 
     es_config = config.elasticsearch
     kwargs = {"request_timeout": es_config.timeout}
-    if es_config.username:
-        kwargs["basic_auth"] = (es_config.username, es_config.password or "")
+
+    resolved_api_key = api_key or es_config.api_key
+    resolved_username = username if username is not None else es_config.username
+    resolved_password = password if password is not None else es_config.password
+
+    if resolved_api_key:
+        kwargs["api_key"] = resolved_api_key
+    elif resolved_username:
+        kwargs["basic_auth"] = (resolved_username, resolved_password or "")
+
     return Elasticsearch(es_config.url, **kwargs)
 
 

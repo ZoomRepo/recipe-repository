@@ -7,10 +7,8 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
-from elasticsearch import Elasticsearch
-from elasticsearch.exceptions import ApiError, TransportError
-
 from webapp.config import AppConfig
+from webapp.scripts.env_loader import load_dotenv_if_available
 from webapp.scripts.es_utils import ES_EXCEPTIONS, build_client, index_exists
 
 
@@ -38,15 +36,25 @@ def _parse_args(argv: Iterable[str]) -> argparse.Namespace:
         action="store_true",
         help="Delete any existing index before creating it again.",
     )
+    parser.add_argument(
+        "--username",
+        help="Override the Elasticsearch username from the environment.",
+    )
+    parser.add_argument(
+        "--password",
+        help=(
+            "Override the Elasticsearch password from the environment. "
+            "Use with --username."
+        ),
+    )
+    parser.add_argument(
+        "--api-key",
+        help=(
+            "Provide a base64 encoded Elasticsearch API key. "
+            "Takes precedence over --username/--password."
+        ),
+    )
     return parser.parse_args(list(argv))
-
-
-def _build_client(config: AppConfig) -> Elasticsearch:
-    es_config = config.elasticsearch
-    kwargs = {"request_timeout": es_config.timeout}
-    if es_config.username:
-        kwargs["basic_auth"] = ("elastic", "alskdjf")
-    return Elasticsearch(es_config.url, **kwargs)
 
 
 def _load_mapping(path: Path) -> dict:
@@ -61,6 +69,7 @@ def _load_mapping(path: Path) -> dict:
 
 
 def main(argv: Iterable[str] | None = None) -> int:
+    load_dotenv_if_available()
     args = _parse_args(argv or [])
     config = AppConfig.from_env()
     es_config = config.elasticsearch
@@ -72,14 +81,19 @@ def main(argv: Iterable[str] | None = None) -> int:
     aliases = mapping.get("aliases")
 
     try:
-        client = build_client(config)
+        client = build_client(
+            config,
+            username=args.username,
+            password=args.password,
+            api_key=args.api_key,
+        )
     except Exception as exc:  # pragma: no cover - defensive guard
         print(f"Failed to create Elasticsearch client: {exc}", file=sys.stderr)
         return 2
 
     try:
-        exists = client.indices.exists(index=index_name)
-    except (TransportError, ApiError) as exc:
+        exists = index_exists(client, index_name)
+    except ES_EXCEPTIONS as exc:
         print(f"Failed to inspect index '{index_name}': {exc}", file=sys.stderr)
         return 2
 
@@ -88,7 +102,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             try:
                 client.indices.delete(index=index_name)
                 print(f"Deleted existing index '{index_name}'.")
-            except (TransportError, ApiError) as exc:
+            except ES_EXCEPTIONS as exc:
                 print(f"Failed to delete index '{index_name}': {exc}", file=sys.stderr)
                 return 2
         else:
@@ -102,7 +116,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             mappings=mappings,
             aliases=aliases,
         )
-    except (TransportError, ApiError) as exc:
+    except ES_EXCEPTIONS as exc:
         print(f"Failed to create index '{index_name}': {exc}", file=sys.stderr)
         return 2
 

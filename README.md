@@ -179,6 +179,8 @@ recipes and scraper metadata:
 export ELASTICSEARCH_URL=http://localhost:9200
 export ELASTICSEARCH_USERNAME=elastic
 export ELASTICSEARCH_PASSWORD=super-secret
+# alternatively, you can provide a single API key instead of username/password
+# export ELASTICSEARCH_API_KEY=base64encoded:secret
 export ELASTICSEARCH_RECIPE_INDEX=recipes
 export ELASTICSEARCH_SCRAPER_INDEX=scraper-events
 ```
@@ -189,6 +191,10 @@ health check script:
 ```bash
 python -m webapp.scripts.es_healthcheck --check-indices
 ```
+
+Both the health check and setup scripts automatically load the repository's
+`.env` file (when present), so any credentials stored there are applied even if
+the variables are not exported in your shell session.
 
 The command pings the cluster, waits for at least the `yellow` health status,
 and optionally ensures the configured indices exist.

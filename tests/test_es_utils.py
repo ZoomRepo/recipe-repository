@@ -4,6 +4,7 @@ from unittest import mock
 from elasticsearch.exceptions import BadRequestError, NotFoundError
 from elastic_transport import ApiResponseMeta, HttpHeaders, NodeConfig
 
+from webapp.config import AppConfig, ElasticsearchConfig
 from webapp.scripts import es_utils
 
 
@@ -59,3 +60,75 @@ class IndexExistsTests(unittest.TestCase):
 
         with self.assertRaises(BadRequestError):
             es_utils.index_exists(self.client, "recipes")
+
+
+class BuildClientTests(unittest.TestCase):
+    def setUp(self) -> None:
+        patcher = mock.patch("webapp.scripts.es_utils.Elasticsearch")
+        self.addCleanup(patcher.stop)
+        self.mock_es = patcher.start()
+
+    def test_uses_basic_auth_from_config(self) -> None:
+        config = AppConfig(
+            elasticsearch=ElasticsearchConfig(
+                url="http://es:9200", username="elastic", password="secret"
+            )
+        )
+
+        es_utils.build_client(config)
+
+        self.mock_es.assert_called_once_with(
+            "http://es:9200",
+            request_timeout=config.elasticsearch.timeout,
+            basic_auth=("elastic", "secret"),
+        )
+
+    def test_overrides_credentials_from_cli(self) -> None:
+        config = AppConfig(
+            elasticsearch=ElasticsearchConfig(
+                url="http://es:9200", username="elastic", password="secret"
+            )
+        )
+
+        es_utils.build_client(
+            config,
+            username="cli-user",
+            password="cli-pass",
+        )
+
+        self.mock_es.assert_called_once_with(
+            "http://es:9200",
+            request_timeout=config.elasticsearch.timeout,
+            basic_auth=("cli-user", "cli-pass"),
+        )
+
+    def test_prefers_api_key_when_available(self) -> None:
+        config = AppConfig(
+            elasticsearch=ElasticsearchConfig(
+                url="http://es:9200",
+                username="elastic",
+                password="secret",
+                api_key="encoded:key",
+            )
+        )
+
+        es_utils.build_client(config)
+
+        self.mock_es.assert_called_once_with(
+            "http://es:9200",
+            request_timeout=config.elasticsearch.timeout,
+            api_key="encoded:key",
+        )
+
+    def test_cli_api_key_overrides_config(self) -> None:
+        config = AppConfig(
+            elasticsearch=ElasticsearchConfig(url="http://es:9200")
+        )
+
+        es_utils.build_client(config, api_key="cli-key")
+
+        self.mock_es.assert_called_once_with(
+            "http://es:9200",
+            request_timeout=config.elasticsearch.timeout,
+            api_key="cli-key",
+        )
