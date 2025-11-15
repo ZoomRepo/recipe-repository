@@ -4,8 +4,8 @@
 
 cluster:
   url: ${ELASTICSEARCH_URL:-http://elasticsearch:9200}
-  username: ${ELASTICSEARCH_USERNAME:-}
-  password: ${ELASTICSEARCH_PASSWORD:-}
+  username: ${ELASTICSEARCH_USERNAME:elastic}
+  password: ${ELASTICSEARCH_PASSWORD:alskdjf}
   timeout: ${ELASTICSEARCH_TIMEOUT:-10}
 
 indices:
