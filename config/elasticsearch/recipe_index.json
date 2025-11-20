@@ -1,4 +1,7 @@
 {
+  "aliases": {
+    "recipes-search": {}
+  },
   "settings": {
     "number_of_shards": 1,
     "number_of_replicas": 1,
@@ -17,6 +20,11 @@
           "min_shingle_size": 2,
           "max_shingle_size": 3,
           "output_unigrams": true
+        },
+        "recipe_edge_ngram": {
+          "type": "edge_ngram",
+          "min_gram": 2,
+          "max_gram": 20
         }
       },
       "normalizer": {
@@ -33,6 +41,7 @@
           "tokenizer": "standard",
           "filter": [
             "lowercase",
+            "asciifolding",
             "english_stop",
             "english_stemmer"
           ]
@@ -42,9 +51,19 @@
           "tokenizer": "standard",
           "filter": [
             "lowercase",
+            "asciifolding",
             "english_stop",
             "english_stemmer",
             "recipe_shingle"
+          ]
+        },
+        "recipe_autocomplete": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "asciifolding",
+            "recipe_edge_ngram"
           ]
         }
       }
@@ -80,12 +99,23 @@
           "keyword": {
             "type": "keyword",
             "ignore_above": 512
+          },
+          "autocomplete": {
+            "type": "text",
+            "analyzer": "recipe_autocomplete",
+            "search_analyzer": "recipe_text"
           }
         }
       },
       "description": {
         "type": "text",
-        "analyzer": "recipe_text"
+        "analyzer": "recipe_text",
+        "fields": {
+          "shingles": {
+            "type": "text",
+            "analyzer": "recipe_shingle"
+          }
+        }
       },
       "image": {
         "type": "keyword",
@@ -112,18 +142,17 @@
                 "type": "keyword",
                 "normalizer": "lowercase_keyword",
                 "ignore_above": 256
+              },
+              "autocomplete": {
+                "type": "text",
+                "analyzer": "recipe_autocomplete",
+                "search_analyzer": "recipe_text"
               }
             }
           },
           "quantity": {
-            "type": "text",
-            "analyzer": "recipe_text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 64
-              }
-            }
+            "type": "keyword",
+            "ignore_above": 64
           },
           "unit": {
             "type": "keyword",
@@ -183,8 +212,7 @@
         }
       },
       "nutrients": {
-        "type": "object",
-        "dynamic": "true"
+        "type": "flattened"
       },
       "created_at": {
         "type": "date",
@@ -201,6 +229,7 @@
       "suggest": {
         "type": "completion",
         "analyzer": "recipe_text",
+        "search_analyzer": "recipe_text",
         "preserve_separators": true,
         "preserve_position_increments": true
       }
