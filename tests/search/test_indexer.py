@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime
 from unittest.mock import MagicMock, patch
 
+from webapp.config import AppConfig, ElasticsearchConfig
 from webapp.search.indexer import RecipeDocumentBuilder, RecipeSearchIndexer
 
 
@@ -45,6 +46,28 @@ class RecipeSearchIndexerTests(unittest.TestCase):
     def setUp(self) -> None:
         self.client = MagicMock()
         self.indexer = RecipeSearchIndexer(self.client, "recipes-index")
+
+    def test_from_config_sets_compatibility_headers(self) -> None:
+        es_config = ElasticsearchConfig(
+            url="http://localhost:9200",
+            compatibility_version=8,
+        )
+        config = AppConfig(elasticsearch=es_config)
+
+        with patch("webapp.search.indexer.Elasticsearch") as es:
+            es.return_value = MagicMock()
+            RecipeSearchIndexer.from_config(config)
+
+        self.assertTrue(es.called)
+        kwargs = es.call_args.kwargs
+        self.assertIn("headers", kwargs)
+        self.assertEqual(
+            kwargs["headers"],
+            {
+                "Accept": "application/vnd.elasticsearch+json; compatible-with=8",
+                "Content-Type": "application/vnd.elasticsearch+json; compatible-with=8",
+            },
+        )
 
     def test_upsert_row_indexes_document(self) -> None:
         row = {

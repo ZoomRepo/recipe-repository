@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+from contextlib import closing
 from itertools import islice
 from typing import Iterable, Iterator, List
 
@@ -43,15 +44,6 @@ def _chunked(iterable: Iterable[dict], size: int) -> Iterator[List[dict]]:
 
 def _fetch_recipes(config: AppConfig) -> Iterator[dict]:
     db = config.database
-    connection = mysql.connector.connect(
-        host=db.host,
-        port=db.port,
-        user=db.user,
-        password=db.password,
-        database=db.database,
-        charset="utf8mb4",
-        use_unicode=True,
-    )
     query = """
         SELECT
             id,
@@ -75,16 +67,20 @@ def _fetch_recipes(config: AppConfig) -> Iterator[dict]:
         FROM recipes
         ORDER BY id ASC
     """
-    cursor = None
-    try:
-        cursor = connection.cursor(dictionary=True)
+    with closing(
+        mysql.connector.connect(
+            host=db.host,
+            port=db.port,
+            user=db.user,
+            password=db.password,
+            database=db.database,
+            charset="utf8mb4",
+            use_unicode=True,
+        )
+    ) as connection, closing(connection.cursor(dictionary=True)) as cursor:
         cursor.execute(query)
         for row in cursor:
             yield dict(row)
-    finally:
-        if cursor is not None:
-            cursor.close()
-        connection.close()
 
 
 def main() -> int:

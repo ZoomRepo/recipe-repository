@@ -152,6 +152,15 @@ class RecipeSearchIndexer:
         if es_config.username or es_config.password:
             username = es_config.username or "elastic"
             kwargs["basic_auth"] = (username, es_config.password or "")
+        if es_config.compatibility_version:
+            version = es_config.compatibility_version
+            compat_header = (
+                "application/vnd.elasticsearch+json; compatible-with=%s" % version
+            )
+            kwargs["headers"] = {
+                "Accept": compat_header,
+                "Content-Type": compat_header,
+            }
         client = Elasticsearch(es_config.url, **kwargs)
         return cls(client, es_config.recipe_index)
 

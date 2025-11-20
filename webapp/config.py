@@ -82,6 +82,7 @@ class ElasticsearchConfig:
     recipe_index: str = "recipes"
     scraper_index: str = "scraper-events"
     timeout: int = 10
+    compatibility_version: int | None = 8
 
     @classmethod
     def from_env(cls, prefix: str = "ELASTICSEARCH_") -> "ElasticsearchConfig":
@@ -93,6 +94,12 @@ class ElasticsearchConfig:
         recipe_index = os.getenv(f"{prefix}RECIPE_INDEX", cls.recipe_index)
         scraper_index = os.getenv(f"{prefix}SCRAPER_INDEX", cls.scraper_index)
         timeout = int(os.getenv(f"{prefix}TIMEOUT", cls.timeout))
+        compatibility_raw = os.getenv(f"{prefix}COMPATIBILITY_VERSION")
+        compatibility_version = (
+            int(compatibility_raw)
+            if compatibility_raw is not None and compatibility_raw.strip()
+            else cls.compatibility_version
+        )
         return cls(
             url=url,
             username=username,
@@ -100,6 +107,7 @@ class ElasticsearchConfig:
             recipe_index=recipe_index,
             scraper_index=scraper_index,
             timeout=timeout,
+            compatibility_version=compatibility_version,
         )
 
 
