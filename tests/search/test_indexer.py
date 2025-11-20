@@ -60,10 +60,9 @@ class RecipeSearchIndexerTests(unittest.TestCase):
 
         self.assertTrue(es.called)
         kwargs = es.call_args.kwargs
-        self.assertEqual(
-            kwargs.get("compat_mimetype"),
-            "application/vnd.elasticsearch+json; compatible-with=8",
-        )
+        expected_header = "application/vnd.elasticsearch+json; compatible-with=8"
+        self.assertEqual(kwargs.get("headers", {}).get("Accept"), expected_header)
+        self.assertEqual(kwargs.get("headers", {}).get("Content-Type"), expected_header)
 
     def test_upsert_row_indexes_document(self) -> None:
         row = {
@@ -110,10 +109,9 @@ class RecipeSearchIndexerTests(unittest.TestCase):
             RecipeSearchIndexer.from_config(config)
 
         kwargs = es.call_args.kwargs
-        self.assertEqual(
-            kwargs.get("compat_mimetype"),
-            "application/vnd.elasticsearch+json; compatible-with=8",
-        )
+        expected_header = "application/vnd.elasticsearch+json; compatible-with=8"
+        self.assertEqual(kwargs.get("headers", {}).get("Accept"), expected_header)
+        self.assertEqual(kwargs.get("headers", {}).get("Content-Type"), expected_header)
         self.assertTrue(
             any("defaulting to 8" in message for message in log.output),
             log.output,
