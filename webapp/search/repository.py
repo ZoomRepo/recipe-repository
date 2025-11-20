@@ -174,13 +174,17 @@ class ElasticsearchSearchRepository(SearchRepository):
                     }
                 )
 
-        option_filters = self._build_option_filters(
-            cuisines or [], meals or [], diets or []
-        )
-        if option_filters:
-            filter_clauses.append(
-                {"bool": {"should": option_filters, "minimum_should_match": 1}}
-            )
+        cuisine_filters = self._build_option_filter_group(cuisines or [], CUISINE_LOOKUP)
+        if cuisine_filters:
+            filter_clauses.append(cuisine_filters)
+
+        meal_filters = self._build_option_filter_group(meals or [], MEAL_LOOKUP)
+        if meal_filters:
+            filter_clauses.append(meal_filters)
+
+        diet_filters = self._build_option_filter_group(diets or [], DIET_LOOKUP)
+        if diet_filters:
+            filter_clauses.append(diet_filters)
 
         query_body: Mapping[str, object] = {
             "query": {
@@ -202,32 +206,26 @@ class ElasticsearchSearchRepository(SearchRepository):
         }
         return query_body
 
-    def _build_option_filters(
-        self,
-        cuisines: Sequence[str],
-        meals: Sequence[str],
-        diets: Sequence[str],
-    ) -> list[Mapping[str, object]]:
-        clauses: list[Mapping[str, object]] = []
-        clauses.extend(self._build_filter_for_options(cuisines, CUISINE_LOOKUP))
-        clauses.extend(self._build_filter_for_options(meals, MEAL_LOOKUP))
-        clauses.extend(self._build_filter_for_options(diets, DIET_LOOKUP))
-        return clauses
-
-    def _build_filter_for_options(
+    def _build_option_filter_group(
         self, values: Sequence[str], lookup: Mapping[str, FilterOption]
-    ) -> list[Mapping[str, object]]:
-        filters: list[Mapping[str, object]] = []
+    ) -> Mapping[str, object] | None:
+        option_filters: list[Mapping[str, object]] = []
         for value in values:
             option = lookup.get(value)
             if not option:
                 continue
-            keyword_clauses: list[Mapping[str, object]] = []
+            keyword_filters: list[Mapping[str, object]] = []
             for keyword in option.normalized_keywords():
-                keyword_clauses.append(self._keyword_query(keyword))
-            if keyword_clauses:
-                filters.append({"bool": {"should": keyword_clauses}})
-        return filters
+                keyword_filters.append(self._keyword_query(keyword))
+            if keyword_filters:
+                option_filters.append(
+                    {"bool": {"should": keyword_filters, "minimum_should_match": 1}}
+                )
+
+        if not option_filters:
+            return None
+
+        return {"bool": {"should": option_filters, "minimum_should_match": 1}}
 
     def _keyword_query(self, keyword: str) -> Mapping[str, object]:
         return {
