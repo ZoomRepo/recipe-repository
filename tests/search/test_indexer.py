@@ -61,6 +61,7 @@ class RecipeSearchIndexerTests(unittest.TestCase):
         self.assertTrue(es.called)
         kwargs = es.call_args.kwargs
         self.assertIn("headers", kwargs)
+        self.assertFalse(kwargs.get("api_versioning", True))
         self.assertEqual(
             kwargs["headers"],
             {
@@ -114,6 +115,7 @@ class RecipeSearchIndexerTests(unittest.TestCase):
             RecipeSearchIndexer.from_config(config)
 
         kwargs = es.call_args.kwargs
+        self.assertFalse(kwargs.get("api_versioning", True))
         self.assertEqual(
             kwargs["headers"],
             {

@@ -163,6 +163,7 @@ class RecipeSearchIndexer:
             compat_header = (
                 "application/vnd.elasticsearch+json; compatible-with=%s" % version
             )
+            kwargs["api_versioning"] = False
             kwargs["headers"] = {
                 "Accept": compat_header,
                 "Content-Type": compat_header,
