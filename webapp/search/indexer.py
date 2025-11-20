@@ -154,6 +154,12 @@ class RecipeSearchIndexer:
             kwargs["basic_auth"] = (username, es_config.password or "")
         if es_config.compatibility_version:
             version = es_config.compatibility_version
+            if version not in (7, 8):
+                logger.warning(
+                    "Invalid Elasticsearch compatibility version '%s'; defaulting to 8",
+                    version,
+                )
+                version = 8
             compat_header = (
                 "application/vnd.elasticsearch+json; compatible-with=%s" % version
             )

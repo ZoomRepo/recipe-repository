@@ -100,6 +100,32 @@ class RecipeSearchIndexerTests(unittest.TestCase):
         self.assertEqual(actions[0]["_id"], 1)
         self.assertEqual(actions[1]["_source"], {"id": 2, "title": "Two"})
 
+    def test_invalid_compatibility_version_defaults_to_8(self) -> None:
+        es_config = ElasticsearchConfig(
+            url="http://localhost:9200",
+            compatibility_version=9,
+        )
+        config = AppConfig(elasticsearch=es_config)
+
+        with patch("webapp.search.indexer.Elasticsearch") as es, self.assertLogs(
+            "webapp.search.indexer", level="WARNING"
+        ) as log:
+            es.return_value = MagicMock()
+            RecipeSearchIndexer.from_config(config)
+
+        kwargs = es.call_args.kwargs
+        self.assertEqual(
+            kwargs["headers"],
+            {
+                "Accept": "application/vnd.elasticsearch+json; compatible-with=8",
+                "Content-Type": "application/vnd.elasticsearch+json; compatible-with=8",
+            },
+        )
+        self.assertTrue(
+            any("defaulting to 8" in message for message in log.output),
+            log.output,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
