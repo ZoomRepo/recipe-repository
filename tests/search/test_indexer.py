@@ -42,6 +42,26 @@ class RecipeDocumentBuilderTests(unittest.TestCase):
         self.assertEqual(document["created_at"], "2024-01-01T12:00:00")
         self.assertEqual(document["updated_at"], "2024-01-02T12:00:00")
 
+    def test_raw_objects_are_stringified_for_indexing(self) -> None:
+        row = {
+            "id": 6,
+            "raw": {
+                "json_ld": {
+                    "image": {
+                        "url": "https://example.com/image.jpg",
+                        "width": 400,
+                        "height": 300,
+                    }
+                }
+            },
+        }
+
+        document = RecipeDocumentBuilder.from_row(row)
+
+        self.assertIsInstance(document["raw"], dict)
+        self.assertIsInstance(document["raw"]["json_ld"], str)
+        self.assertIn("image.jpg", document["raw"]["json_ld"])
+
 
 class RecipeSearchIndexerTests(unittest.TestCase):
     def setUp(self) -> None:

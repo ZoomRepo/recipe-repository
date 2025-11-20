@@ -29,6 +29,8 @@ class RecipeDocumentBuilder:
         tags = cls._parse_json_list(row.get("tags"))
 
         title = cls._string_or_none(row.get("title"))
+        sanitized_raw = cls._sanitize_raw(raw_data)
+
         document: MutableMapping[str, object] = {
             "id": row.get("id"),
             "source_name": row.get("source_name"),
@@ -45,7 +47,7 @@ class RecipeDocumentBuilder:
             "author": cls._string_or_none(row.get("author")),
             "categories": categories,
             "tags": tags,
-            "raw": raw_data,
+            "raw": sanitized_raw,
             "nutrients": cls._extract_nutrients(raw_data),
             "created_at": cls._isoformat(row.get("created_at")),
             "updated_at": cls._isoformat(row.get("updated_at")),
@@ -116,6 +118,24 @@ class RecipeDocumentBuilder:
             return None
         nutrients = raw.get("nutrition")
         return nutrients if isinstance(nutrients, Mapping) else None
+
+    @classmethod
+    def _sanitize_raw(cls, raw: Mapping[str, object] | None) -> Mapping[str, object] | None:
+        if raw is None:
+            return None
+
+        sanitized: dict[str, object] = {}
+        for key, value in raw.items():
+            sanitized[key] = cls._sanitize_raw_value(value)
+        return sanitized
+
+    @staticmethod
+    def _sanitize_raw_value(value: object) -> object:
+        if isinstance(value, Mapping):
+            return json.dumps(value, ensure_ascii=False)
+        if isinstance(value, list):
+            return json.dumps(value, ensure_ascii=False)
+        return value
 
     @staticmethod
     def _isoformat(value: object | None) -> str | None:
