@@ -16,6 +16,8 @@ from .http_client import HttpClient
 from .models import RecipeTemplate
 from .repository import MySqlRecipeRepository
 from .service import RecipeScraperService, logger as service_logger
+from webapp.config import AppConfig
+from webapp.search.indexer import RecipeSearchIndexer
 
 
 DEFAULT_CONFIG = Path("config/scraper_templates.json")
@@ -150,12 +152,16 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
     args = parse_args(argv)
     configure_logging(args.log_level)
 
+    app_config = AppConfig.from_env()
+    indexer = RecipeSearchIndexer.from_config(app_config)
+
     repository = MySqlRecipeRepository(
         host=args.db_host,
         user=args.db_user,
         password=args.db_password,
         database=args.db_name,
         port=args.db_port,
+        indexer=indexer,
     )
     repository.ensure_schema()
 
