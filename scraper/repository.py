@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import logging
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from typing import Generator, Iterable, List, Optional
@@ -9,7 +10,11 @@ from typing import Generator, Iterable, List, Optional
 import mysql.connector
 from mysql.connector.connection import MySQLConnection
 
+from webapp.search.indexer import RecipeSearchIndexer, RecipeDocumentBuilder
+
 from .models import PendingFailure, Recipe, ScrapeFailure
+
+logger = logging.getLogger(__name__)
 
 
 class RecipeRepository(ABC):
@@ -49,6 +54,7 @@ class MySqlRecipeRepository(RecipeRepository):
         database: str,
         port: int = 3306,
         connect_timeout: int = 10,
+        indexer: Optional[RecipeSearchIndexer] = None,
     ) -> None:
         self._config = {
             "host": host,
@@ -60,6 +66,7 @@ class MySqlRecipeRepository(RecipeRepository):
             "charset": "utf8mb4",
             "use_unicode": True,
         }
+        self._indexer = indexer
 
     @contextmanager
     def _connection(self) -> Generator[MySQLConnection, None, None]:
@@ -172,7 +179,20 @@ class MySqlRecipeRepository(RecipeRepository):
         with self._connection() as connection:
             cursor = connection.cursor()
             cursor.execute(sql, params)
+            recipe_id = cursor.lastrowid
             connection.commit()
+
+            if self._indexer:
+                indexed_id = recipe_id or self._lookup_recipe_id(cursor, recipe.source_url)
+                if indexed_id:
+                    row = self._fetch_recipe_row(connection, indexed_id)
+                    if row:
+                        try:
+                            self._indexer.upsert_recipe(
+                                RecipeDocumentBuilder.from_row(row)
+                            )
+                        except Exception:
+                            logger.exception("Failed to index recipe %s", indexed_id)
 
     def record_failure(self, failure: ScrapeFailure) -> None:
         sql = """
@@ -246,6 +266,45 @@ class MySqlRecipeRepository(RecipeRepository):
                 )
             )
         return failures
+
+    @staticmethod
+    def _lookup_recipe_id(cursor, source_url: str) -> Optional[int]:
+        cursor.execute("SELECT id FROM recipes WHERE source_url = %s", (source_url,))
+        row = cursor.fetchone()
+        return int(row[0]) if row and row[0] is not None else None
+
+    @staticmethod
+    def _fetch_recipe_row(connection: MySQLConnection, recipe_id: int) -> Optional[dict]:
+        lookup_sql = """
+            SELECT
+                id,
+                source_name,
+                source_url,
+                title,
+                description,
+                ingredients,
+                instructions,
+                prep_time,
+                cook_time,
+                total_time,
+                servings,
+                image,
+                author,
+                categories,
+                tags,
+                raw,
+                created_at,
+                updated_at
+            FROM recipes
+            WHERE id = %s
+        """
+        cursor = connection.cursor(dictionary=True)
+        try:
+            cursor.execute(lookup_sql, (recipe_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        finally:
+            cursor.close()
 
     @staticmethod
     def _to_json_text(value: Optional[object]) -> Optional[str]:
