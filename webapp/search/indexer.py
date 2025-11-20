@@ -7,6 +7,7 @@ from datetime import datetime
 from typing import Iterable, Mapping, MutableMapping, Sequence
 
 from elasticsearch import Elasticsearch, helpers
+from elasticsearch.helpers import BulkIndexError
 from elasticsearch.exceptions import NotFoundError
 
 from webapp.config import AppConfig
@@ -178,7 +179,41 @@ class RecipeSearchIndexer:
             }
             for document in documents
         )
-        helpers.bulk(self._client, actions)
+        try:
+            helpers.bulk(self._client, actions)
+        except BulkIndexError as exc:
+            self._log_bulk_errors(exc)
+            raise
+
+    def _log_bulk_errors(self, exc: BulkIndexError) -> None:
+        errors = exc.errors
+        if not errors:
+            logger.error("Bulk indexing failed with no error details: %s", exc)
+            return
+
+        samples = []
+        for error in errors[:5]:
+            action = (
+                error.get("index")
+                or error.get("create")
+                or error.get("update")
+                or error.get("delete")
+                or {}
+            )
+            samples.append(
+                "id=%s status=%s reason=%s"
+                % (
+                    action.get("_id"),
+                    action.get("status"),
+                    _extract_error_reason(action.get("error")),
+                )
+            )
+
+        logger.error(
+            "Bulk indexing failed for %d document(s); sample errors: %s",
+            len(errors),
+            "; ".join(samples),
+        )
 
     def bulk_index_rows(self, rows: Iterable[Mapping[str, object]]) -> None:
         self.bulk_index(RecipeDocumentBuilder.from_row(row) for row in rows)
@@ -195,3 +230,9 @@ class RecipeSearchIndexer:
             self._client.delete(index=self._index, id=recipe_id)
         except NotFoundError:
             logger.debug("Recipe %s already absent from index", recipe_id)
+
+
+def _extract_error_reason(error: object) -> object:
+    if isinstance(error, Mapping):
+        return error.get("reason") or error.get("type") or error
+    return error

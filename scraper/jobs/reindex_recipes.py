@@ -3,13 +3,14 @@ from __future__ import annotations
 
 import argparse
 import logging
-from contextlib import closing
+from contextlib import contextmanager
 from itertools import islice
 from typing import Iterable, Iterator, List
 
 import mysql.connector
 
 from elasticsearch.exceptions import AuthenticationException
+from elasticsearch.helpers import BulkIndexError
 
 from webapp.config import AppConfig
 from webapp.search.indexer import RecipeDocumentBuilder, RecipeSearchIndexer
@@ -42,7 +43,8 @@ def _chunked(iterable: Iterable[dict], size: int) -> Iterator[List[dict]]:
         yield batch
 
 
-def _fetch_recipes(config: AppConfig) -> Iterator[dict]:
+@contextmanager
+def _recipe_stream(config: AppConfig) -> Iterator[Iterator[dict]]:
     db = config.database
     query = """
         SELECT
@@ -67,20 +69,28 @@ def _fetch_recipes(config: AppConfig) -> Iterator[dict]:
         FROM recipes
         ORDER BY id ASC
     """
-    with closing(
-        mysql.connector.connect(
-            host=db.host,
-            port=db.port,
-            user=db.user,
-            password=db.password,
-            database=db.database,
-            charset="utf8mb4",
-            use_unicode=True,
-        )
-    ) as connection, closing(connection.cursor(dictionary=True)) as cursor:
+    connection = mysql.connector.connect(
+        host=db.host,
+        port=db.port,
+        user=db.user,
+        password=db.password,
+        database=db.database,
+        charset="utf8mb4",
+        use_unicode=True,
+    )
+    cursor = connection.cursor(dictionary=True, buffered=True)
+    try:
         cursor.execute(query)
-        for row in cursor:
-            yield dict(row)
+        def _iter_rows() -> Iterator[dict]:
+            for row in cursor:
+                yield dict(row)
+
+        yield _iter_rows()
+    finally:
+        try:
+            cursor.close()
+        finally:
+            connection.close()
 
 
 def main() -> int:
@@ -90,24 +100,29 @@ def main() -> int:
     indexer = RecipeSearchIndexer.from_config(config)
 
     logger.info("Starting reindex into '%s'", config.elasticsearch.recipe_index)
-    documents = (
-        RecipeDocumentBuilder.from_row(row) for row in _fetch_recipes(config)
-    )
+    with _recipe_stream(config) as rows:
+        documents = (RecipeDocumentBuilder.from_row(row) for row in rows)
 
-    total = 0
-    for batch in _chunked(documents, max(args.batch_size, 1)):
-        try:
-            indexer.bulk_index(batch)
-        except AuthenticationException as exc:  # pragma: no cover - env specific
-            logger.error(
-                "Failed to authenticate to Elasticsearch at %s. "
-                "Set ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD if the "
-                "cluster requires credentials.",
-                config.elasticsearch.url,
-            )
-            raise SystemExit(1) from exc
-        total += len(batch)
-        logger.info("Indexed %d recipes so far", total)
+        total = 0
+        for batch in _chunked(documents, max(args.batch_size, 1)):
+            try:
+                indexer.bulk_index(batch)
+            except AuthenticationException as exc:  # pragma: no cover - env specific
+                logger.error(
+                    "Failed to authenticate to Elasticsearch at %s. "
+                    "Set ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD if the "
+                    "cluster requires credentials.",
+                    config.elasticsearch.url,
+                )
+                raise SystemExit(1) from exc
+            except BulkIndexError as exc:
+                logger.error(
+                    "Bulk indexing failed for a batch; aborting after %d indexed recipes",
+                    total,
+                )
+                raise SystemExit(1) from exc
+            total += len(batch)
+            logger.info("Indexed %d recipes so far", total)
 
     logger.info("Reindex complete. %d recipes indexed.", total)
     return 0

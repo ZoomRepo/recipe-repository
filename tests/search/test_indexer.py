@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch
 
 from webapp.config import AppConfig, ElasticsearchConfig
 from webapp.search.indexer import RecipeDocumentBuilder, RecipeSearchIndexer
+from elasticsearch.helpers import BulkIndexError
 
 
 class RecipeDocumentBuilderTests(unittest.TestCase):
@@ -94,6 +95,32 @@ class RecipeSearchIndexerTests(unittest.TestCase):
         actions = list(bulk.call_args[0][1])
         self.assertEqual(actions[0]["_id"], 1)
         self.assertEqual(actions[1]["_source"], {"id": 2, "title": "Two"})
+
+    def test_bulk_index_logs_errors(self) -> None:
+        documents = [{"id": 3, "title": "Bad"}]
+        bulk_error = BulkIndexError(
+            "2 document(s) failed",
+            [
+                {
+                    "index": {
+                        "_id": 3,
+                        "status": 400,
+                        "error": {"reason": "mapper_parsing_exception"},
+                    }
+                }
+            ],
+        )
+        with patch("webapp.search.indexer.helpers.bulk") as bulk, self.assertLogs(
+            "webapp.search.indexer", level="ERROR"
+        ) as log:
+            bulk.side_effect = bulk_error
+            with self.assertRaises(BulkIndexError):
+                self.indexer.bulk_index(documents)
+
+        self.assertTrue(
+            any("mapper_parsing_exception" in message for message in log.output),
+            log.output,
+        )
 
     def test_invalid_compatibility_version_defaults_to_8(self) -> None:
         es_config = ElasticsearchConfig(
