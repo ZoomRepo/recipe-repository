@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
+import logging
 from typing import Iterable, Optional, Sequence
 
 from .models import PaginatedResult, RecipeDetail
@@ -12,7 +13,11 @@ from .filter_options import (
     normalize_selection,
 )
 from .repository import RecipeQueryRepository
+from .search.repository import SearchRepository
 from .services import NutritionService
+
+
+logger = logging.getLogger(__name__)
 
 
 class RecipeService:
@@ -20,11 +25,13 @@ class RecipeService:
 
     def __init__(
         self,
-        repository: RecipeQueryRepository,
+        search_repository: SearchRepository,
+        detail_repository: RecipeQueryRepository,
         page_size: int,
         nutrition_service: Optional[NutritionService] = None,
     ) -> None:
-        self._repository = repository
+        self._search_repository = search_repository
+        self._detail_repository = detail_repository
         self._page_size = page_size
         self._nutrition_service = nutrition_service
 
@@ -58,20 +65,32 @@ class RecipeService:
         normalized_meals = normalize_selection(meals or [], MEAL_LOOKUP)
         normalized_diets = normalize_selection(diets or [], DIET_LOOKUP)
 
-        results = self._repository.search(
-            normalized_query,
-            normalized_ingredients,
-            page,
-            self._page_size,
-            normalized_cuisines,
-            normalized_meals,
-            normalized_diets,
-        )
+        try:
+            results = self._search_repository.search(
+                normalized_query,
+                normalized_ingredients,
+                page,
+                self._page_size,
+                normalized_cuisines,
+                normalized_meals,
+                normalized_diets,
+            )
+        except Exception:  # noqa: BLE001
+            logger.exception("Primary search repository failed; falling back to SQL")
+            results = self._detail_repository.search(
+                normalized_query,
+                normalized_ingredients,
+                page,
+                self._page_size,
+                normalized_cuisines,
+                normalized_meals,
+                normalized_diets,
+            )
 
         return self._with_nutrition(results)
 
     def get(self, recipe_id: int) -> Optional[RecipeDetail]:
-        recipe = self._repository.get(recipe_id)
+        recipe = self._detail_repository.get(recipe_id)
         if recipe is None:
             return None
         if not self._nutrition_service:

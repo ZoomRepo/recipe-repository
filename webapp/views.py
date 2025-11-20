@@ -226,7 +226,7 @@ def _format_subtitle(total: int) -> str:
 
 
 def _serialize_summary(recipe: RecipeSummary) -> Dict[str, Any]:
-    return {
+    payload = {
         "id": recipe.id,
         "title": recipe.title,
         "sourceName": recipe.source_name,
@@ -237,6 +237,13 @@ def _serialize_summary(recipe: RecipeSummary) -> Dict[str, Any]:
         "ingredients": list(recipe.ingredients),
         "nutrients": recipe.nutrients,
     }
+
+    if recipe.score is not None:
+        payload["score"] = recipe.score
+    if recipe.highlights:
+        payload["highlights"] = recipe.highlights
+
+    return payload
 
 
 def _serialize_detail(recipe: RecipeDetail) -> Dict[str, Any]:

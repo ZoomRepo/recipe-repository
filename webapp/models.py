@@ -20,6 +20,8 @@ class RecipeSummary:
     ingredients: List[str]
     raw: Optional[dict]
     nutrients: Optional[Dict[str, float]]
+    score: Optional[float] = None
+    highlights: Optional[Dict[str, List[str]]] = None
 
 
 @dataclass(frozen=True)
