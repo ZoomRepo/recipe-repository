@@ -51,10 +51,15 @@ function hexToArrayBuffer(hex: string): ArrayBuffer {
   return bytes.buffer
 }
 
-export async function createLoginSessionToken(email: string, expiresAt: Date): Promise<string> {
+export async function createLoginSessionToken(
+  email: string,
+  sessionId: string,
+  expiresAt: Date
+): Promise<string> {
   const encodedEmail = encodeURIComponent(email)
+  const safeSessionId = encodeURIComponent(sessionId)
   const expiry = expiresAt.getTime()
-  const payload = `${encodedEmail}.${expiry}`
+  const payload = `${encodedEmail}.${safeSessionId}.${expiry}`
   const key = await getKey()
   const subtle = getSubtleCrypto()
   const signatureBuffer = await subtle.sign("HMAC", key, encoder.encode(payload))
@@ -64,17 +69,18 @@ export async function createLoginSessionToken(email: string, expiresAt: Date): P
 
 export async function verifyLoginSessionToken(
   token: string
-): Promise<{ email: string; expiresAt: Date } | null> {
+): Promise<{ email: string; sessionId: string; expiresAt: Date } | null> {
   const parts = token.split(".")
-  if (parts.length < 3) {
+  if (parts.length < 4) {
     return null
   }
 
   const signatureHex = parts.pop()
   const expiresRaw = parts.pop()
+  const encodedSessionId = parts.pop()
   const encodedEmail = parts.join(".")
 
-  if (!encodedEmail || !expiresRaw || !signatureHex) {
+  if (!encodedEmail || !encodedSessionId || !expiresRaw || !signatureHex) {
     return null
   }
 
@@ -88,7 +94,7 @@ export async function verifyLoginSessionToken(
     return null
   }
 
-  const payload = `${encodedEmail}.${expiresRaw}`
+  const payload = `${encodedEmail}.${encodedSessionId}.${expiresRaw}`
   try {
     const signatureBuffer = hexToArrayBuffer(signatureHex)
     const key = await getKey()
@@ -103,7 +109,8 @@ export async function verifyLoginSessionToken(
 
   try {
     const email = decodeURIComponent(encodedEmail)
-    return { email, expiresAt }
+    const sessionId = decodeURIComponent(encodedSessionId)
+    return { email, sessionId, expiresAt }
   } catch (error) {
     return null
   }

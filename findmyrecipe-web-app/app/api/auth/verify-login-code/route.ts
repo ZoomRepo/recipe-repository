@@ -4,11 +4,13 @@ import { z } from "zod"
 import { LOGIN_GATE_COOKIE_NAME, resolveLoginGateConfig } from "@/lib/login-gate-config"
 import {
   consumeLoginCode,
-  generateLoginSessionCode,
+  generateLoginSessionToken,
   isEmailWhitelisted,
-  storeLoginSessionCode,
+  saveLoginSessionToken,
 } from "@/lib/login-gate-repository"
 import { createLoginSessionToken } from "@/lib/login-session-token"
+
+export const runtime = "nodejs"
 
 const requestSchema = z.object({
   email: z.string().email(),
@@ -34,6 +36,8 @@ export async function POST(request: Request) {
 
   const { email, code } = parsed.data
 
+  const normalizedEmail = email.trim().toLowerCase()
+
   const whitelisted = await isEmailWhitelisted(email)
   if (!whitelisted) {
     return NextResponse.json({ error: "This email is not authorized for temporary access" }, { status: 403 })
@@ -45,19 +49,20 @@ export async function POST(request: Request) {
   }
 
   const expiresAt = new Date(Date.now() + config.sessionDurationDays * 24 * 60 * 60 * 1000)
-  const token = await createLoginSessionToken(email, expiresAt)
-  const sessionCode = generateLoginSessionCode()
-  await storeLoginSessionCode(email, sessionCode, expiresAt)
+  const sessionTokenId = generateLoginSessionToken()
+  const signedToken = await createLoginSessionToken(normalizedEmail, sessionTokenId, expiresAt)
+
+  await saveLoginSessionToken(normalizedEmail, signedToken, expiresAt)
 
   const response = NextResponse.json({
     success: true,
-    sessionCode,
+    authenticated: true,
     expiresAt: expiresAt.toISOString(),
   })
 
   response.cookies.set({
     name: LOGIN_GATE_COOKIE_NAME,
-    value: token,
+    value: signedToken,
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
