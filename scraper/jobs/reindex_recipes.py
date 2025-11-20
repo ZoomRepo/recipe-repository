@@ -8,6 +8,8 @@ from typing import Iterable, Iterator, List
 
 import mysql.connector
 
+from elasticsearch.exceptions import AuthenticationException
+
 from webapp.config import AppConfig
 from webapp.search.indexer import RecipeDocumentBuilder, RecipeSearchIndexer
 
@@ -73,13 +75,15 @@ def _fetch_recipes(config: AppConfig) -> Iterator[dict]:
         FROM recipes
         ORDER BY id ASC
     """
+    cursor = None
     try:
         cursor = connection.cursor(dictionary=True)
         cursor.execute(query)
         for row in cursor:
             yield dict(row)
     finally:
-        cursor.close()
+        if cursor is not None:
+            cursor.close()
         connection.close()
 
 
@@ -96,7 +100,16 @@ def main() -> int:
 
     total = 0
     for batch in _chunked(documents, max(args.batch_size, 1)):
-        indexer.bulk_index(batch)
+        try:
+            indexer.bulk_index(batch)
+        except AuthenticationException as exc:  # pragma: no cover - env specific
+            logger.error(
+                "Failed to authenticate to Elasticsearch at %s. "
+                "Set ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD if the "
+                "cluster requires credentials.",
+                config.elasticsearch.url,
+            )
+            raise SystemExit(1) from exc
         total += len(batch)
         logger.info("Indexed %d recipes so far", total)
 
