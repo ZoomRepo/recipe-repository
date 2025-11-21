@@ -17,7 +17,9 @@ export async function GET(request: NextRequest) {
       filters: result.filters,
     })
   } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to load recipes"
+    const status = (error as { status?: number }).status ?? 502
     console.error("Failed to load recipes", error)
-    return NextResponse.json({ error: "Unable to load recipes" }, { status: 500 })
+    return NextResponse.json({ error: message }, { status })
   }
 }

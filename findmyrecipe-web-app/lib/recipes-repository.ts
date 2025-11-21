@@ -1,5 +1,14 @@
 import { CUISINE_LOOKUP, DIET_LOOKUP, MEAL_LOOKUP, normalizeSelection } from "./filters"
 
+class ApiRequestError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.status = status
+  }
+}
+
 function getApiBaseUrl() {
   const baseUrl = process.env.RECIPES_API_BASE_URL || process.env.NEXT_PUBLIC_RECIPES_API_BASE_URL
   return baseUrl?.replace(/\/$/u, "") || "http://localhost:5000/api/v1"
@@ -398,11 +407,18 @@ export async function fetchRecipes(searchParams: URLSearchParams): Promise<Pagin
   }
 
   const apiUrl = `${getApiBaseUrl()}/recipes${outbound.toString() ? `?${outbound.toString()}` : ""}`
-  const response = await fetch(apiUrl)
+  let response: Response
+  try {
+    response = await fetch(apiUrl)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to reach recipes API"
+    throw new ApiRequestError(message, 502)
+  }
+
   if (!response.ok) {
     const payload = await response.json().catch(() => ({}))
     const message = typeof payload.error === "string" ? payload.error : `Request failed with status ${response.status}`
-    throw new Error(message)
+    throw new ApiRequestError(message, response.status)
   }
 
   const payload = (await response.json()) as PaginatedRecipes
