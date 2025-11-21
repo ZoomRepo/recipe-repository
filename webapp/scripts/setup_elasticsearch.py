@@ -43,8 +43,9 @@ def _parse_args(argv: Iterable[str]) -> argparse.Namespace:
 def _build_client(config: AppConfig) -> Elasticsearch:
     es_config = config.elasticsearch
     kwargs = {"request_timeout": es_config.timeout}
-    if es_config.username:
-        kwargs["basic_auth"] = (es_config.username, es_config.password or "")
+    if es_config.username or es_config.password:
+        username = es_config.username or "elastic"
+        kwargs["basic_auth"] = (username, es_config.password or "")
     return Elasticsearch(es_config.url, **kwargs)
 
 

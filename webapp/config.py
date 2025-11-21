@@ -93,6 +93,8 @@ class ElasticsearchConfig:
         recipe_index = os.getenv(f"{prefix}RECIPE_INDEX", cls.recipe_index)
         scraper_index = os.getenv(f"{prefix}SCRAPER_INDEX", cls.scraper_index)
         timeout = int(os.getenv(f"{prefix}TIMEOUT", cls.timeout))
+        if not username and password:
+            username = "elastic"
         return cls(
             url=url,
             username=username,

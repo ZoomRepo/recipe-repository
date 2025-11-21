@@ -162,6 +162,10 @@ generates the `elastic` superuser. Provide a strong password via the
 `ELASTICSEARCH_PASSWORD` environment variable before starting the container so
 the secret is never written to disk in plain text.
 
+If you set only the password, the application defaults to the `elastic`
+superuser for you. Override `ELASTICSEARCH_USERNAME` if you prefer a different
+role with scoped privileges.
+
 Configure both the scraper and web application with matching credentials.
 Environment variables are the preferred mechanism so secrets remain outside of
 version control. The repository includes a `.env.example` template covering the
