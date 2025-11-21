@@ -14,6 +14,19 @@ function getApiBaseUrl() {
   return baseUrl?.replace(/\/$/u, "") || "http://localhost:5000/api/v1"
 }
 
+function buildApiHeaders(): HeadersInit {
+  const headers: HeadersInit = {
+    Accept: "application/json",
+  }
+
+  const token = process.env.RECIPES_API_TOKEN || process.env.NEXT_PUBLIC_RECIPES_API_TOKEN
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
+  return headers
+}
+
 export interface RecipeSummary {
   id: number
   title: string | null
@@ -409,15 +422,26 @@ export async function fetchRecipes(searchParams: URLSearchParams): Promise<Pagin
   const apiUrl = `${getApiBaseUrl()}/recipes${outbound.toString() ? `?${outbound.toString()}` : ""}`
   let response: Response
   try {
-    response = await fetch(apiUrl)
+    response = await fetch(apiUrl, { headers: buildApiHeaders() })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to reach recipes API"
     throw new ApiRequestError(message, 502)
   }
 
   if (!response.ok) {
-    const payload = await response.json().catch(() => ({}))
-    const message = typeof payload.error === "string" ? payload.error : `Request failed with status ${response.status}`
+    let message = `Request failed with status ${response.status}`
+    try {
+      const payload = await response.json()
+      if (typeof (payload as Record<string, unknown>).error === "string") {
+        message = (payload as { error: string }).error
+      }
+    } catch {
+      const text = (await response.text()).trim()
+      if (text) {
+        message = text
+      }
+    }
+
     throw new ApiRequestError(message, response.status)
   }
 
@@ -447,14 +471,25 @@ export async function fetchRecipeDetail(id: number): Promise<RecipeDetail | null
   }
 
   const apiUrl = `${getApiBaseUrl()}/recipes/${id}`
-  const response = await fetch(apiUrl)
+  const response = await fetch(apiUrl, { headers: buildApiHeaders() })
   if (response.status === 404) {
     return null
   }
   if (!response.ok) {
-    const payload = await response.json().catch(() => ({}))
-    const message = typeof payload.error === "string" ? payload.error : `Request failed with status ${response.status}`
-    throw new Error(message)
+    let message = `Request failed with status ${response.status}`
+    try {
+      const payload = await response.json()
+      if (typeof (payload as Record<string, unknown>).error === "string") {
+        message = (payload as { error: string }).error
+      }
+    } catch {
+      const text = (await response.text()).trim()
+      if (text) {
+        message = text
+      }
+    }
+
+    throw new ApiRequestError(message, response.status)
   }
 
   const payload = (await response.json()) as RecipeDetail
