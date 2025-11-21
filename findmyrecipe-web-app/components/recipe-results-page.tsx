@@ -17,6 +17,30 @@ type FilterOption = {
   label: string
 }
 
+function formatHighlight(highlights?: Record<string, string[]>): string | null {
+  if (!highlights) {
+    return null
+  }
+
+  for (const key of ["description", "ingredients", "title"]) {
+    const candidates = highlights[key]
+    if (Array.isArray(candidates)) {
+      const snippet = candidates.find((value) => typeof value === "string" && value.trim().length > 0)
+      if (snippet) {
+        return snippet.replace(/<\/?.+?>/gu, "").trim()
+      }
+    }
+  }
+
+  const firstValue = Object.values(highlights).find((value) => Array.isArray(value) && value.length > 0)
+  if (firstValue) {
+    const snippet = firstValue.find((value) => typeof value === "string" && value.trim().length > 0)
+    return snippet ? snippet.replace(/<\/?.+?>/gu, "").trim() : null
+  }
+
+  return null
+}
+
 export interface RecipeSummary {
   id: number
   title: string | null
@@ -27,6 +51,8 @@ export interface RecipeSummary {
   updatedAt: string | null
   ingredients: string[]
   nutrients: Record<string, number> | null
+  score?: number | null
+  highlights?: Record<string, string[]>
 }
 
 interface PaginationInfo {
@@ -193,6 +219,7 @@ export default function RecipeResultsPage({
                   return value !== null && value !== undefined ? [key, value] : null
                 }).filter((entry): entry is [string, number] => Array.isArray(entry))
                 const formattedUpdatedAt = formatUpdatedAt(recipe.updatedAt)
+                const highlightSnippet = formatHighlight(recipe.highlights)
 
                 return (
                   <article
@@ -202,6 +229,15 @@ export default function RecipeResultsPage({
                   >
                     <div className="pointer-events-none absolute inset-0 z-20 flex bg-slate-950/90 text-slate-100 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
                       <div className="pointer-events-auto flex w-full flex-col gap-5 overflow-hidden p-5">
+                        <div className="flex flex-col gap-3 text-sm text-slate-200">
+                          {recipe.score !== null && recipe.score !== undefined && (
+                            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-100">
+                              <span>Relevance</span>
+                              <span>{recipe.score.toFixed(2)}</span>
+                            </span>
+                          )}
+                          {highlightSnippet && <p className="line-clamp-2 text-slate-200/90">{highlightSnippet}</p>}
+                        </div>
                         <div className="grid gap-5 md:grid-cols-2">
                           <section>
                             <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">Nutrition</h3>

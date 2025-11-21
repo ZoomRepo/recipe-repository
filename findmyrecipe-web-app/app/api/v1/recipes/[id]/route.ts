@@ -21,7 +21,9 @@ export async function GET(_: NextRequest, context: RouteContext) {
     }
     return NextResponse.json(recipe)
   } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to load recipe"
+    const status = (error as { status?: number }).status ?? 500
     console.error("Failed to load recipe", error)
-    return NextResponse.json({ error: "Unable to load recipe" }, { status: 500 })
+    return NextResponse.json({ error: message }, { status })
   }
 }
