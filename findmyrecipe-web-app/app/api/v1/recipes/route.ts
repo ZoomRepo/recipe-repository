@@ -5,7 +5,11 @@ export const dynamic = "force-dynamic"
 
 export async function GET(request: NextRequest) {
   try {
-    const result = await fetchRecipes(request.nextUrl.searchParams, request.headers.get("authorization"))
+    const result = await fetchRecipes(
+      request.nextUrl.searchParams,
+      request.headers.get("authorization"),
+      request.headers.get("cookie"),
+    )
     return NextResponse.json({
       items: result.items,
       pagination: {
