@@ -27,6 +27,27 @@ function buildApiHeaders(): HeadersInit {
   return headers
 }
 
+async function extractErrorMessage(response: Response, fallback: string): Promise<string> {
+  try {
+    const rawText = await response.clone().text()
+    const trimmed = rawText.trim()
+    if (!trimmed) {
+      return fallback
+    }
+    try {
+      const parsed = JSON.parse(trimmed)
+      if (parsed && typeof parsed === "object" && typeof (parsed as { error?: unknown }).error === "string") {
+        return (parsed as { error: string }).error
+      }
+    } catch {
+      // Ignore JSON parse errors; fall back to raw text below.
+    }
+    return trimmed
+  } catch {
+    return fallback
+  }
+}
+
 export interface RecipeSummary {
   id: number
   title: string | null
@@ -429,19 +450,7 @@ export async function fetchRecipes(searchParams: URLSearchParams): Promise<Pagin
   }
 
   if (!response.ok) {
-    let message = `Request failed with status ${response.status}`
-    try {
-      const payload = await response.json()
-      if (typeof (payload as Record<string, unknown>).error === "string") {
-        message = (payload as { error: string }).error
-      }
-    } catch {
-      const text = (await response.text()).trim()
-      if (text) {
-        message = text
-      }
-    }
-
+    const message = await extractErrorMessage(response, `Request failed with status ${response.status}`)
     throw new ApiRequestError(message, response.status)
   }
 
@@ -476,19 +485,7 @@ export async function fetchRecipeDetail(id: number): Promise<RecipeDetail | null
     return null
   }
   if (!response.ok) {
-    let message = `Request failed with status ${response.status}`
-    try {
-      const payload = await response.json()
-      if (typeof (payload as Record<string, unknown>).error === "string") {
-        message = (payload as { error: string }).error
-      }
-    } catch {
-      const text = (await response.text()).trim()
-      if (text) {
-        message = text
-      }
-    }
-
+    const message = await extractErrorMessage(response, `Request failed with status ${response.status}`)
     throw new ApiRequestError(message, response.status)
   }
 
