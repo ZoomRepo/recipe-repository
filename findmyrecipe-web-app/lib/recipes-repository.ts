@@ -28,15 +28,12 @@ function buildApiHeaders(
 
   if (token) {
     headers["X-Api-Token"] = token
-    headers.Authorization = `Bearer ${token}`
   }
 
   if (authHeader) {
-    headers["X-Forwarded-Authorization"] = authHeader
-
-    if (!token) {
-      headers.Authorization = authHeader
-    }
+    headers.Authorization = authHeader
+  } else if (token) {
+    headers.Authorization = `Bearer ${token}`
   }
 
   if (cookieHeader) {
