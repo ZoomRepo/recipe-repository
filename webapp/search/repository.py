@@ -70,10 +70,18 @@ class ElasticsearchSearchRepository(SearchRepository):
         cuisines: Sequence[str] | None = None,
         meals: Sequence[str] | None = None,
         diets: Sequence[str] | None = None,
-    ) -> PaginatedResult:
+        ) -> PaginatedResult:
         normalized_page = max(page, 1)
         offset = (normalized_page - 1) * page_size
         payload = self._build_search_body(query, ingredients, cuisines, meals, diets)
+
+        logger.info(
+            "Searching Elasticsearch index %s with query=%r page=%s page_size=%s",
+            self._index,
+            query,
+            normalized_page,
+            page_size,
+        )
 
         try:
             response = self._client.search(
@@ -85,15 +93,11 @@ class ElasticsearchSearchRepository(SearchRepository):
                 _source=self._source_fields(),
                 sort=["_score:desc", {"updated_at": "desc"}, {"id": "desc"}],
             )
-        except TransportError:
-            logger.exception("Elasticsearch search failed; returning empty result set")
-            return PaginatedResult(
-                items=[],
-                total=0,
-                page=normalized_page,
-                page_size=page_size,
-                query=query or None,
+        except TransportError as exc:
+            logger.exception(
+                "Elasticsearch search failed; raising to trigger SQL fallback"
             )
+            raise exc
 
         hits = response.get("hits", {})
         total_obj = hits.get("total", {})
