@@ -8,14 +8,14 @@ type RouteContext = {
   params: { id: string | string[] }
 }
 
-export async function GET(_: NextRequest, context: RouteContext) {
+export async function GET(request: NextRequest, context: RouteContext) {
   try {
     const params = await(context.params)
     const id = normalizeRecipeId(params.id)
     if (id === null) {
       return NextResponse.json({ error: "Invalid recipe identifier" }, { status: 400 })
     }
-    const recipe = await fetchRecipeDetail(id)
+    const recipe = await fetchRecipeDetail(id, request.headers.get("authorization"))
     if (!recipe) {
       return NextResponse.json({ error: "Recipe not found" }, { status: 404 })
     }
