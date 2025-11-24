@@ -48,6 +48,7 @@ class PaginatedResult:
     page: int
     page_size: int
     query: Optional[str] = None
+    backend: Optional[str] = None
 
     @property
     def total_pages(self) -> int:

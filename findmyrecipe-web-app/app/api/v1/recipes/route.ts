@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       request.headers.get("authorization"),
       request.headers.get("cookie"),
     )
-    return NextResponse.json({
+    const response = NextResponse.json({
       items: result.items,
       pagination: {
         page: result.page,
@@ -19,7 +19,12 @@ export async function GET(request: NextRequest) {
         totalPages: result.totalPages,
       },
       filters: result.filters,
+      searchBackend: result.searchBackend,
     })
+    if (result.searchBackend) {
+      response.headers.set("X-Search-Backend", result.searchBackend)
+    }
+    return response
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to load recipes"
     const status = (error as { status?: number }).status ?? 502

@@ -72,6 +72,7 @@ export interface RecipesResponse {
     meals: string[]
     diets: string[]
   }
+  searchBackend?: string | null
 }
 
 interface RecipeResultsPageProps {
@@ -155,6 +156,14 @@ export default function RecipeResultsPage({
   const heading = normalizedQuery ? `Results for "${normalizedQuery}"` : "Latest recipes"
   const total = pagination?.total ?? 0
   const subtitle = `${total} recipe${total === 1 ? "" : "s"} found`
+  const searchBackend = data?.searchBackend ?? null
+  const backendLabel = searchBackend
+    ? searchBackend === "elasticsearch"
+      ? "Elasticsearch"
+      : searchBackend === "sql"
+        ? "SQL (fallback)"
+        : searchBackend
+    : "Unknown"
 
   const appliedFilters = useMemo(() => buildAppliedFilterLabels(data), [data])
 
@@ -164,6 +173,11 @@ export default function RecipeResultsPage({
         <div className="mb-8 space-y-3">
           <h2 className="text-3xl font-bold text-foreground">{heading}</h2>
           <p className="text-muted-foreground">{isLoading && !data ? "Loading recipes..." : subtitle}</p>
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <span className="rounded-full bg-muted px-3 py-1 font-semibold uppercase tracking-wide text-foreground">
+              Search backend: {backendLabel}
+            </span>
+          </div>
           {appliedFilters.length > 0 && (
             <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
               {appliedFilters.map((label) => (

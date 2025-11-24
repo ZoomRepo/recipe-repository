@@ -117,4 +117,5 @@ class RecipeService:
             page=results.page,
             page_size=results.page_size,
             query=results.query,
+            backend=results.backend,
         )

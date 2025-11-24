@@ -102,6 +102,7 @@ export interface PaginatedRecipes {
     meals: string[]
     diets: string[]
   }
+  searchBackend?: string | null
 }
 
 const DEFAULT_PAGE_SIZE = Number.parseInt(process.env.PAGE_SIZE ?? "20", 10)
@@ -468,6 +469,8 @@ export async function fetchRecipes(
     throw new ApiRequestError(message, 502)
   }
 
+  const searchBackendHeader = response.headers.get("x-search-backend")
+
   if (!response.ok) {
     const message = await extractErrorMessage(response, `Request failed with status ${response.status}`)
     throw new ApiRequestError(message, response.status)
@@ -490,6 +493,7 @@ export async function fetchRecipes(
       meals,
       diets,
     },
+    searchBackend: payload.searchBackend ?? searchBackendHeader ?? null,
   }
 }
 

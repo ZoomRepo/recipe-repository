@@ -75,7 +75,7 @@ def register_routes(app: Any, service: RecipeService) -> None:
             "meals": meals,
             "diets": diets,
         }
-        return jsonify(
+        response = jsonify(
             {
                 "html": render_template(
                     "recipes/_results.html",
@@ -100,6 +100,9 @@ def register_routes(app: Any, service: RecipeService) -> None:
                 },
             }
         )
+        if results.backend:
+            response.headers["X-Search-Backend"] = results.backend
+        return response
 
     @api_blueprint.route("/recipes")
     def api_recipes_v1() -> Any:
@@ -127,8 +130,12 @@ def register_routes(app: Any, service: RecipeService) -> None:
                 "totalPages": results.total_pages,
             },
             "filters": filters,
+            "searchBackend": results.backend,
         }
-        return jsonify(payload)
+        response = jsonify(payload)
+        if results.backend:
+            response.headers["X-Search-Backend"] = results.backend
+        return response
 
     @api_blueprint.route("/recipes/<int:recipe_id>")
     def api_recipe_detail(recipe_id: int) -> Any:

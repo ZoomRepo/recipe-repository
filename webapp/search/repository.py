@@ -110,6 +110,7 @@ class ElasticsearchSearchRepository(SearchRepository):
             page=normalized_page,
             page_size=page_size,
             query=query or None,
+            backend="elasticsearch",
         )
 
     def _build_search_body(
