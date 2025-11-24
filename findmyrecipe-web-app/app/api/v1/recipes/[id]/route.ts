@@ -19,6 +19,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       id,
       request.headers.get("authorization"),
       request.headers.get("cookie"),
+      request.headers.get("x-api-token"),
     )
     if (!recipe) {
       return NextResponse.json({ error: "Recipe not found" }, { status: 404 })

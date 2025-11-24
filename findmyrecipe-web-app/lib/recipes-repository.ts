@@ -14,12 +14,17 @@ function getApiBaseUrl() {
   return baseUrl?.replace(/\/$/u, "") || "http://localhost:5000/api/v1"
 }
 
-function buildApiHeaders(authHeader?: string | null, cookieHeader?: string | null): HeadersInit {
+function buildApiHeaders(
+  authHeader?: string | null,
+  cookieHeader?: string | null,
+  forwardedApiToken?: string | null,
+): HeadersInit {
   const headers: Record<string, string> = {
     Accept: "application/json",
   }
 
-  const token = process.env.RECIPES_API_TOKEN || process.env.NEXT_PUBLIC_RECIPES_API_TOKEN
+  const token =
+    forwardedApiToken || process.env.RECIPES_API_TOKEN || process.env.NEXT_PUBLIC_RECIPES_API_TOKEN
 
   if (authHeader) {
     headers.Authorization = authHeader
@@ -438,6 +443,7 @@ export async function fetchRecipes(
   searchParams: URLSearchParams,
   authHeader?: string | null,
   cookieHeader?: string | null,
+  apiToken?: string | null,
 ): Promise<PaginatedRecipes> {
   const { query, page, pageSize, ingredients, cuisines, meals, diets } = extractListParams(searchParams)
 
@@ -463,7 +469,7 @@ export async function fetchRecipes(
   const apiUrl = `${getApiBaseUrl()}/recipes${outbound.toString() ? `?${outbound.toString()}` : ""}`
   let response: Response
   try {
-    response = await fetch(apiUrl, { headers: buildApiHeaders(authHeader, cookieHeader) })
+    response = await fetch(apiUrl, { headers: buildApiHeaders(authHeader, cookieHeader, apiToken) })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to reach recipes API"
     throw new ApiRequestError(message, 502)
@@ -501,13 +507,14 @@ export async function fetchRecipeDetail(
   id: number,
   authHeader?: string | null,
   cookieHeader?: string | null,
+  apiToken?: string | null,
 ): Promise<RecipeDetail | null> {
   if (!Number.isFinite(id) || id <= 0) {
     return null
   }
 
   const apiUrl = `${getApiBaseUrl()}/recipes/${id}`
-  const response = await fetch(apiUrl, { headers: buildApiHeaders(authHeader, cookieHeader) })
+  const response = await fetch(apiUrl, { headers: buildApiHeaders(authHeader, cookieHeader, apiToken) })
   if (response.status === 404) {
     return null
   }

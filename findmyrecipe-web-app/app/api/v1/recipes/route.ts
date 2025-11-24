@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
       request.nextUrl.searchParams,
       request.headers.get("authorization"),
       request.headers.get("cookie"),
+      request.headers.get("x-api-token"),
     )
     const response = NextResponse.json({
       items: result.items,
