@@ -1,13 +1,75 @@
-import type { RowDataPacket } from "mysql2"
-import { getPool } from "./database"
-import {
-  CUISINE_LOOKUP,
-  DIET_LOOKUP,
-  MEAL_LOOKUP,
-  type FilterOption,
-  normalizeSelection,
-  normalizedKeywords,
-} from "./filters"
+import { CUISINE_LOOKUP, DIET_LOOKUP, MEAL_LOOKUP, normalizeSelection } from "./filters"
+
+class ApiRequestError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.status = status
+  }
+}
+
+function getApiBaseUrl() {
+  const baseUrl = process.env.RECIPES_API_BASE_URL || process.env.NEXT_PUBLIC_RECIPES_API_BASE_URL
+  return baseUrl?.replace(/\/$/u, "") || "http://localhost:5000/api/v1"
+}
+
+function buildApiHeaders(
+  authHeader?: string | null,
+  cookieHeader?: string | null,
+  forwardedApiToken?: string | null,
+): HeadersInit {
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+  }
+
+  const token =
+    forwardedApiToken || process.env.RECIPES_API_TOKEN || process.env.NEXT_PUBLIC_RECIPES_API_TOKEN
+
+  if (token) {
+    headers["X-Api-Token"] = token
+  }
+
+  if (authHeader) {
+    headers.Authorization = authHeader
+    if (token && token !== authHeader) {
+      headers["X-Forwarded-Authorization"] = `Bearer ${token}`
+    }
+  } else if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
+  if (!headers["X-Forwarded-Authorization"] && (authHeader || token)) {
+    headers["X-Forwarded-Authorization"] = authHeader || `Bearer ${token}`
+  }
+
+  if (cookieHeader) {
+    headers.Cookie = cookieHeader
+  }
+
+  return headers
+}
+
+async function extractErrorMessage(response: Response, fallback: string): Promise<string> {
+  try {
+    const rawText = await response.clone().text()
+    const trimmed = rawText.trim()
+    if (!trimmed) {
+      return fallback
+    }
+    try {
+      const parsed = JSON.parse(trimmed)
+      if (parsed && typeof parsed === "object" && typeof (parsed as { error?: unknown }).error === "string") {
+        return (parsed as { error: string }).error
+      }
+    } catch {
+      // Ignore JSON parse errors; fall back to raw text below.
+    }
+    return trimmed
+  } catch {
+    return fallback
+  }
+}
 
 export interface RecipeSummary {
   id: number
@@ -19,6 +81,8 @@ export interface RecipeSummary {
   updatedAt: string | null
   ingredients: string[]
   nutrients: Record<string, number> | null
+  score?: number | null
+  highlights?: Record<string, string[]>
 }
 
 export interface RecipeDetail extends RecipeSummary {
@@ -46,6 +110,7 @@ export interface PaginatedRecipes {
     meals: string[]
     diets: string[]
   }
+  searchBackend?: string | null
 }
 
 const DEFAULT_PAGE_SIZE = Number.parseInt(process.env.PAGE_SIZE ?? "20", 10)
@@ -311,112 +376,6 @@ function extractNormalizedNutrition(
   return aggregateIngredientNutrition(raw.ingredients)
 }
 
-function buildQueryConditions(
-  query: string | null,
-  ingredients: string[],
-  cuisines: string[],
-  meals: string[],
-  diets: string[],
-): { whereClause: string; params: unknown[] } {
-  const conditions: string[] = []
-  const params: unknown[] = []
-
-  if (query) {
-    const lowered = query.toLowerCase()
-    const like = `%${lowered}%`
-    const normalizedClause =
-      "(LOWER(COALESCE(title, '')) LIKE ? OR " +
-      "LOWER(COALESCE(description, '')) LIKE ? OR " +
-      "LOWER(COALESCE(ingredients, '')) LIKE ? OR " +
-      "LOWER(COALESCE(instructions, '')) LIKE ? OR " +
-      "LOWER(COALESCE(categories, '')) LIKE ? OR " +
-      "LOWER(COALESCE(tags, '')) LIKE ?)"
-    const queryClauses = [normalizedClause]
-    params.push(like, like, like, like, like, like)
-
-    const keywords = lowered
-      .split(/\s+/)
-      .map((keyword) => keyword.trim())
-      .filter((keyword) => keyword.length > 0)
-
-    if (keywords.length > 1) {
-      const keywordClause = "(LOWER(COALESCE(title, '')) LIKE ? OR LOWER(COALESCE(description, '')) LIKE ?)"
-      for (const keyword of keywords) {
-        const keywordLike = `%${keyword}%`
-        queryClauses.push(keywordClause)
-        params.push(keywordLike, keywordLike)
-      }
-    }
-
-    conditions.push(`(${queryClauses.join(" OR ")})`)
-  }
-
-  for (const ingredient of ingredients) {
-    const like = `%${ingredient.toLowerCase()}%`
-    conditions.push("LOWER(ingredients) LIKE ?")
-    params.push(like)
-  }
-
-  applyOptionFilters(cuisines, CUISINE_LOOKUP, conditions, params)
-  applyOptionFilters(meals, MEAL_LOOKUP, conditions, params)
-  applyOptionFilters(diets, DIET_LOOKUP, conditions, params)
-
-  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : ""
-  return { whereClause, params }
-}
-
-function applyOptionFilters(
-  selected: string[],
-  lookup: Record<string, FilterOption>,
-  conditions: string[],
-  params: unknown[],
-) {
-  if (selected.length === 0) {
-    return
-  }
-
-  const optionClauses: string[] = []
-  for (const value of selected) {
-    const option = lookup[value]
-    if (!option) {
-      continue
-    }
-    const keywords = normalizedKeywords(option)
-    const clause = buildKeywordClause(keywords, params)
-    if (clause) {
-      optionClauses.push(clause)
-    }
-  }
-  if (optionClauses.length > 0) {
-    conditions.push(`(${optionClauses.join(" OR ")})`)
-  }
-}
-
-function buildKeywordClause(keywords: string[], params: unknown[]): string | null {
-  if (keywords.length === 0) {
-    return null
-  }
-
-  const columnTemplate =
-    "LOWER(COALESCE(title, '')) LIKE ? OR " +
-    "LOWER(COALESCE(description, '')) LIKE ? OR " +
-    "LOWER(COALESCE(categories, '')) LIKE ? OR " +
-    "LOWER(COALESCE(tags, '')) LIKE ? OR " +
-    "LOWER(COALESCE(ingredients, '')) LIKE ?"
-
-  const keywordClauses: string[] = []
-  for (const keyword of keywords) {
-    const like = `%${keyword}%`
-    keywordClauses.push(`(${columnTemplate})`)
-    params.push(like, like, like, like, like)
-  }
-
-  if (keywordClauses.length === 0) {
-    return null
-  }
-  return `(${keywordClauses.join(" OR ")})`
-}
-
 function parseDate(value: unknown): string | null {
   if (!value) {
     return null
@@ -430,30 +389,38 @@ function parseDate(value: unknown): string | null {
 }
 
 function parseJsonList(value: unknown): string[] {
-  if (typeof value !== "string" || value.trim().length === 0) {
-    return []
-  }
-  try {
-    const parsed = JSON.parse(value)
-    if (Array.isArray(parsed)) {
-      return parsed.filter((item) => typeof item === "string" && item.trim().length > 0).map((item) => item.trim())
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value)
+      if (Array.isArray(parsed)) {
+        return parsed.filter((item) => typeof item === "string" && item.trim().length > 0).map((item) => item.trim())
+      }
+    } catch {
+      return []
     }
-  } catch {
-    return []
+  }
+  if (Array.isArray(value)) {
+    return value.filter((item) => typeof item === "string" && item.trim().length > 0).map((item) => item.trim())
   }
   return []
 }
 
 function parseJsonObject(value: unknown): Record<string, unknown> | null {
-  if (typeof value !== "string" || value.trim().length === 0) {
+  if (!value) {
     return null
   }
-  try {
-    const parsed = JSON.parse(value)
-    return parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : null
-  } catch {
-    return null
+  if (typeof value === "object") {
+    return value as Record<string, unknown>
   }
+  if (typeof value === "string" && value.trim().length > 0) {
+    try {
+      const parsed = JSON.parse(value)
+      return parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : null
+    } catch {
+      return null
+    }
+  }
+  return null
 }
 
 export function extractListParams(searchParams: URLSearchParams) {
@@ -475,121 +442,154 @@ export function extractListParams(searchParams: URLSearchParams) {
   }
 }
 
-export async function fetchRecipes(searchParams: URLSearchParams): Promise<PaginatedRecipes> {
+export async function fetchRecipes(
+  searchParams: URLSearchParams,
+  authHeader?: string | null,
+  cookieHeader?: string | null,
+  apiToken?: string | null,
+): Promise<PaginatedRecipes> {
   const { query, page, pageSize, ingredients, cuisines, meals, diets } = extractListParams(searchParams)
-  const { whereClause, params } = buildQueryConditions(query, ingredients, cuisines, meals, diets)
-  const offset = (page - 1) * pageSize
 
-  const listingSql = `
-    SELECT
-      id,
-      title,
-      source_name AS sourceName,
-      source_url AS sourceUrl,
-      description,
-      image,
-      updated_at AS updatedAt,
-      ingredients,
-      raw
-    FROM recipes
-    ${whereClause}
-    ORDER BY updated_at DESC, id DESC
-    LIMIT ? OFFSET ?
-  `
+  const outbound = new URLSearchParams()
+  if (query) {
+    outbound.set("q", query)
+  }
+  outbound.set("page", String(page))
+  outbound.set("pageSize", String(pageSize))
+  for (const ingredient of ingredients) {
+    outbound.append("ingredient", ingredient)
+  }
+  for (const cuisine of cuisines) {
+    outbound.append("cuisine", cuisine)
+  }
+  for (const meal of meals) {
+    outbound.append("meal", meal)
+  }
+  for (const diet of diets) {
+    outbound.append("diet", diet)
+  }
 
-  const countSql = `SELECT COUNT(*) AS total FROM recipes ${whereClause}`
+  const apiUrl = `${getApiBaseUrl()}/recipes${outbound.toString() ? `?${outbound.toString()}` : ""}`
+  let response: Response
+  try {
+    response = await fetch(apiUrl, { headers: buildApiHeaders(authHeader, cookieHeader, apiToken) })
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to reach recipes API"
+    throw new ApiRequestError(message, 502)
+  }
 
-  const pool = getPool()
-  const [rows] = await pool.query<RowDataPacket[]>(listingSql, [...params, pageSize, offset])
-  const [countRows] = await pool.query<RowDataPacket[]>(countSql, params)
-  const total = countRows.length > 0 ? Number(countRows[0].total ?? 0) : 0
-  const normalizedPage = page > 0 ? page : 1
-  const totalPages = total > 0 ? Math.ceil(total / pageSize) : 1
+  const searchBackendHeader = response.headers.get("x-search-backend")
+
+  if (!response.ok) {
+    const message = await extractErrorMessage(response, `Request failed with status ${response.status}`)
+    throw new ApiRequestError(message, response.status)
+  }
+
+  const payload = (await response.json()) as PaginatedRecipes
 
   return {
-    items: rows.map((row) => {
-      const rawObject = parseJsonObject(row.raw)
-      const parsedIngredients = parseJsonList(row.ingredients)
-      const fallbackIngredients = extractIngredientStrings(rawObject?.ingredients)
-      return {
-        id: Number(row.id),
-        title: row.title ?? null,
-        sourceName: row.sourceName,
-        sourceUrl: row.sourceUrl,
-        description: row.description ?? null,
-        image: row.image ?? null,
-        updatedAt: parseDate(row.updatedAt),
-        ingredients: parsedIngredients.length > 0 ? parsedIngredients : fallbackIngredients,
-        nutrients: extractNormalizedNutrition(rawObject),
-      }
-    }),
-    total,
-    page: normalizedPage,
-    pageSize,
-    totalPages,
-    filters: {
+    items: Array.isArray(payload.items)
+      ? payload.items.map(normalizeSummary)
+      : [],
+    total: typeof payload.total === "number" ? payload.total : payload.pagination?.total ?? 0,
+    page: payload.pagination?.page ?? page,
+    pageSize: payload.pagination?.pageSize ?? pageSize,
+    totalPages: payload.pagination?.totalPages ?? payload.totalPages ?? 1,
+    filters: payload.filters ?? {
       query,
       ingredients,
       cuisines,
       meals,
       diets,
     },
+    searchBackend: payload.searchBackend ?? searchBackendHeader ?? null,
   }
 }
 
-export async function fetchRecipeDetail(id: number): Promise<RecipeDetail | null> {
+export async function fetchRecipeDetail(
+  id: number,
+  authHeader?: string | null,
+  cookieHeader?: string | null,
+  apiToken?: string | null,
+): Promise<RecipeDetail | null> {
   if (!Number.isFinite(id) || id <= 0) {
     return null
   }
-  const sql = `
-    SELECT
-      id,
-      title,
-      source_name AS sourceName,
-      source_url AS sourceUrl,
-      description,
-      image,
-      ingredients,
-      instructions,
-      prep_time AS prepTime,
-      cook_time AS cookTime,
-      total_time AS totalTime,
-      servings,
-      author,
-      categories,
-      tags,
-      raw,
-      updated_at AS updatedAt
-    FROM recipes
-    WHERE id = ?
-  `
-  const pool = getPool()
-  const [rows] = await pool.query<RowDataPacket[]>(sql, [id])
-  if (rows.length === 0) {
+
+  const apiUrl = `${getApiBaseUrl()}/recipes/${id}`
+  const response = await fetch(apiUrl, { headers: buildApiHeaders(authHeader, cookieHeader, apiToken) })
+  if (response.status === 404) {
     return null
   }
-  const row = rows[0]
-  const raw = parseJsonObject(row.raw)
-  const ingredients = parseJsonList(row.ingredients)
+  if (!response.ok) {
+    const message = await extractErrorMessage(response, `Request failed with status ${response.status}`)
+    throw new ApiRequestError(message, response.status)
+  }
+
+  const payload = (await response.json()) as RecipeDetail
+  return normalizeDetail(payload)
+}
+
+function normalizeHighlights(highlights: unknown): Record<string, string[]> | undefined {
+  if (!highlights || typeof highlights !== "object") {
+    return undefined
+  }
+  const entries: [string, string[]][] = []
+  for (const [key, value] of Object.entries(highlights)) {
+    const parts = Array.isArray(value)
+      ? value.filter((part) => typeof part === "string" && part.trim().length > 0).map((part) => part.trim())
+      : []
+    if (parts.length > 0) {
+      entries.push([key, parts])
+    }
+  }
+  return entries.length > 0 ? Object.fromEntries(entries) : undefined
+}
+
+function normalizeSummary(payload: any): RecipeSummary {
+  const raw = parseJsonObject(payload?.raw)
+  const normalizedIngredients = parseJsonList(payload?.ingredients)
   const fallbackIngredients = extractIngredientStrings(raw?.ingredients)
+  const nutrients =
+    (payload?.nutrients && typeof payload.nutrients === "object" ? (payload.nutrients as Record<string, number>) : null) ??
+    extractNormalizedNutrition(raw)
+
+  const scoreValue = typeof payload?.score === "number" && Number.isFinite(payload.score) ? payload.score : null
+
   return {
-    id: Number(row.id),
-    title: row.title ?? null,
-    sourceName: row.sourceName,
-    sourceUrl: row.sourceUrl,
-    description: row.description ?? null,
-    image: row.image ?? null,
-    updatedAt: parseDate(row.updatedAt),
-    ingredients: ingredients.length > 0 ? ingredients : fallbackIngredients,
-    instructions: parseJsonList(row.instructions),
-    prepTime: row.prepTime ?? null,
-    cookTime: row.cookTime ?? null,
-    totalTime: row.totalTime ?? null,
-    servings: row.servings ?? null,
-    author: row.author ?? null,
-    categories: parseJsonList(row.categories),
-    tags: parseJsonList(row.tags),
+    id: Number(payload?.id) || 0,
+    title: typeof payload?.title === "string" ? payload.title : null,
+    sourceName: typeof payload?.sourceName === "string" ? payload.sourceName : "",
+    sourceUrl: typeof payload?.sourceUrl === "string" ? payload.sourceUrl : "",
+    description: typeof payload?.description === "string" ? payload.description : null,
+    image: typeof payload?.image === "string" ? payload.image : null,
+    updatedAt: parseDate(payload?.updatedAt),
+    ingredients: normalizedIngredients.length > 0 ? normalizedIngredients : fallbackIngredients,
+    nutrients,
+    score: scoreValue,
+    highlights: normalizeHighlights(payload?.highlights),
+  }
+}
+
+function normalizeDetail(payload: any): RecipeDetail {
+  const summary = normalizeSummary(payload)
+  const raw = parseJsonObject(payload?.raw)
+  const instructions = parseJsonList(payload?.instructions)
+  const categories = parseJsonList(payload?.categories)
+  const tags = parseJsonList(payload?.tags)
+
+  return {
+    ...summary,
+    ingredients: summary.ingredients,
+    instructions,
+    prepTime: typeof payload?.prepTime === "string" ? payload.prepTime : null,
+    cookTime: typeof payload?.cookTime === "string" ? payload.cookTime : null,
+    totalTime: typeof payload?.totalTime === "string" ? payload.totalTime : null,
+    servings: typeof payload?.servings === "string" ? payload.servings : null,
+    author: typeof payload?.author === "string" ? payload.author : null,
+    categories,
+    tags,
     raw,
-    nutrients: extractNormalizedNutrition(raw),
+    nutrients: summary.nutrients ?? extractNormalizedNutrition(raw),
   }
 }

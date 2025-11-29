@@ -20,6 +20,8 @@ class RecipeSummary:
     ingredients: List[str]
     raw: Optional[dict]
     nutrients: Optional[Dict[str, float]]
+    score: Optional[float] = None
+    highlights: Optional[Dict[str, List[str]]] = None
 
 
 @dataclass(frozen=True)
@@ -46,6 +48,7 @@ class PaginatedResult:
     page: int
     page_size: int
     query: Optional[str] = None
+    backend: Optional[str] = None
 
     @property
     def total_pages(self) -> int:

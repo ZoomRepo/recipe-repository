@@ -8,6 +8,7 @@ from flask import Flask
 from .auth import register_login_routes
 from .config import AppConfig
 from .repository import RecipeQueryRepository
+from .search.repository import ElasticsearchSearchRepository
 from .service import RecipeService
 from .services import EmailService, NutritionService
 from .whitelist import LoginWhitelistRepository, register_whitelist_routes
@@ -24,8 +25,10 @@ def create_app(config: AppConfig | None = None) -> Flask:
         static_folder="static",
     )
     repository = RecipeQueryRepository.from_config(resolved_config.database)
+    search_repository = ElasticsearchSearchRepository.from_config(resolved_config)
     nutrition_service = NutritionService()
     service = RecipeService(
+        search_repository,
         repository,
         resolved_config.page_size,
         nutrition_service=nutrition_service,
