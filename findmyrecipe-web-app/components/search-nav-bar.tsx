@@ -11,8 +11,6 @@ interface SearchNavBarProps {
 }
 
 export default function SearchNavBar({ searchQuery, onSearchChange, onSearchSubmit }: SearchNavBarProps) {
-  const user = null
-
   const handleSearchChange = (value: string) => {
     onSearchChange(value)
     if (value.trim()) {
@@ -63,28 +61,10 @@ export default function SearchNavBar({ searchQuery, onSearchChange, onSearchSubm
           </div>
         </div>
 
-        {/* Auth/User actions */}
         <div className="flex items-center gap-3">
-          {user ? (
-            <Link href="/account" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Account
-            </Link>
-          ) : (
-            <>
-              <Link
-                href="/auth/login"
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-              >
-                Login
-              </Link>
-              <Link
-                href="/auth/sign-up"
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-              >
-                Sign up
-              </Link>
-            </>
-          )}
+          <Link href="/pricing" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            Pricing
+          </Link>
         </div>
       </div>
     </nav>

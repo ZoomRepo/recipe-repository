@@ -19,8 +19,12 @@ env:
 	export SMTP_PORT=465 
 	export SMTP_USERNAME=no.reply@findmyflavour.com 
 	export SMTP_PASSWORD=xul98qVUK%$uluJu 
-	export SMTP_SECURE=true 
+	export SMTP_SECURE=true
+	export ELASTICSEARCH_USERNAME=elastic
+	export ELASTICSEARCH_PASSWORD=alskdjf
 	echo "Development environment has been successfully setup!"
+	echo "Starting Docker containers..."
+	docker compose up -d
 
 dev:
 	cd findmyrecipe-web-app && \

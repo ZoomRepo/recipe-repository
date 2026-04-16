@@ -7,6 +7,16 @@ import type { ReactNode } from "react"
 import SubscriptionGate from "@/components/subscription-gate"
 import { normalizeRecipeId } from "@/lib/recipe-id"
 
+const API_ROUTE_HEADERS: HeadersInit = (() => {
+  const headers: Record<string, string> = { Accept: "application/json" }
+  const publicToken = process.env.NEXT_PUBLIC_RECIPES_API_TOKEN
+  if (publicToken) {
+    headers["x-api-token"] = publicToken
+    headers.Authorization = `Bearer ${publicToken}`
+  }
+  return headers
+})()
+
 interface RecipeDetail {
   id: number
   title: string | null
@@ -48,7 +58,7 @@ export default function RecipePage() {
     setIsLoading(true)
     setError(null)
 
-    fetch(url, { signal: controller.signal })
+    fetch(url, { signal: controller.signal, headers: API_ROUTE_HEADERS, credentials: "same-origin" })
       .then(async (response) => {
         if (!response.ok) {
           const payload = await response.json().catch(() => ({}))

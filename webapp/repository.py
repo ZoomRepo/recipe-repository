@@ -116,6 +116,7 @@ class RecipeQueryRepository:
             page=normalized_page,
             page_size=page_size,
             query=query or None,
+            backend="sql",
         )
 
     def get(self, recipe_id: int) -> Optional[RecipeDetail]:
