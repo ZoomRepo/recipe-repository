@@ -37,8 +37,17 @@ def _parse_args(argv: Iterable[str]) -> argparse.Namespace:
 def _build_client(config: AppConfig) -> Elasticsearch:
     es_config = config.elasticsearch
     kwargs = {"request_timeout": es_config.timeout}
-    if es_config.username:
-        kwargs["basic_auth"] = (es_config.username, es_config.password or "")
+    if es_config.username or es_config.password:
+        kwargs["basic_auth"] = (es_config.username or "elastic", es_config.password or "")
+    if es_config.compatibility_version:
+        version = es_config.compatibility_version
+        compat_header = (
+            "application/vnd.elasticsearch+json; compatible-with=%s" % version
+        )
+        kwargs["headers"] = {
+            "Accept": compat_header,
+            "Content-Type": compat_header,
+        }
     return Elasticsearch(es_config.url, **kwargs)
 
 
@@ -55,7 +64,13 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     try:
         if not client.ping():
-            print("Elasticsearch ping failed", file=sys.stderr)
+            username = es_config.username or ("elastic" if es_config.password else None)
+            auth_description = username if username else "none"
+            print(
+                "Elasticsearch ping failed for "
+                f"url='{es_config.url}' auth='{auth_description}'",
+                file=sys.stderr,
+            )
             return 2
         health = client.cluster.health(
             wait_for_status=args.expected_status,

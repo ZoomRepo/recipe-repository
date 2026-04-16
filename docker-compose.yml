@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.3
@@ -14,7 +12,11 @@ services:
     networks:
       - recipe-stack
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fsS -u elastic:${ELASTICSEARCH_PASSWORD:-changeme} http://localhost:9200/_cluster/health >/dev/null",
+        ]
       interval: 30s
       timeout: 10s
       retries: 5

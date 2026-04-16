@@ -1,4 +1,4 @@
-.PHONY: env run_app run_app_production run_scraper migrate rerun_failures
+.PHONY: env run_app run_app_production run_scraper migrate rerun_failures setup_search_index reindex_search
 
 env:
 	@if [ ! -d "venv" ]; then \
@@ -73,6 +73,22 @@ rerun_failures:
 	@. venv/bin/activate && \
 			export FLASK_DEBUG=1 && export FLASK_ENV=development && \
 			python -m scraper.cli --config config/scraper_templates.json --rerun-failures
+
+setup_search_index:
+	@if [ ! -d "venv" ]; then \
+			echo "❌ venv not found. Run 'make setup' first."; \
+			exit 1; \
+	fi
+	@. venv/bin/activate && \
+			python -m webapp.scripts.setup_elasticsearch
+
+reindex_search:
+	@if [ ! -d "venv" ]; then \
+			echo "❌ venv not found. Run 'make setup' first."; \
+			exit 1; \
+	fi
+	@. venv/bin/activate && \
+			python -m scraper.jobs.reindex_recipes
 
 compile_scraping_failures:
 	python3 scraper/scripts/compile_scraping_failures.py

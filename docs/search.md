@@ -70,3 +70,34 @@ Key behaviour:
    to override the target index name for experimental environments.
 
 This script should be executed after provisioning the Elasticsearch cluster or whenever the mapping evolves.
+
+## Migrating from MySQL search to Elasticsearch search
+
+The application already treats Elasticsearch as the primary search backend and
+uses the MySQL repository only as a fallback. A complete migration therefore
+looks like this:
+
+1. Configure the Elasticsearch connection with `ELASTICSEARCH_URL` and, when
+   needed, `ELASTICSEARCH_USERNAME` / `ELASTICSEARCH_PASSWORD`.
+2. Create the recipe index:
+
+   ```bash
+   python -m webapp.scripts.setup_elasticsearch
+   ```
+
+3. Backfill all existing rows from MySQL into Elasticsearch:
+
+   ```bash
+   python -m scraper.jobs.reindex_recipes
+   ```
+
+4. Start the application with SQL fallback disabled:
+
+   ```bash
+   export SEARCH_ALLOW_SQL_FALLBACK=false
+   python -m webapp
+   ```
+
+When `SEARCH_ALLOW_SQL_FALLBACK=false`, any Elasticsearch outage or indexing
+problem will surface immediately instead of causing search traffic to fall back
+to the legacy SQL implementation.

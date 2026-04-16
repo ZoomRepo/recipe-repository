@@ -151,10 +151,10 @@ environment variable if you need to use a different port.
 
 The scraper and Flask app can push documents to Elasticsearch for downstream
 search, analytics, or monitoring. A single-node cluster is defined in
-`docker-compose.elasticsearch.yml` and can be launched locally with Docker:
+`docker-compose.yml` and can be launched locally with Docker:
 
 ```bash
-docker compose -f docker-compose.elasticsearch.yml up -d
+docker compose up -d
 ```
 
 The compose file provisions a secured node that listens on port `9200` and
@@ -176,12 +176,16 @@ At minimum you should define the cluster URL and the indices used to store
 recipes and scraper metadata:
 
 ```bash
-export ELASTICSEARCH_URL=http://localhost:9200
+export ELASTICSEARCH_URL=http://127.0.0.1:9200
 export ELASTICSEARCH_USERNAME=elastic
 export ELASTICSEARCH_PASSWORD=super-secret
 export ELASTICSEARCH_RECIPE_INDEX=recipes
 export ELASTICSEARCH_SCRAPER_INDEX=scraper-events
 ```
+
+The Flask app reads these environment variables when it starts. If you change
+any `ELASTICSEARCH_*` settings, restart the web application before testing
+search again.
 
 Verify connectivity from the application container or your workstation using the
 health check script:
@@ -192,6 +196,46 @@ python -m webapp.scripts.es_healthcheck --check-indices
 
 The command pings the cluster, waits for at least the `yellow` health status,
 and optionally ensures the configured indices exist.
+
+If you are running Elasticsearch via Docker in this repository, start or
+recreate it with:
+
+```bash
+docker compose up -d --force-recreate elasticsearch
+```
+
+If the health check still reports a ping failure, verify the node directly with
+an authenticated request:
+
+```bash
+curl -v -u elastic:$ELASTICSEARCH_PASSWORD http://127.0.0.1:9200
+```
+
+Using `127.0.0.1` is recommended here because some local environments can be
+finicky about `localhost` resolution even when Docker has correctly published
+port `9200`.
+
+To migrate your existing MySQL recipe catalogue into Elasticsearch and make it
+the active search backend:
+
+```bash
+make setup_search_index
+make reindex_search
+```
+
+The web application already queries Elasticsearch first. After the reindex has
+completed, disable the MySQL fallback so search fails loudly instead of
+quietly dropping back to SQL:
+
+```bash
+export SEARCH_ALLOW_SQL_FALLBACK=false
+python -m webapp
+```
+
+With fallback disabled, the API and the Next.js frontend will report
+`Elasticsearch` as the active backend whenever search succeeds. If Elasticsearch
+is unavailable, the request will now return an error instead of silently using
+the SQL search path.
 
 ### Temporary email login gate (Next.js app)
 

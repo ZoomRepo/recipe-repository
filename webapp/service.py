@@ -29,11 +29,13 @@ class RecipeService:
         detail_repository: RecipeQueryRepository,
         page_size: int,
         nutrition_service: Optional[NutritionService] = None,
+        allow_sql_fallback: bool = True,
     ) -> None:
         self._search_repository = search_repository
         self._detail_repository = detail_repository
         self._page_size = page_size
         self._nutrition_service = nutrition_service
+        self._allow_sql_fallback = allow_sql_fallback
 
     def search(
         self,
@@ -76,6 +78,11 @@ class RecipeService:
                 normalized_diets,
             )
         except Exception:  # noqa: BLE001
+            if not self._allow_sql_fallback:
+                logger.exception(
+                    "Primary search repository failed and SQL fallback is disabled"
+                )
+                raise
             logger.exception("Primary search repository failed; falling back to SQL")
             results = self._detail_repository.search(
                 normalized_query,

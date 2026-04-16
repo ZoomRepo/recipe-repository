@@ -32,6 +32,7 @@ def create_app(config: AppConfig | None = None) -> Flask:
         repository,
         resolved_config.page_size,
         nutrition_service=nutrition_service,
+        allow_sql_fallback=resolved_config.search.allow_sql_fallback,
     )
     register_routes(app, service)
     app.secret_key = resolved_config.secret_key

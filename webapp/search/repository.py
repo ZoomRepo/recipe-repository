@@ -42,9 +42,10 @@ class ElasticsearchSearchRepository(SearchRepository):
     def from_config(cls, config: AppConfig) -> "ElasticsearchSearchRepository":
         es_config = config.elasticsearch
         kwargs: MutableMapping[str, object] = {"request_timeout": es_config.timeout}
+        auth_username: str | None = None
         if es_config.username or es_config.password:
-            username = es_config.username or "elastic"
-            kwargs["basic_auth"] = (username, es_config.password or "")
+            auth_username = es_config.username or "elastic"
+            kwargs["basic_auth"] = (auth_username, es_config.password or "")
         if es_config.compatibility_version:
             version = es_config.compatibility_version
             if version not in (7, 8):
@@ -58,6 +59,12 @@ class ElasticsearchSearchRepository(SearchRepository):
             )
             headers: MutableMapping[str, str] = kwargs.setdefault("headers", {})
             headers.update({"Accept": compat_header, "Content-Type": compat_header})
+        logger.info(
+            "Creating Elasticsearch client url=%s index=%s auth=%s",
+            es_config.url,
+            es_config.recipe_index,
+            auth_username or "none",
+        )
         client = Elasticsearch(es_config.url, **kwargs)
         return cls(client, es_config.recipe_index)
 
@@ -91,7 +98,11 @@ class ElasticsearchSearchRepository(SearchRepository):
                 size=page_size,
                 highlight=payload["highlight"],
                 _source=self._source_fields(),
-                sort=["_score:desc", {"updated_at": "desc"}, {"id": "desc"}],
+                sort=[
+                    {"_score": "desc"},
+                    {"updated_at": "desc"},
+                    {"id": "desc"},
+                ],
             )
         except TransportError as exc:
             logger.exception(
@@ -344,4 +355,3 @@ class ElasticsearchSearchRepository(SearchRepository):
             return None
         nutrients = source.get("nutrients")
         return nutrients if isinstance(nutrients, Mapping) else None
-

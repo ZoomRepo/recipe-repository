@@ -112,6 +112,22 @@ class ElasticsearchConfig:
 
 
 @dataclass(frozen=True)
+class SearchConfig:
+    """Configuration for search backend behavior."""
+
+    allow_sql_fallback: bool = True
+
+    @classmethod
+    def from_env(cls, prefix: str = "SEARCH_") -> "SearchConfig":
+        """Create the configuration from environment variables."""
+
+        allow_sql_fallback = _strtobool(
+            os.getenv(f"{prefix}ALLOW_SQL_FALLBACK", str(cls.allow_sql_fallback))
+        )
+        return cls(allow_sql_fallback=allow_sql_fallback)
+
+
+@dataclass(frozen=True)
 class LoginGateConfig:
     """Configuration for the temporary email login gate."""
 
@@ -149,6 +165,7 @@ class AppConfig:
     login_gate: LoginGateConfig = LoginGateConfig()
     mail: MailConfig = MailConfig()
     elasticsearch: ElasticsearchConfig = ElasticsearchConfig()
+    search: SearchConfig = SearchConfig()
 
     @classmethod
     def from_env(cls) -> "AppConfig":
@@ -160,6 +177,7 @@ class AppConfig:
         login_gate = LoginGateConfig.from_env()
         mail = MailConfig.from_env()
         elasticsearch = ElasticsearchConfig.from_env()
+        search = SearchConfig.from_env()
         return cls(
             database=database,
             page_size=page_size,
@@ -167,4 +185,5 @@ class AppConfig:
             login_gate=login_gate,
             mail=mail,
             elasticsearch=elasticsearch,
+            search=search,
         )
