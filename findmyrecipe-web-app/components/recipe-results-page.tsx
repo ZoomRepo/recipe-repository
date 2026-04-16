@@ -252,7 +252,7 @@ export default function RecipeResultsPage({
                           )}
                           {highlightSnippet && <p className="line-clamp-2 text-slate-200/90">{highlightSnippet}</p>}
                         </div>
-                        <div className="grid gap-5 md:grid-cols-2">
+                        <div className="flex flex-1 flex-col gap-5 overflow-hidden">
                           <section>
                             <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">Nutrition</h3>
                             {nutrientEntries.length > 0 ? (
@@ -270,10 +270,10 @@ export default function RecipeResultsPage({
                               <p className="mt-3 text-sm text-slate-300/80">Nutrition information unavailable.</p>
                             )}
                           </section>
-                          <section>
+                          <section className="flex-1 overflow-hidden">
                             <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">Ingredients</h3>
                             {recipe.ingredients.length > 0 ? (
-                              <ul className="mt-3 space-y-2 text-sm leading-snug text-slate-100/90">
+                              <ul className="mt-3 space-y-2 text-sm leading-snug text-slate-100/90 overflow-y-auto max-h-full">
                                 {recipe.ingredients.map((ingredient, index) => (
                                   <li key={`${ingredient}-${index}`}>{ingredient}</li>
                                 ))}
