@@ -85,19 +85,14 @@ export default function SubscriptionGate({ recipeId, recipeName, children }: Sub
                 Subscribe for £3/month
               </Button>
             </Link>
-            <Link href="/auth/sign-up" className="block">
+            <Link href="/" className="block">
               <Button variant="outline" className="w-full bg-transparent">
-                Create Account
+                Keep browsing
               </Button>
             </Link>
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            Already have an account?{" "}
-            <Link href="/auth/login" className="text-primary hover:underline">
-              Login
-            </Link>
-          </p>
+          <p className="text-xs text-muted-foreground">No account required to keep exploring recipes.</p>
         </div>
       </div>
     )

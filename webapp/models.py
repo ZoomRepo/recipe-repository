@@ -1,7 +1,7 @@
 """Domain models for the recipe web application."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Iterable, List, Optional
 
@@ -28,15 +28,14 @@ class RecipeSummary:
 class RecipeDetail(RecipeSummary):
     """Complete recipe representation."""
 
-    instructions: List[str]
-    prep_time: Optional[str]
-    cook_time: Optional[str]
-    total_time: Optional[str]
-    servings: Optional[str]
-    author: Optional[str]
-    categories: List[str]
-    tags: List[str]
-    raw: Optional[dict]
+    instructions: List[str] = field(default_factory=list)
+    prep_time: Optional[str] = None
+    cook_time: Optional[str] = None
+    total_time: Optional[str] = None
+    servings: Optional[str] = None
+    author: Optional[str] = None
+    categories: List[str] = field(default_factory=list)
+    tags: List[str] = field(default_factory=list)
 
 
 @dataclass(frozen=True)

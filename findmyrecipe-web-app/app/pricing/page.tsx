@@ -1,48 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
+import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 
 export default function PricingPage() {
   const [isLoading, setIsLoading] = useState(false)
-  const [user, setUser] = useState<any>(null)
-  const router = useRouter()
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const supabase = createClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      setUser(user)
-    }
-    checkUser()
-  }, [])
 
   const handleSubscribe = async () => {
-    if (!user) {
-      router.push("/auth/sign-up")
-      return
-    }
-
     setIsLoading(true)
-    try {
-      const response = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, email: user.email }),
-      })
-      const { url } = await response.json()
-      if (url) router.push(url)
-    } catch (error) {
-      console.error("Error:", error)
-    } finally {
-      setIsLoading(false)
-    }
+    window.setTimeout(() => setIsLoading(false), 500)
   }
 
   const features = [
@@ -116,8 +84,11 @@ export default function PricingPage() {
                 ))}
               </ul>
               <Button onClick={handleSubscribe} disabled={isLoading} className="w-full">
-                {isLoading ? "Loading..." : user ? "Subscribe Now" : "Sign up to Subscribe"}
+                {isLoading ? "Loading..." : "Premium coming soon"}
               </Button>
+              <p className="text-sm text-muted-foreground">
+                Authentication has been removed from the app, so paid subscriptions are temporarily unavailable.
+              </p>
             </CardContent>
           </Card>
         </div>

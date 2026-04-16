@@ -5,7 +5,6 @@ import type React from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 interface RecipeSearchProps {
   searchQuery: string
@@ -15,9 +14,6 @@ interface RecipeSearchProps {
 
 export default function RecipeSearch({ searchQuery, setSearchQuery, onSearch }: RecipeSearchProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
-  const subscriptionStatus = typeof window !== "undefined" ? localStorage.getItem("subscriptionStatus") : null
-  const user = subscriptionStatus === "active"
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -35,84 +31,46 @@ export default function RecipeSearch({ searchQuery, setSearchQuery, onSearch }: 
           </Link>
 
           <div className="flex items-center gap-4">
-            <Link href="/whitelist" className="hidden sm:inline-flex">
-              <Button variant="ghost" size="sm" className="rounded-full">
-                Whitelist
-              </Button>
-            </Link>
-            {user ? (
-              <>
-                <div className="relative">
-                  <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="p-2 hover:bg-secondary rounded-lg transition-colors"
-                  >
-                    {isOpen ? (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    ) : (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 6h16M4 12h16M4 18h16"
-                        />
-                      </svg>
-                    )}
-                  </button>
+            <div className="relative">
+              <button onClick={() => setIsOpen(!isOpen)} className="p-2 hover:bg-secondary rounded-lg transition-colors">
+                {isOpen ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                )}
+              </button>
 
-                  {isOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-card border border-border rounded-lg shadow-lg z-50">
-                      <div className="px-4 py-3 border-b border-border">
-                        <p className="text-sm text-muted-foreground">Subscribed User</p>
-                      </div>
-                      <Link
-                        href="/account"
-                        className="block px-4 py-2 hover:bg-secondary text-foreground"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Manage Subscription
-                      </Link>
-                      <Link
-                        href="/account"
-                        className="block px-4 py-2 hover:bg-secondary text-foreground"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        View Favorites
-                      </Link>
-                      <button
-                        onClick={() => {
-                          localStorage.removeItem("subscriptionStatus")
-                          setIsOpen(false)
-                          router.refresh()
-                        }}
-                        className="block w-full text-left px-4 py-2 hover:bg-secondary text-foreground rounded-b-lg"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  )}
+              {isOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-card border border-border rounded-lg shadow-lg z-50">
+                  <div className="px-4 py-3 border-b border-border">
+                    <p className="text-sm text-muted-foreground">Browse freely</p>
+                  </div>
+                  <Link
+                    href="/pricing"
+                    className="block px-4 py-2 hover:bg-secondary text-foreground"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    View pricing
+                  </Link>
+                  <Link
+                    href="/results"
+                    className="block px-4 py-2 hover:bg-secondary text-foreground rounded-b-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Explore recipes
+                  </Link>
                 </div>
-              </>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Link href="/whitelist" className="sm:hidden">
-                  <Button variant="ghost" size="sm">
-                    Whitelist
-                  </Button>
-                </Link>
-                <Link href="/auth/login">
-                  <Button variant="outline" size="sm">
-                    Login
-                  </Button>
-                </Link>
-                <Link href="/auth/sign-up">
-                  <Button size="sm">Sign up</Button>
-                </Link>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>

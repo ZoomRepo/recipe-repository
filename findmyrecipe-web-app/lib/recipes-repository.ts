@@ -11,7 +11,7 @@ class ApiRequestError extends Error {
 
 function getApiBaseUrl() {
   const baseUrl = process.env.RECIPES_API_BASE_URL || process.env.NEXT_PUBLIC_RECIPES_API_BASE_URL
-  return baseUrl?.replace(/\/$/u, "") || "http://localhost:5000/api/v1"
+  return baseUrl?.replace(/\/$/u, "") || "http://localhost:8000/api/v1"
 }
 
 function buildApiHeaders(
@@ -467,14 +467,22 @@ export async function fetchRecipes(
   try {
     response = await fetch(apiUrl, { headers: buildApiHeaders(authHeader, cookieHeader, apiToken) })
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Failed to reach recipes API"
+    const rawMessage = error instanceof Error ? error.message : "Failed to reach recipes API"
+    const message =
+      rawMessage === "fetch failed"
+        ? `Failed to reach recipes API at ${getApiBaseUrl()}. Make sure the Flask app is running.`
+        : rawMessage
     throw new ApiRequestError(message, 502)
   }
 
   const searchBackendHeader = response.headers.get("x-search-backend")
 
   if (!response.ok) {
-    const message = await extractErrorMessage(response, `Request failed with status ${response.status}`)
+    const defaultMessage =
+      response.status === 403
+        ? `Recipes API returned 403. Check RECIPES_API_BASE_URL/RECIPES_API_TOKEN configuration.`
+        : `Request failed with status ${response.status}`
+    const message = await extractErrorMessage(response, defaultMessage)
     throw new ApiRequestError(message, response.status)
   }
 
@@ -515,7 +523,11 @@ export async function fetchRecipeDetail(
     return null
   }
   if (!response.ok) {
-    const message = await extractErrorMessage(response, `Request failed with status ${response.status}`)
+    const defaultMessage =
+      response.status === 403
+        ? `Recipes API returned 403. Check RECIPES_API_BASE_URL/RECIPES_API_TOKEN configuration.`
+        : `Request failed with status ${response.status}`
+    const message = await extractErrorMessage(response, defaultMessage)
     throw new ApiRequestError(message, response.status)
   }
 
